@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A IA da Atende AI é para você? | Diagnóstico rápido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #F6F7F2;
+    --surface: #FFFFFF;
+    --ink: #12171A;
+    --muted: #5B6560;
+    --muted-2: #8A938C;
+    --green-900: #0F3D2E;
+    --green-700: #146C4B;
+    --green-600: #1A8258;
+    --green-500: #21A366;
+    --green-100: #E3F3E9;
+    --green-50: #F1F8F3;
+    --border: #E4E7E1;
+    --amber: #E0993E;
+    --shadow-panel: 0 24px 60px -20px rgba(15,61,46,0.25);
+    --shadow-bubble: 0 1px 2px rgba(18,23,26,0.06);
+    font-size: 16px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0; padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body{
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex; align-items:center; justify-content:center;
+    padding:32px 16px;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  .ambient{ position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+  .ambient span{ position:absolute; border-radius:50%; filter:blur(70px); opacity:0.5; }
+  .ambient span:nth-child(1){ width:420px;height:420px; background:radial-gradient(circle, var(--green-100), transparent 70%); top:-120px; left:-140px; }
+  .ambient span:nth-child(2){ width:360px;height:360px; background:radial-gradient(circle, #FCEFDB, transparent 70%); bottom:-140px; right:-120px; opacity:0.6; }
+
+  .app{ position:relative; z-index:1; width:100%; max-width:480px; }
+
+  .brand{ display:flex; align-items:center; gap:10px; margin-bottom:14px; padding:0 4px; }
+  .brand-mark{ width:30px;height:30px; flex-shrink:0; }
+  .brand-name{ font-weight:700; font-size:0.95rem; letter-spacing:-0.01em; }
+  .brand-tag{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--muted-2); letter-spacing:0.02em; margin-left:auto; }
+
+  .panel{
+    background:var(--surface);
+    border-radius:24px;
+    box-shadow:var(--shadow-panel);
+    border:1px solid var(--border);
+    overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+
+  .panel-header{
+    display:flex; align-items:center; gap:12px;
+    padding:16px 20px;
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg, #FFFFFF, #FBFCFA);
+  }
+  .avatar{ width:38px;height:38px; border-radius:11px; background:var(--green-700); display:flex;align-items:center;justify-content:center; flex-shrink:0; }
+  .avatar svg{ width:20px;height:20px; }
+  .ph-name{ font-weight:700; font-size:0.92rem; }
+  .ph-status{ font-size:0.75rem; color:var(--green-600); display:flex; align-items:center; gap:5px; }
+  .ph-status .dot{ width:6px;height:6px;border-radius:50%; background:var(--green-500); display:inline-block; }
+
+  .progress-track{ height:3px; background:var(--border); position:relative; }
+  .progress-fill{ position:absolute; left:0; top:0; bottom:0; width:0%; background:var(--green-500); transition:width .45s ease; }
+
+  .thread{ padding:22px 18px 18px; display:flex; flex-direction:column; gap:12px; min-height:420px; }
+
+  .msg{
+    max-width:86%; padding:12px 15px; border-radius:16px;
+    font-size:0.94rem; line-height:1.48;
+    box-shadow:var(--shadow-bubble);
+    opacity:0; transform:translateY(6px);
+    animation:rise .38s ease forwards;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .msg.ai{ align-self:flex-start; background:var(--green-50); border:1px solid var(--green-100); border-bottom-left-radius:4px; color:var(--ink); }
+  .msg.user{ align-self:flex-end; background:var(--green-700); color:#fff; border-bottom-right-radius:4px; }
+
+  .qnum{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--muted-2); align-self:flex-start; margin:2px 2px -2px; }
+
+  .typing{
+    align-self:flex-start; background:var(--green-50); border:1px solid var(--green-100);
+    border-bottom-left-radius:4px; padding:13px 16px; border-radius:16px;
+    display:flex; gap:4px; opacity:0; animation:rise .3s ease forwards;
+  }
+  .typing span{ width:6px;height:6px;border-radius:50%; background:var(--green-500); opacity:0.5; animation:blink 1.1s infinite ease-in-out; }
+  .typing span:nth-child(2){ animation-delay:.15s; }
+  .typing span:nth-child(3){ animation-delay:.3s; }
+  @keyframes blink{ 0%,80%,100%{opacity:.25; transform:scale(0.85);} 40%{opacity:1; transform:scale(1);} }
+
+  .options{ display:flex; flex-direction:column; gap:8px; align-self:flex-start; width:100%; opacity:0; animation:rise .38s ease forwards; }
+  .opt{
+    text-align:left; background:#fff; border:1.5px solid var(--border); color:var(--ink);
+    padding:11px 14px; border-radius:12px; font-family:inherit; font-size:0.9rem; font-weight:600;
+    cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .opt:hover{ border-color:var(--green-500); background:var(--green-50); }
+  .opt:active{ transform:scale(0.99); }
+  .opt:focus-visible{ outline:2px solid var(--green-600); outline-offset:2px; }
+  .opt[disabled]{ pointer-events:none; opacity:0.55; }
+
+  .multi-hint{
+    display:flex; align-items:center; gap:6px;
+    font-size:0.74rem; color:var(--muted-2);
+    align-self:flex-start;
+    margin:-2px 2px 0;
+    opacity:0; animation:rise .35s ease forwards;
+  }
+  .multi-hint svg{ flex-shrink:0; }
+
+  .opt-check{
+    display:flex; align-items:center; gap:10px;
+    text-align:left; background:#fff; border:1.5px solid var(--border); color:var(--ink);
+    padding:11px 14px; border-radius:12px; font-family:inherit; font-size:0.9rem; font-weight:600;
+    cursor:pointer; transition:border-color .15s ease, background .15s ease;
+    width:100%;
+  }
+  .opt-check:hover{ border-color:var(--green-500); }
+  .opt-check .box{
+    width:18px; height:18px; border-radius:5px; border:1.6px solid var(--border);
+    flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .opt-check .box svg{ opacity:0; transform:scale(0.6); transition:opacity .12s ease, transform .12s ease; }
+  .opt-check.checked{ border-color:var(--green-500); background:var(--green-50); }
+  .opt-check.checked .box{ border-color:var(--green-600); background:var(--green-600); }
+  .opt-check.checked .box svg{ opacity:1; transform:scale(1); }
+  .opt-check:focus-visible{ outline:2px solid var(--green-600); outline-offset:2px; }
+
+  .continue-btn{
+    width:100%; background:var(--green-700); color:#fff; font-weight:700; font-size:0.9rem;
+    border:none; border-radius:12px; padding:12px 14px; cursor:pointer;
+    font-family:inherit; margin-top:4px;
+    opacity:0.4; pointer-events:none;
+    transition:background .15s ease, transform .1s ease, opacity .2s ease;
+  }
+  .continue-btn.ready{ opacity:1; pointer-events:auto; }
+  .continue-btn:hover{ background:var(--green-600); }
+  .continue-btn:active{ transform:scale(0.99); }
+  .continue-btn:focus-visible{ outline:2px solid var(--green-600); outline-offset:2px; }
+  .continue-btn,.restart{ min-height:44px; }
+
+  .composer-hint{ padding:10px 18px 16px; font-size:0.72rem; color:var(--muted-2); text-align:center; border-top:1px solid var(--border); font-family:'IBM Plex Mono', monospace; }
+
+  .loading{
+    align-self:center;
+    width:100%;
+    display:flex; flex-direction:column; align-items:center;
+    padding:36px 12px 24px;
+    opacity:0; animation:rise .4s ease forwards;
+  }
+  .loading-icon{
+    width:44px; height:44px; border-radius:13px;
+    background:var(--green-700);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    animation:pulse 1.4s ease-in-out infinite;
+  }
+  .loading-icon svg{ width:22px; height:22px; }
+  @keyframes pulse{ 0%,100%{ transform:scale(1); opacity:1; } 50%{ transform:scale(1.08); opacity:0.85; } }
+
+  .loading-word-track{
+    height:22px; overflow:hidden; position:relative;
+    margin-bottom:16px;
+  }
+  .loading-word{
+    font-size:0.92rem; font-weight:600; color:var(--ink);
+    text-align:center;
+    animation:word-roll 1.5s ease forwards;
+  }
+  @keyframes word-roll{
+    0%{ transform:translateY(16px); opacity:0; }
+    25%{ transform:translateY(0); opacity:1; }
+    80%{ transform:translateY(0); opacity:1; }
+    100%{ transform:translateY(-16px); opacity:0; }
+  }
+
+  .loading-bar-track{ width:200px; height:4px; background:var(--border); border-radius:99px; overflow:hidden; }
+  .loading-bar-fill{ height:100%; width:0%; background:var(--green-500); border-radius:99px; transition:width linear; }
+
+  @media (prefers-reduced-motion: reduce){
+    .loading-icon{ animation:none; }
+    .loading-word{ animation:none; opacity:1; transform:none; }
+  }
+
+  .result{ align-self:stretch; background:var(--green-900); color:#fff; border-radius:18px; padding:22px 20px 20px; opacity:0; animation:rise .4s ease forwards; }
+  .result-eyebrow{ font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:#9FDCBB; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
+  .result-title{ font-size:1.24rem; font-weight:800; line-height:1.28; letter-spacing:-0.01em; margin-bottom:10px; }
+  .result-title em{ color:#9FDCBB; font-style:normal; }
+  .result-body{ font-size:0.92rem; line-height:1.6; color:#DCEDE2; margin-bottom:14px; }
+  .result-body strong{ color:#fff; }
+
+  .divider{ height:1px; background:rgba(255,255,255,0.12); margin:16px 0; }
+  .control-heading{ font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#9FDCBB; text-transform:uppercase; letter-spacing:0.05em; margin:0 0 9px; }
+
+  .match-row{ display:flex; align-items:center; gap:12px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:12px; padding:12px 14px; margin-bottom:6px; }
+  .match-num{ font-family:'IBM Plex Mono', monospace; font-weight:500; font-size:1.4rem; color:#fff; min-width:58px; }
+  .match-bar-track{ flex:1; height:6px; background:rgba(255,255,255,0.15); border-radius:99px; overflow:hidden; }
+  .match-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,#4ADE80,#9FDCBB); border-radius:99px; transition:width 1s cubic-bezier(.2,.8,.2,1); }
+  .match-caption{ font-size:0.72rem; color:#9FDCBB; line-height:1.45; margin:0 0 16px; }
+
+  .founder-line{ font-size:0.82rem; color:#DCEDE2; margin:20px 0 12px; line-height:1.55; }
+  .founder-line strong{ color:#fff; }
+
+  .reasons{ list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:9px; }
+  .reasons li{ display:flex; gap:9px; font-size:0.87rem; line-height:1.5; color:#DCEDE2; }
+  .reasons li svg{ flex-shrink:0; margin-top:3px; }
+
+  .cta{
+    display:block; width:100%; text-align:center; background:#fff; color:var(--green-900);
+    font-weight:700; font-size:0.95rem; padding:13px 16px; border-radius:12px; text-decoration:none;
+    transition:transform .12s ease, box-shadow .12s ease;
+    box-shadow:0 8px 20px -8px rgba(0,0,0,0.4);
+  }
+  .cta:hover{ transform:translateY(-1px); }
+  .cta:focus-visible{ outline:2px solid #fff; outline-offset:3px; }
+  .quiz-plan-links{ display:grid; gap:9px; }
+  .cta--pro{ background:#baf91a; color:#142218; }
+  .cta--basic{ background:#fff; color:var(--green-900); }
+
+  .restart{
+    display:block; text-align:center; margin-top:12px; background:none; border:none; color:#9FDCBB;
+    font-size:0.78rem; font-family:inherit; text-decoration:underline; cursor:pointer; width:100%; padding:4px;
+  }
+  .restart:focus-visible{ outline:2px solid #fff; outline-offset:3px; }
+
+  footer.note{ text-align:center; font-size:0.72rem; color:var(--muted-2); margin-top:16px; line-height:1.5; }
+
+  @media (max-width:640px){
+    html,body{ min-height:100dvh; overscroll-behavior:contain; }
+    body{ align-items:flex-start; padding:18px 12px 28px; }
+    .app{ max-width:520px; }
+    .brand{ margin-bottom:10px; padding:0 2px; }
+    .brand-mark{ width:27px; height:27px; }
+    .brand-name{ font-size:.9rem; }
+    .brand-tag{ font-size:.61rem; }
+    .panel{ border-radius:19px; }
+    .panel-header{ padding:13px 15px; }
+    .avatar{ width:35px; height:35px; border-radius:10px; }
+    .thread{ min-height:0; padding:16px 12px 14px; gap:9px; }
+    .msg{ max-width:94%; padding:11px 13px; font-size:.9rem; }
+    .options{ gap:7px; }
+    .opt,.opt-check{ min-height:48px; padding:11px 12px; font-size:.87rem; touch-action:manipulation; }
+    .continue-btn,.cta,.restart{ touch-action:manipulation; }
+    .composer-hint{ padding:9px 12px 12px; }
+    .result{ padding:19px 16px 17px; border-radius:15px; }
+    .result-title{ font-size:1.14rem; }
+    .result-body{ font-size:.87rem; }
+    footer.note{ margin-top:11px; padding:0 6px; }
+  }
+
+  @media (max-height:760px) and (min-width:641px){
+    body{ align-items:flex-start; padding-top:22px; padding-bottom:22px; }
+    .thread{ min-height:360px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .msg, .options, .typing, .result, .multi-hint{ animation:none !important; opacity:1 !important; transform:none !important; }
+    .typing span{ animation:none; }
+    .match-bar-fill, .continue-btn{ transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient"><span></span><span></span></div>
+
+<div class="app">
+
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="2" width="28" height="28" rx="9" fill="#146C4B"/>
+      <path d="M10 20.5 L16 9 L22 20.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="16" cy="17" r="1.6" fill="#fff"/>
+    </svg>
+    <span class="brand-name">Atende AI</span>
+    <span class="brand-tag">DIAGNÓSTICO&nbsp;·&nbsp;90S</span>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <div class="avatar">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 15 L12 6 L17 15" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12.5" r="1.3" fill="#fff"/>
+        </svg>
+      </div>
+      <div>
+        <div class="ph-name">IA da Atende AI</div>
+        <div class="ph-status"><span class="dot"></span> online agora</div>
+      </div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="thread" id="thread" aria-live="polite"></div>
+
+    <div class="composer-hint" id="composerHint">toque em uma opção para responder</div>
+  </div>
+
+  <footer class="note">Suas respostas ficam apenas neste navegador e são usadas somente para montar o seu diagnóstico.</footer>
+</div>
+
+<script>
+(function(){
+
+  let TOTAL_STEPS = 5; // recalculado após a pergunta 1, conforme o caminho seguido
+  const state = {
+    a:0, b:0, vol:0, tags:[],
+    personType:null, familyConcern:null, employeeConcern:null,
+    deepTag:null, deepClause:null,
+    sequence:null,
+    exploredTopics: new Set()
+  };
+  let step = 0; // 0 = pergunta da pessoa; demais índices resolvidos via state.sequence
+
+  function currentTrack(){
+    const diff = state.a - state.b;
+    if (diff >= 1) return 'A';
+    if (diff <= -1) return 'B';
+    return 'misto';
+  }
+
+  // ---------------------------------------------------------------
+  // PASSO 0 — quem cuida do atendimento (define o caminho a seguir)
+  // ---------------------------------------------------------------
+  const Q_PERSON = {
+    kind:'person',
+    multi:false,
+    text: "Olá! 👋 Sou a IA da Atende AI. Para começar: hoje, quem cuida do atendimento pelo WhatsApp na sua loja?",
+    options: [
+      { label: "Sou eu mesmo(a), o(a) proprietário(a)", personType:'dono', a:3, b:0 },
+      { label: "Tenho alguém da minha família que atende", personType:'familiar', a:2, b:1 },
+      { label: "Tenho um funcionário dedicado a isso", personType:'funcionario', a:0, b:3 },
+      { label: "Ninguém tem essa responsabilidade fixa", personType:'indefinido', a:2, b:0 },
+    ]
+  };
+
+  // ---------------------------------------------------------------
+  // RAMO FAMILIAR — múltipla escolha: explora se essa pessoa poderia ganhar
+  // liberdade ou apoiar outra frente do negócio
+  // ---------------------------------------------------------------
+  const Q_FAMILY = {
+    kind:'family',
+    multi:true,
+    text: "Entendi. Ter alguém de confiança da família ajudando é comum. Você sente que essa pessoa poderia ganhar mais liberdade, ou ajudar em outra parte do negócio?",
+    options: [
+      { label: "Sim, poderia ter mais tempo livre em alguns momentos fora da loja", tag:'tempo_livre', clause:"dar mais tempo livre a essa pessoa em alguns momentos fora da loja", a:2, b:1 },
+      { label: "Sim, poderia apoiar mais a cozinha", tag:'apoio_cozinha', clause:"liberar essa pessoa para apoiar mais a cozinha", a:2, b:1 },
+      { label: "Sim, poderia apoiar mais os entregadores e o suporte ao cliente", tag:'apoio_entrega_suporte', clause:"liberar essa pessoa para apoiar mais os entregadores e o suporte ao cliente", a:2, b:1,
+        confirm: "Ótima visão. Isso pode elevar o patamar de qualidade, velocidade e satisfação do cliente no seu negócio." },
+      { label: "Não, esse arranjo funciona bem do jeito que está", tag:'nenhum', a:1, b:1 },
+    ]
+  };
+
+  // ---------------------------------------------------------------
+  // RAMO FUNCIONÁRIO — explora o risco de um setor crítico numa única pessoa
+  // ---------------------------------------------------------------
+  const Q_EMPLOYEE_RISK = {
+    kind:'employee',
+    multi:false,
+    text: "Hoje, esse setor está nas mãos de uma única pessoa. Pensando nisso, o que mais pesa para você?",
+    options: [
+      { label: "Se ela faltar ou sair, o atendimento praticamente para", tag:'risco_saida', clause:"reduzir o risco de o atendimento parar se ela faltar ou sair", a:0, b:3 },
+      { label: "A questão trabalhista: hora extra, rotatividade e processo", tag:'risco_trabalhista', clause:"reduzir a exposição a risco trabalhista nesse setor", a:0, b:3 },
+      { label: "Ela comete erro quando o movimento aperta", tag:'erro', clause:"reduzir os erros que aparecem quando o movimento aperta", a:0, b:2 },
+      { label: "Hoje isso não me preocupa muito", tag:'nenhum', a:0, b:1 },
+    ]
+  };
+
+  // ---------------------------------------------------------------
+  // VOLUME — entra logo no início, para calibrar tudo o que vem depois
+  // ---------------------------------------------------------------
+  const Q_VOLUME = {
+    kind:'volume',
+    multi:false,
+    text: "Antes de entrar nos detalhes: em média, quantos pedidos você recebe por dia, somando todos os canais de venda (WhatsApp, iFood, 99Food, Keeta, etc)?",
+    options: [
+      { label: "Poucos pedidos, eu gostaria de vender mais", vol:1, clause:"vender mais pedidos por dia" },
+      { label: "16 a 40 pedidos por dia", vol:2 },
+      { label: "41 a 80 pedidos por dia", vol:3 },
+      { label: "Mais de 80 pedidos por dia", vol:4 },
+    ]
+  };
+
+  // ---------------------------------------------------------------
+  // PRIORIDADE — múltipla escolha: já reúne o desafio principal e o entorno dele
+  // ---------------------------------------------------------------
+  function priorityOptions(track, personType){
+    let equipeLabel, equipeClause, equipeTag, equipeA, equipeB;
+    if (personType === 'familiar'){
+      equipeLabel = "Ter atendimento consistente, mesmo quando essa pessoa da família não está disponível";
+      equipeClause = "ter atendimento consistente, mesmo quando essa pessoa da família não está disponível";
+      equipeTag = 'equipe'; equipeA = 2; equipeB = 1;
+    } else if (track === 'B'){
+      equipeLabel = "Ter atendimento consistente, mesmo quando muda quem está atendendo";
+      equipeClause = "ter atendimento consistente, mesmo quando muda quem está atendendo";
+      equipeTag = 'equipe'; equipeA = 1; equipeB = 2;
+    } else if (personType === 'dono'){
+      equipeLabel = "Não depender só de mim para manter o padrão de atendimento";
+      equipeClause = "não depender só de você para manter o padrão de atendimento";
+      equipeTag = 'pessoal'; equipeA = 3; equipeB = 0;
+    } else if (personType === 'indefinido'){
+      equipeLabel = "Ter atendimento consistente, mas sem ter que contratar uma pessoa";
+      equipeClause = "ter atendimento consistente, sem precisar contratar uma pessoa";
+      equipeTag = 'pessoal'; equipeA = 2; equipeB = 0;
+    } else {
+      equipeLabel = "Ter atendimento consistente, mesmo quando alguém mais participa do atendimento";
+      equipeClause = "ter atendimento consistente, mesmo quando alguém mais participa do atendimento";
+      equipeTag = 'equipe'; equipeA = 1; equipeB = 2;
+    }
+    const erroLabel = track === 'B'
+      ? "Reduzir os erros que a equipe comete quando o movimento aperta"
+      : "Reduzir os erros de pedido que acontecem na correria do dia a dia";
+
+    return [
+      { label: equipeLabel, clause: equipeClause, tag: equipeTag, a: equipeA, b: equipeB },
+      { label: erroLabel, clause:"reduzir os erros de pedido que acontecem na correria", tag:'erro', a: track==='B'?1:2, b: track==='B'?2:1 },
+      { label: "Eliminar a fila de clientes querendo pedir em horários de pico", clause:"eliminar a fila nos horários de pico", tag:'pico', a:2, b:2 },
+      { label: "Melhorar a experiência do cliente e dar mais atenção individual", clause:"melhorar a experiência do cliente e dar mais atenção individual", tag:'atencao', a:2, b:2 },
+      { label: "Aumentar o número de pedidos, sem perder qualidade", clause:"aumentar o número de pedidos, sem perder qualidade", tag:'growth', a:2, b:2 },
+      { label: "Atender fora do horário de atendimento com agendamento", clause:"atender fora do horário de atendimento com agendamento", tag:'disponibilidade', a:2, b:1 },
+      { label: "Depender menos dos marketplaces (iFood, 99Food, Keeta)", clause:"depender menos dos marketplaces (iFood, 99Food, Keeta)", tag:'marketplace', a:2, b:1 },
+    ];
+  }
+
+  // ---------------------------------------------------------------
+  // APROFUNDAMENTO DINÂMICO — a partir do que mais se destacou na prioridade
+  // ---------------------------------------------------------------
+  const DEEPDIVE = {
+    growth: {
+      text: (clause) => `Você também sinalizou que quer ${clause}. Isso costuma vir de dois lugares: mais gente pedindo direto pelo WhatsApp, ou menos comissão saindo para os marketplaces (iFood, 99Food, Keeta). O que pesa mais para você hoje?`,
+      options: [
+        { label:"Trazer mais gente pedindo direto pelo WhatsApp da loja", a:2, b:2 },
+        { label:"Reduzir o quanto fica retido em comissão", a:2, b:1 },
+        { label:"As duas coisas, praticamente na mesma medida", a:2, b:2 },
+        { label:"Ainda não parei para separar isso", a:1, b:1 },
+      ]
+    },
+    erro: {
+      text: (clause) => `Sobre ${clause}: o que mais gera retrabalho quando isso acontece?`,
+      options: [
+        { label:"Corrigir o pedido já enviado para a cozinha", a:2, b:2 },
+        { label:"Explicar para o cliente o que saiu errado", a:2, b:2 },
+        { label:"Lidar com a entrega já a caminho do endereço errado", a:2, b:2 },
+        { label:"Não sei precisar, mas sei que consome tempo", a:1, b:1 },
+      ]
+    },
+    pico: {
+      text: (clause) => `Sobre ${clause}: o que mais dói quando isso acontece?`,
+      options: [
+        { label:"O cliente desiste no meio da conversa e pede em outro lugar", a:2, b:2 },
+        { label:"Eu fico impedido(a) de fazer outra coisa nesse horário", a:3, b:0 },
+        { label:"A equipe fica sob pressão e erra mais", a:0, b:3 },
+        { label:"Ainda não parei para sentir o impacto exato", a:1, b:1 },
+      ]
+    },
+    atencao: {
+      text: (clause) => `Sobre ${clause}: o que mais ajudaria a elevar essa experiência hoje?`,
+      options: [
+        { label:"Criar um relacionamento e fidelizar, não só com respostas padrão", a:2, b:2 },
+        { label:"Lembrar do histórico e das preferências de quem já comprou antes", a:2, b:2 },
+        { label:"Ter mais rapidez sem perder a cordialidade", a:2, b:2 },
+        { label:"Ainda não sei precisar, mas sinto que falta algo", a:1, b:1 },
+      ]
+    },
+    disponibilidade: {
+      text: (clause) => `Sobre ${clause}: em que momento essa lacuna mais pesa?`,
+      options: [
+        { label:"Em qualquer horário, eu queria captar o pedido e agendar para quando eu abrir", a:2, b:1 },
+        { label:"À noite, depois do expediente", a:2, b:1 },
+        { label:"Nos fins de semana e feriados", a:2, b:1 },
+        { label:"Quando alguém da equipe está de folga", a:1, b:2 },
+      ]
+    },
+    marketplace: {
+      text: (clause) => `Sobre ${clause}: o que faria mais diferença no seu caixa hoje?`,
+      options: [
+        { label:"Pagar menos comissão por pedido", a:2, b:1 },
+        { label:"Manter o mesmo volume, mas com mais margem", a:2, b:1 },
+        { label:"Depender menos de um único canal de venda", a:2, b:2 },
+        { label:"Ainda não calculei o que faria mais diferença", a:1, b:1 },
+      ]
+    },
+    equipe: {
+      text: (clause) => `Sobre ${clause}: o que mais pesa nesse processo hoje?`,
+      options: [
+        { label:"Contratar alguém só para cobrir algumas horas fica caro e desproporcional", a:2, b:0 },
+        { label:"O tempo até a pessoa nova aprender a rotina", a:0, b:3 },
+        { label:"A oscilação na qualidade do atendimento nesse meio-tempo", a:0, b:3 },
+        { label:"Precisar assumir o atendimento nesse período", a:2, b:1 },
+      ]
+    },
+    pessoal: {
+      text: (clause) => `Sobre ${clause}: o que você faria com esse tempo ou energia de volta?`,
+      options: [
+        { label:"Cuidar do crescimento do negócio", a:3, b:0 },
+        { label:"Gerenciar melhor minha empresa", a:3, b:0 },
+        { label:"Ficar mais presente com a família", a:3, b:0 },
+        { label:"Simplesmente descansar", a:3, b:0 },
+        { label:"Ainda não pensei nisso", a:1, b:0 },
+      ]
+    }
+  };
+
+  // ---------------------------------------------------------------
+  // SOLUÇÃO POR PROBLEMA — usado para montar o diagnóstico final de forma
+  // contextual: título e explicação seguem o problema real que a pessoa apontou
+  // ---------------------------------------------------------------
+  const SOLUTIONS = {
+    growth: {
+      headline: "seu negócio quer vender mais, mas o atendimento ainda não acompanha",
+      intro: "A Atendente digital atende todo mundo que chega, no mesmo instante e sem fila. Cada conversa nova vira uma chance real de venda, não uma espera.",
+      bullets: [
+        "Atendimento simultâneo, sem limite, mesmo em picos de demanda",
+        "Histórico de conversa guardado, para reativar quem já comprou antes",
+      ]
+    },
+    erro: {
+      headline: "os erros de pedido ainda custam caro no seu atendimento",
+      intro: "Cada resposta é baseada só no que está cadastrado no seu cardápio. A IA não inventa item, não troca pedido e não esquece observação.",
+      bullets: [
+        "Confirmação estruturada do pedido antes de seguir para a cozinha",
+        "Sem erro de endereço ou item por sobrecarga de conversas",
+      ]
+    },
+    pico: {
+      headline: "o horário de pico está custando venda para você",
+      intro: "A Atendente digital atende todas as conversas ao mesmo tempo, sem fila e sem perder pedido. O horário de pico deixa de ser um gargalo.",
+      bullets: [
+        "Sem limite de conversas simultâneas, nem no auge do movimento",
+        "Resposta imediata, mesmo com dezenas de pedidos ao mesmo tempo",
+      ]
+    },
+    atencao: {
+      headline: "a experiência do cliente ainda não tem a atenção que merece",
+      intro: "A Atendente digital reconhece quem já comprou antes e personaliza a conversa com base nesse histórico, sem perder a cordialidade da sua marca.",
+      bullets: [
+        "Tom de conversa configurado para soar como a sua loja",
+        "Reconhecimento de cliente recorrente, com sugestão de repetir pedido",
+      ]
+    },
+    disponibilidade: {
+      headline: "seu atendimento para quando o expediente termina",
+      intro: "A Atendente digital atende 24 horas por dia, inclusive à noite e nos fins de semana. O negócio continua vendendo fora do seu horário.",
+      bullets: [
+        "Atendimento contínuo, sem depender de plantão humano",
+        "Pedido agendado para fora do horário comercial, sem perder a venda",
+      ]
+    },
+    marketplace: {
+      headline: "os marketplaces ainda pesam demais na sua operação",
+      intro: "A Atendente digital sustenta um canal de venda próprio tão rápido quanto o aplicativo de delivery, sem repassar comissão por pedido.",
+      bullets: [
+        "Atendimento pelo WhatsApp com a mesma agilidade de um marketplace",
+        "Cliente fidelizado no seu canal, sem depender de plataforma terceira",
+      ]
+    },
+    equipe: {
+      headline: "seu atendimento depende demais de uma única pessoa",
+      intro: "A Atendente digital sustenta o padrão de atendimento independente de quem estiver disponível naquele dia. Ninguém precisa aprender tudo de novo.",
+      bullets: [
+        "Continuidade garantida mesmo se alguém faltar, sair ou estiver de folga",
+        "Mesmo padrão de resposta, em qualquer horário ou situação",
+      ]
+    },
+    pessoal: {
+      headline: "seu atendimento ainda depende só de você",
+      intro: "A Atendente digital assume a conversa do início ao fim, sem precisar da sua presença. O negócio continua vendendo mesmo quando você não está de prontidão.",
+      bullets: [
+        "Atendimento completo sem depender da sua presença atrás do celular",
+        "Você decide o que fazer com o tempo que sobra, sem culpa",
+      ]
+    }
+  };
+  const UNIVERSAL_BULLET = "Funciona no seu número de WhatsApp, sem trocar de aplicativo nem pedir para o cliente baixar nada novo";
+
+  function cap(str){ return str.charAt(0).toUpperCase() + str.slice(1); }
+
+  // ---------------------------------------------------------------
+  // FECHAMENTO — mais emocional, mas com lógica de negócio por trás.
+  // O pool é maior que 4: cada opção só entra se fizer sentido pro
+  // contexto da pessoa, e opções de temas já bastante explorados cedem
+  // lugar pra quem ainda não foi tocado.
+  // ---------------------------------------------------------------
+  const Q_FINAL_TEXT = "Última pergunta: olhando para frente, o que faria mais diferença para o seu negócio?";
+
+  const FINAL_POOL = [
+    { label: "Ter menos preocupação com atendimento e conseguir focar mais no crescimento da loja", topic:null, a:2, b:2 },
+    { label: "Depender cada vez menos dos marketplaces (iFood, 99Food, Keeta) e ter mais dinheiro disponível em caixa", topic:'marketplace', a:2, b:1 },
+    { label: "Diminuir as incertezas e riscos de funcionário: faltas e risco de ação trabalhista", topic:'equipe', a:0, b:3, requires: p => p.personType === 'funcionario' },
+    { label: "Evoluir meu negócio em tecnologia e ter um atendimento autônomo e confiável", topic:null, a:2, b:1 },
+    { label: "Não depender só de mim para o atendimento continuar", topic:'pessoal', a:3, b:0, requires: p => p.personType === 'dono' || p.personType === 'indefinido' },
+    { label: "Ter certeza de que o padrão de atendimento não cai quando falta alguém", topic:'equipe', a:1, b:2, requires: p => p.personType === 'funcionario' || p.personType === 'familiar' },
+  ];
+
+  function buildFinalOptions(){
+    const candidates = FINAL_POOL.filter(opt => !opt.requires || opt.requires(state));
+    const scored = candidates.map((opt, idx) => ({
+      opt, idx,
+      explored: opt.topic ? state.exploredTopics.has(opt.topic) : false
+    }));
+    scored.sort((x, y) => (x.explored - y.explored) || (x.idx - y.idx));
+    return scored.slice(0, 4).map(s => s.opt);
+  }
+
+  // ---------------------------------------------------------------
+  // Controle de fluxo
+  // ---------------------------------------------------------------
+  function getQuestionForStep(i){
+    const track = currentTrack();
+
+    if (i === 0) return Q_PERSON;
+
+    const kind = state.sequence[i - 1];
+
+    if (kind === 'family') return Q_FAMILY;
+    if (kind === 'employee') return Q_EMPLOYEE_RISK;
+    if (kind === 'volume') return Q_VOLUME;
+
+    if (kind === 'priority'){
+      return {
+        kind:'priority', multi:true,
+        text:"Hoje, quais desafios você entende como prioridade a serem resolvidos no atendimento?",
+        options: priorityOptions(track, state.personType)
+      };
+    }
+    if (kind === 'deepdive'){
+      const dd = DEEPDIVE[state.deepTag] || DEEPDIVE.growth;
+      return { kind:'deepdive', multi:false, text: dd.text(state.deepClause), options: dd.options };
+    }
+    if (kind === 'final'){
+      return { kind:'final', multi:false, text: Q_FINAL_TEXT, options: buildFinalOptions() };
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------
+  const thread = document.getElementById('thread');
+  const progressFill = document.getElementById('progressFill');
+  const composerHint = document.getElementById('composerHint');
+
+  function scrollDown(){
+    thread.scrollTop = thread.scrollHeight;
+    window.scrollTo({ top: document.body.scrollHeight, behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+  }
+
+  function addAiBubble(text, cb){
+    const typing = document.createElement('div');
+    typing.className = 'typing';
+    typing.innerHTML = '<span></span><span></span><span></span>';
+    thread.appendChild(typing);
+    scrollDown();
+
+    const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 380;
+    setTimeout(() => {
+      typing.remove();
+      const bubble = document.createElement('div');
+      bubble.className = 'msg ai';
+      bubble.textContent = text;
+      thread.appendChild(bubble);
+      scrollDown();
+      if (cb) cb();
+    }, delay);
+  }
+
+  function addUserBubble(text){
+    const bubble = document.createElement('div');
+    bubble.className = 'msg user';
+    bubble.textContent = text;
+    thread.appendChild(bubble);
+    scrollDown();
+  }
+
+  function addQnum(){
+    const el = document.createElement('div');
+    el.className = 'qnum';
+    el.textContent = 'PERGUNTA ' + (step+1) + ' DE ' + TOTAL_STEPS;
+    thread.appendChild(el);
+  }
+
+  function advanceAfterAnswer(){
+    step++;
+    progressFill.style.width = Math.round((step/TOTAL_STEPS)*100) + '%';
+    setTimeout(() => {
+      if (step < TOTAL_STEPS){ askQuestion(); } else { showLoading(); }
+    }, 220);
+  }
+
+  function showLoading(){
+    composerHint.textContent = 'processando';
+    const words = [
+      "Analisando suas respostas",
+      "Cruzando os dados do seu negócio",
+      "Montando o seu resultado em tempo real",
+    ];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wordDuration = 800; // ms por palavra — mantém o feedback sem prolongar a espera
+    const totalDuration = words.length * wordDuration;
+
+    const loading = document.createElement('div');
+    loading.className = 'loading';
+    loading.innerHTML = `
+      <div class="loading-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 15 L12 6 L17 15" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12.5" r="1.3" fill="#fff"/>
+        </svg>
+      </div>
+      <div class="loading-word-track"><div class="loading-word" id="loadingWord">${words[0]}</div></div>
+      <div class="loading-bar-track"><div class="loading-bar-fill" id="loadingBar"></div></div>
+    `;
+    thread.appendChild(loading);
+    scrollDown();
+
+    const bar = loading.querySelector('#loadingBar');
+    const wordEl = loading.querySelector('#loadingWord');
+
+    if (reduceMotion){
+      bar.style.transition = 'none';
+      bar.style.width = '100%';
+      finish();
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      bar.style.transition = `width ${totalDuration}ms linear`;
+      bar.style.width = '100%';
+    });
+
+    let i = 0;
+    const wordTimer = setInterval(() => {
+      i++;
+      if (i < words.length){
+        wordEl.textContent = words[i];
+        wordEl.style.animation = 'none';
+        void wordEl.offsetWidth; // reinicia a animação
+        wordEl.style.animation = '';
+      }
+    }, wordDuration);
+
+    setTimeout(() => {
+      clearInterval(wordTimer);
+      finish();
+    }, totalDuration);
+  }
+
+  function applyStepSideEffects(opt, kind){
+    if (opt.personType){
+      state.personType = opt.personType;
+      const seq = ['volume','priority','deepdive','final'];
+      if (opt.personType === 'familiar') seq.unshift('family');
+      if (opt.personType === 'funcionario') seq.unshift('employee');
+      state.sequence = seq;
+      TOTAL_STEPS = 1 + seq.length;
+    }
+    if (opt.clause) state.tags.push(opt.clause);
+    if (kind === 'employee' && opt.tag){
+      state.employeeConcern = opt.tag;
+      if (opt.tag === 'risco_saida' || opt.tag === 'risco_trabalhista') state.exploredTopics.add('equipe');
+      if (opt.tag === 'erro') state.exploredTopics.add('erro');
+    }
+  }
+
+  function renderSingleOptions(q){
+    const wrap = document.createElement('div');
+    wrap.className = 'options';
+    q.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.type = 'button';
+      btn.textContent = opt.label;
+      btn.addEventListener('click', () => {
+        wrap.querySelectorAll('.opt').forEach(b => b.disabled = true);
+        addUserBubble(opt.label);
+        state.a += opt.a || 0;
+        state.b += opt.b || 0;
+        state.vol += opt.vol || 0;
+        applyStepSideEffects(opt, q.kind);
+        advanceAfterAnswer();
+      });
+      wrap.appendChild(btn);
+    });
+    thread.appendChild(wrap);
+    scrollDown();
+  }
+
+  function renderMultiOptions(q){
+    const hint = document.createElement('div');
+    hint.className = 'multi-hint';
+    hint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" stroke="#8A938C" stroke-width="1.6"/><rect x="13" y="3" width="8" height="8" rx="2" stroke="#8A938C" stroke-width="1.6"/><rect x="3" y="13" width="8" height="8" rx="2" stroke="#8A938C" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" rx="2" stroke="#8A938C" stroke-width="1.6"/></svg><span>Pode marcar mais de uma opção</span>';
+    thread.appendChild(hint);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'options';
+
+    const selected = new Set();
+    let debounceTimer = null;
+
+    const continueBtn = document.createElement('button');
+    continueBtn.className = 'continue-btn';
+    continueBtn.type = 'button';
+    continueBtn.disabled = true;
+    continueBtn.textContent = 'Continuar';
+
+    q.options.forEach((opt, idx) => {
+      const row = document.createElement('button');
+      row.className = 'opt-check';
+      row.type = 'button';
+      row.setAttribute('aria-pressed','false');
+      row.innerHTML = '<span class="box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>' + opt.label + '</span>';
+      row.addEventListener('click', () => {
+        const isChecked = row.classList.toggle('checked');
+        row.setAttribute('aria-pressed', isChecked ? 'true' : 'false');
+        if (isChecked){ selected.add(idx); } else { selected.delete(idx); }
+
+        if (debounceTimer) clearTimeout(debounceTimer);
+        continueBtn.disabled = true;
+        if (selected.size >= 1){
+          continueBtn.classList.remove('ready');
+          const delay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
+          debounceTimer = setTimeout(() => { continueBtn.classList.add('ready'); continueBtn.disabled = false; }, delay);
+        } else {
+          continueBtn.classList.remove('ready');
+        }
+      });
+      wrap.appendChild(row);
+    });
+
+    wrap.appendChild(continueBtn);
+    thread.appendChild(wrap);
+    scrollDown();
+
+    continueBtn.addEventListener('click', () => {
+      if (selected.size === 0) return;
+      wrap.querySelectorAll('.opt-check').forEach(b => b.disabled = true);
+      continueBtn.disabled = true;
+
+      const chosenOptions = Array.from(selected).map(i => q.options[i]);
+      chosenOptions.forEach((opt, i) => {
+        setTimeout(() => addUserBubble(opt.label), i * 200);
+      });
+
+      const tagsChosen = [];
+      const confirmTexts = [];
+      chosenOptions.forEach(opt => {
+        state.a += opt.a || 0;
+        state.b += opt.b || 0;
+        if (opt.tag) tagsChosen.push(opt.tag);
+        if (opt.clause) state.tags.push(opt.clause);
+        if (opt.confirm) confirmTexts.push(opt.confirm);
+      });
+
+      if (q.kind === 'family'){
+        const meaningful = tagsChosen.find(t => t !== 'nenhum');
+        state.familyConcern = meaningful || 'nenhum';
+      }
+
+      let dominant;
+      if (q.kind === 'priority'){
+        dominant = tagsChosen.find(t => !state.exploredTopics.has(t)) || tagsChosen[0] || 'growth';
+        tagsChosen.forEach(t => state.exploredTopics.add(t));
+      } else {
+        dominant = tagsChosen[0] || 'growth';
+      }
+      const dominantOpt = chosenOptions.find(o => o.tag === dominant) || chosenOptions[0];
+      state.deepTag = dominant;
+      state.deepClause = dominantOpt ? (dominantOpt.clause || 'melhorar o atendimento') : 'melhorar o atendimento';
+
+      const baseDelay = chosenOptions.length * 200 + 250;
+
+      if (confirmTexts.length){
+        setTimeout(() => {
+          let i = 0;
+          function nextConfirm(){
+            addAiBubble(confirmTexts[i], () => {
+              i++;
+              if (i < confirmTexts.length) nextConfirm(); else advanceAfterAnswer();
+            });
+          }
+          nextConfirm();
+        }, baseDelay);
+      } else {
+        setTimeout(advanceAfterAnswer, baseDelay);
+      }
+    });
+  }
+
+  function askQuestion(){
+    const q = getQuestionForStep(step);
+    addQnum();
+    addAiBubble(q.text, () => {
+      if (q.multi){ renderMultiOptions(q); } else { renderSingleOptions(q); }
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Resultado
+  // ---------------------------------------------------------------
+  function recommendPlan(){
+    const advancedTopics = ['growth','pico','atencao','marketplace','disponibilidade','equipe'];
+    const needsPro = state.vol > 1 || advancedTopics.some(topic => state.exploredTopics.has(topic));
+    const basicFit = !needsPro && ['erro','pessoal'].includes(state.deepTag);
+    if (basicFit){
+      return {
+        name:'Founder Basic', variant:'basic',
+        reason:'Seu volume é menor e o foco é organizar os pedidos e liberar sua rotina, com atendimento automático para até três clientes ao mesmo tempo.',
+        url:'https://pay.cakto.com.br/p3rgmzw_892813'
+      };
+    }
+    const reasons = {
+      growth:'Combina atendimento sem limite, recuperação de vendas e oferta de adicionais para aproveitar mais oportunidades no seu WhatsApp.',
+      pico:'Atende sem limite de clientes ao mesmo tempo e recupera conversas abandonadas para ajudar você a vender mais nos picos.',
+      atencao:'Reconhece clientes que voltam, entende áudios e atende sem limite para dar mais atenção a cada conversa.',
+      marketplace:'Ajuda a fortalecer seu WhatsApp com atendimento sem limite e recuperação de vendas, sem comissão por pedido.',
+      disponibilidade:'Mantém o atendimento disponível 24 horas, sem limite de conversas, e ajuda a recuperar oportunidades fora dos picos.',
+      equipe:'Oferece atendimento sem limite e relatórios completos para dar continuidade à operação quando a equipe muda ou o movimento aumenta.',
+      pessoal:'Assume o atendimento sem limite de conversas e oferece relatórios completos para você acompanhar a loja e liberar sua rotina.',
+      erro:'Organiza os pedidos com atendimento sem limite e relatórios completos para acompanhar a operação mesmo quando o movimento aumenta.'
+    };
+    return {
+      name:'Founder PRO', variant:'pro',
+      reason:reasons[state.deepTag] || reasons.growth,
+      url:'https://pay.cakto.com.br/fwrej9i_1220822'
+    };
+  }
+
+  function finish(){
+    const loadingEl = thread.querySelector('.loading');
+    if (loadingEl) loadingEl.remove();
+
+    composerHint.textContent = 'diagnóstico pronto';
+    const profile = currentTrack();
+    const engagement = state.a + state.b + state.vol;
+    const matchPercent = 97 + Math.min(3, Math.floor(engagement / 10));
+
+    let volLine;
+    if (state.vol >= 6){
+      volLine = "No seu volume, isso já não é exceção, é rotina: todo dia de pico sem atendimento rápido é uma fatia de faturamento que simplesmente não chega no seu caixa.";
+    } else if (state.vol >= 3){
+      volLine = "O relógio corre contra você no horário de pico: o atendimento manual segura o resto do dia, mas está deixando venda na mesa exatamente na hora que mais importa.";
+    } else {
+      volLine = "Quanto mais tempo passa, mais caro fica resolver depois: seu volume ainda é administrável, o que torna agora o melhor momento para estruturar o atendimento antes que o problema cresça junto com o negócio.";
+    }
+
+    const profileLabel = profile === 'A' ? 'Perfil A' : profile === 'B' ? 'Perfil B' : 'Perfil misto';
+    const sol = SOLUTIONS[state.deepTag] || SOLUTIONS.growth;
+
+    const title = `<em>${profileLabel}</em>: ${cap(sol.headline)}`;
+    const body = sol.intro + ' ' + volLine;
+    const reasons = sol.bullets.concat([UNIVERSAL_BULLET]);
+    const plan = recommendPlan();
+
+    const controlPoints = [
+      "Pause quando quiser, sem burocracia",
+      "Acompanhe com dados como ela está atendendo",
+      "Configure do seu jeito, direto no painel",
+    ];
+
+    const matchCaption = "Esse número reflete o quanto do que você descreveu a Atende AI resolve diretamente.";
+
+    const result = document.createElement('div');
+    result.className = 'result';
+    result.innerHTML = `
+      <div class="result-eyebrow">Seu diagnóstico</div>
+      <div class="result-title">${title}</div>
+      <div class="result-body">${body}</div>
+      <ul class="reasons" id="reasonsList"></ul>
+
+      <div class="divider"></div>
+      <div class="control-heading">Você no controle</div>
+      <ul class="reasons" id="controlList"></ul>
+
+      <div class="divider"></div>
+      <div class="match-row">
+        <div class="match-num" id="matchNum">0%</div>
+        <div class="match-bar-track"><div class="match-bar-fill" id="matchBar"></div></div>
+      </div>
+      <div class="match-caption">${matchCaption}</div>
+
+      <div class="founder-line"><strong>O ${plan.name} é o ideal para você.</strong> ${plan.reason}</div>
+      <div class="quiz-plan-links">
+        <a class="cta cta--${plan.variant}" href="${plan.url}" target="_blank" rel="noopener noreferrer">Garantir meu ${plan.name} →</a>
+      </div>
+      <button class="restart" id="restartBtn" type="button">Refazer o diagnóstico</button>
+    `;
+    thread.appendChild(result);
+
+    const checkIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#4ADE80" stroke-width="1.6"/><path d="M8 12.5l2.6 2.6L16 9.6" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    const reasonsUl = result.querySelector('#reasonsList');
+    reasons.forEach(r => {
+      const li = document.createElement('li');
+      li.innerHTML = checkIcon + '<span>' + r + '</span>';
+      reasonsUl.appendChild(li);
+    });
+
+    const controlUl = result.querySelector('#controlList');
+    controlPoints.forEach(r => {
+      const li = document.createElement('li');
+      li.innerHTML = checkIcon + '<span>' + r + '</span>';
+      controlUl.appendChild(li);
+    });
+
+    scrollDown();
+
+    setTimeout(() => {
+      document.getElementById('matchBar').style.width = matchPercent + '%';
+      animateCount(document.getElementById('matchNum'), matchPercent);
+    }, 150);
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+      state.a = 0; state.b = 0; state.vol = 0; state.tags = [];
+      state.personType = null; state.familyConcern = null; state.employeeConcern = null;
+      state.deepTag = null; state.deepClause = null; state.sequence = null;
+      state.exploredTopics = new Set();
+      step = 0;
+      TOTAL_STEPS = 5;
+      progressFill.style.width = '0%';
+      composerHint.textContent = 'toque em uma opção para responder';
+      thread.innerHTML = '';
+      askQuestion();
+    });
+  }
+
+  function animateCount(el, target){
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){ el.textContent = target + '%'; return; }
+    let n = 0;
+    const stepSize = Math.max(1, Math.round(target / 24));
+    const t = setInterval(() => {
+      n = Math.min(target, n + stepSize);
+      el.textContent = n + '%';
+      if (n >= target) clearInterval(t);
+    }, 20);
+  }
+
+  // ---------------------------------------------------------------
+  askQuestion();
+
+})();
+</script>
+
+</body>
+</html>
