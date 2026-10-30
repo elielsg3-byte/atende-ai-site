@@ -41,7 +41,6 @@ export async function POST(request) {
   const secret = process.env.CAKTO_WEBHOOK_SECRET;
   const apiKey = process.env.RESEND_API_KEY;
   if (!secret || !apiKey) return json(500, { error: 'missing_env' });
-  if (!isConfigured()) return json(500, { error: 'email_not_configured' });
 
   const raw = await request.text();
   let body;
@@ -49,10 +48,16 @@ export async function POST(request) {
 
   if (!verify(raw, body, request.headers, secret)) return json(401, { error: 'invalid_signature' });
 
-  // Só e-mail de boas-vindas em compra aprovada; os outros eventos são confirmados e ignorados.
-  if (body.event !== 'purchase_approved') return json(200, { ignored: body.event || null });
+  // E-mail de teste (pedido assinado com o mesmo segredo): {event:'test_email', to, plan:'basic'|'pro'|'upgrade', name}
+  const isTest = body.event === 'test_email';
+  if (!isTest && !isConfigured()) return json(500, { error: 'email_not_configured' });
 
-  const data = Array.isArray(body.data) ? body.data[0] : body.data; // V2 envia array
+  // Só e-mail de boas-vindas em compra aprovada; os outros eventos são confirmados e ignorados.
+  if (!isTest && body.event !== 'purchase_approved') return json(200, { ignored: body.event || null });
+
+  const data = isTest
+    ? { id: `teste-${Date.now()}`, customer: { name: body.name || '', email: body.to }, product: { name: body.plan === 'upgrade' ? 'Upgrade' : body.plan === 'pro' ? 'Founder PRO' : 'Founder Basic' } }
+    : (Array.isArray(body.data) ? body.data[0] : body.data); // V2 envia array
   const customer = (data && data.customer) || {};
   if (!customer.email) return json(200, { ignored: 'no_customer_email' });
 
@@ -60,8 +65,10 @@ export async function POST(request) {
   const email = buildWelcomeEmail({
     firstName: String(customer.name || '').trim().split(/\s+/)[0] || '',
     plan,
-    orderId: data.id || data.refId || '',
+    orderId: isTest ? '' : (data.id || data.refId || ''),
+    draft: isTest,
   });
+  if (isTest) email.subject = '[TESTE] ' + email.subject;
 
   const payload = {
     from: process.env.EMAIL_FROM || 'Atende.AI <contato@atendeaidelivery.com.br>',
