@@ -2277,5 +2277,39 @@ document.addEventListener('keydown', function (event) {
   });
 })();
 </script>
+<script>
+/* Meta Pixel: InitiateCheckout on Cakto buttons + events relayed from the quiz iframe */
+(function(){
+  var PLANS={
+    'p3rgmzw_892813':{name:'Founder Basic',id:'founder-basic',value:97},
+    'fwrej9i_1220822':{name:'Founder PRO',id:'founder-pro',value:167}
+  };
+  function track(ev,params){try{if(typeof window.fbq==='function')window.fbq('track',ev,params);}catch(e){}}
+  function checkoutParams(p){return {content_name:p.name,content_ids:[p.id],content_type:'product',value:p.value,currency:'BRL',num_items:1};}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('a[href*="pay.cakto.com.br/"]');
+    if(!a) return;
+    var key=(a.getAttribute('href').split('pay.cakto.com.br/')[1]||'').split(/[?#]/)[0];
+    var plan=PLANS[key]; if(!plan) return;
+    track('InitiateCheckout',checkoutParams(plan));
+    // same-tab click: give the pixel a moment to send before leaving the page
+    var newTab=a.target==='_blank'||e.ctrlKey||e.metaKey||e.shiftKey||e.button!==0;
+    if(!newTab&&typeof window.fbq==='function'){
+      e.preventDefault();
+      var href=a.href;
+      setTimeout(function(){window.location.href=href;},300);
+    }
+  });
+  var ALLOWED={Lead:1,InitiateCheckout:1};
+  var KEYS=['content_name','content_category','content_ids','content_type','value','currency','num_items'];
+  window.addEventListener('message',function(e){
+    var frame=document.getElementById('quiz-frame');
+    if(!frame||e.source!==frame.contentWindow) return;
+    var d=e.data; if(!d||d.source!=='atende-quiz'||!ALLOWED[d.event]) return;
+    var params={}; KEYS.forEach(function(k){if(d.params&&d.params[k]!==undefined)params[k]=d.params[k];});
+    track(d.event,params);
+  });
+})();
+</script>
 </body>
 </html>

@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>A IA da Atende AI é para você? | Diagnóstico rápido</title>
+<!-- Meta Pixel (only when the quiz is opened directly; inside the site it reports through the parent page) -->
+<script>
+if(window.top===window){
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','1444232587293553');
+fbq('track','PageView');
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
@@ -945,6 +953,17 @@
     };
   }
 
+  // ---------------------------------------------------------------
+  // Meta Pixel: inside the site iframe the parent page sends the event
+  // ---------------------------------------------------------------
+  let leadSent = false;
+  function trackPixel(ev, params){
+    try{
+      if (window.parent !== window){ window.parent.postMessage({source:'atende-quiz', event:ev, params:params}, '*'); }
+      else if (typeof window.fbq === 'function'){ window.fbq('track', ev, params); }
+    }catch(e){}
+  }
+
   function finish(){
     const loadingEl = thread.querySelector('.loading');
     if (loadingEl) loadingEl.remove();
@@ -1005,6 +1024,10 @@
       <button class="restart" id="restartBtn" type="button">Refazer o diagnóstico</button>
     `;
     thread.appendChild(result);
+    const planValue = plan.variant === 'pro' ? 167 : 97;
+    if (!leadSent){ leadSent = true; trackPixel('Lead', {content_name:'Quiz diagnóstico', content_category:plan.name, value:planValue, currency:'BRL'}); }
+    const ctaEl = result.querySelector('.cta');
+    if (ctaEl) ctaEl.addEventListener('click', function(){ trackPixel('InitiateCheckout', {content_name:plan.name, content_ids:[plan.variant === 'pro' ? 'founder-pro' : 'founder-basic'], content_type:'product', value:planValue, currency:'BRL', num_items:1}); });
 
     const checkIcon = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#4ADE80" stroke-width="1.6"/><path d="M8 12.5l2.6 2.6L16 9.6" stroke="#4ADE80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
