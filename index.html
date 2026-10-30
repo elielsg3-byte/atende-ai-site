@@ -207,6 +207,8 @@ body.menu-open .mobile-menu{display:flex}
 .demo-video-player:focus-visible{outline:3px solid #ef0000;outline-offset:-5px}
 .demo-video-frame iframe,.demo-video-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0b0e0d}
 .demo-video-frame video{object-fit:cover}
+.demo-video-frame video:fullscreen{object-fit:contain;background:#000}
+.demo-video-frame video:-webkit-full-screen{object-fit:contain;background:#000}
 
 .setup-section{--setup-bg:#153b2a;position:relative;isolation:isolate;padding:clamp(62px,7vw,90px) 0;background:radial-gradient(circle at 12% 22%,rgba(92,169,126,.12),transparent 31%),radial-gradient(circle at 84% 10%,rgba(186,249,26,.1),transparent 28%),radial-gradient(ellipse at 50% 112%,rgba(186,249,26,.1),transparent 42%),linear-gradient(145deg,#174a32 0%,var(--setup-bg) 52%,#10281d 100%);color:#fff;border-block:1px solid rgba(186,249,26,.16);overflow:hidden}
 .setup-section::before{content:"";position:absolute;z-index:-1;width:760px;height:420px;left:50%;bottom:-315px;transform:translateX(-50%);border-radius:50%;background:rgba(186,249,26,.11);filter:blur(86px);pointer-events:none}
