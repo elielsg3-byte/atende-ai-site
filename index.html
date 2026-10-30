@@ -2278,7 +2278,7 @@ document.addEventListener('keydown', function (event) {
 })();
 </script>
 <script>
-/* Meta Pixel: InitiateCheckout on Cakto buttons + events relayed from the quiz iframe */
+/* Meta Pixel: AddToCart on Cakto buttons + events relayed from the quiz iframe */
 (function(){
   var PLANS={
     'p3rgmzw_892813':{name:'Founder Basic',id:'founder-basic',value:97},
@@ -2291,7 +2291,8 @@ document.addEventListener('keydown', function (event) {
     if(!a) return;
     var key=(a.getAttribute('href').split('pay.cakto.com.br/')[1]||'').split(/[?#]/)[0];
     var plan=PLANS[key]; if(!plan) return;
-    track('InitiateCheckout',checkoutParams(plan));
+    // InitiateCheckout itself comes from the Cakto checkout page; the site click is AddToCart
+    track('AddToCart',checkoutParams(plan));
     // same-tab click: give the pixel a moment to send before leaving the page
     var newTab=a.target==='_blank'||e.ctrlKey||e.metaKey||e.shiftKey||e.button!==0;
     if(!newTab&&typeof window.fbq==='function'){
@@ -2300,7 +2301,7 @@ document.addEventListener('keydown', function (event) {
       setTimeout(function(){window.location.href=href;},300);
     }
   });
-  var ALLOWED={Lead:1,InitiateCheckout:1};
+  var ALLOWED={Lead:1,AddToCart:1};
   var KEYS=['content_name','content_category','content_ids','content_type','value','currency','num_items'];
   window.addEventListener('message',function(e){
     var frame=document.getElementById('quiz-frame');
