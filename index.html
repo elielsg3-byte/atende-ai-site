@@ -205,7 +205,8 @@ body.menu-open .mobile-menu{display:flex}
 .demo-video-play::before{content:"";width:0;height:0;margin-left:5px;border-top:11px solid transparent;border-bottom:11px solid transparent;border-left:17px solid #fff}
 .demo-video-player:hover .demo-video-play{transform:translate(-50%,-50%) scale(1.06);box-shadow:0 16px 44px rgba(0,0,0,.46),0 0 0 10px rgba(239,0,0,.22)}
 .demo-video-player:focus-visible{outline:3px solid #ef0000;outline-offset:-5px}
-.demo-video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0b0e0d}
+.demo-video-frame iframe,.demo-video-frame video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#0b0e0d}
+.demo-video-frame video{object-fit:cover}
 
 .setup-section{--setup-bg:#153b2a;position:relative;isolation:isolate;padding:clamp(62px,7vw,90px) 0;background:radial-gradient(circle at 12% 22%,rgba(92,169,126,.12),transparent 31%),radial-gradient(circle at 84% 10%,rgba(186,249,26,.1),transparent 28%),radial-gradient(ellipse at 50% 112%,rgba(186,249,26,.1),transparent 42%),linear-gradient(145deg,#174a32 0%,var(--setup-bg) 52%,#10281d 100%);color:#fff;border-block:1px solid rgba(186,249,26,.16);overflow:hidden}
 .setup-section::before{content:"";position:absolute;z-index:-1;width:760px;height:420px;left:50%;bottom:-315px;transform:translateX(-50%);border-radius:50%;background:rgba(186,249,26,.11);filter:blur(86px);pointer-events:none}
@@ -982,8 +983,8 @@ src="https://www.facebook.com/tr?id=1444232587293553&amp;ev=PageView&amp;noscrip
           <span style="position:absolute;z-index:-1;width:220px;height:220px;left:50%;top:10%;transform:translateX(-50%);border-radius:50%;filter:blur(60px);background:rgba(186,249,26,.22)"></span>
           <span style="position:absolute;z-index:-1;width:200px;height:200px;right:-10%;bottom:5%;border-radius:50%;filter:blur(60px);background:rgba(135,109,255,.22)"></span>
           <div class="demo-video-frame">
-            <button class="demo-video-player" type="button" data-youtube-player data-youtube-id="8HvH6G-df8g" aria-label="Reproduzir demonstração da Atende.AI no YouTube">
-              <img src="https://i.ytimg.com/vi/8HvH6G-df8g/maxresdefault.jpg" alt="Prévia do vídeo de demonstração da Atende.AI" loading="lazy" decoding="async">
+            <button class="demo-video-player" type="button" data-video-player data-src="assets/video/demo-atende-ai-v1.mp4" data-poster="assets/video/demo-atende-ai-v1-capa.jpg" data-youtube-id="8HvH6G-df8g" aria-label="Reproduzir demonstração da Atende.AI">
+              <img src="assets/video/demo-atende-ai-v1-capa.jpg" alt="Prévia do vídeo de demonstração da Atende.AI" width="720" height="1280" loading="lazy" decoding="async">
               <span class="demo-video-play" aria-hidden="true"></span>
             </button>
           </div>
@@ -2229,17 +2230,39 @@ document.addEventListener('keydown', function (event) {
 })();
 
 (function(){
-  var player=document.querySelector('[data-youtube-player]');
+  var player=document.querySelector('[data-video-player]');
   if(!player) return;
-  player.addEventListener('click',function(){
-    var videoId=player.getAttribute('data-youtube-id');
+  var video=null;
+  function build(){
+    if(video) return video;
+    video=document.createElement('video');
+    video.src=player.getAttribute('data-src');
+    video.poster=player.getAttribute('data-poster');
+    video.preload='auto';
+    video.controls=true;
+    video.playsInline=true;
+    video.setAttribute('playsinline','');
+    video.setAttribute('controlslist','nodownload');
+    video.setAttribute('aria-label','Demonstração da Atende.AI em vídeo');
+    return video;
+  }
+  function youtubeFallback(){
+    var id=player.getAttribute('data-youtube-id');
     var iframe=document.createElement('iframe');
-    iframe.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(videoId)+'?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+    iframe.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&rel=0&playsinline=1&modestbranding=1';
     iframe.title='Demonstração da Atende.AI em vídeo';
-    iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';
     iframe.setAttribute('allowfullscreen','');
-    iframe.referrerPolicy='strict-origin-when-cross-origin';
-    player.replaceWith(iframe);
+    (video&&video.parentNode?video:player).replaceWith(iframe);
+  }
+  // starts buffering as soon as the visitor shows intent, so play is instant
+  ['pointerenter','touchstart','focus'].forEach(function(ev){player.addEventListener(ev,build,{once:true,passive:true})});
+  player.addEventListener('click',function(){
+    var v=build();
+    v.addEventListener('error',youtubeFallback,{once:true});
+    player.replaceWith(v);
+    var p=v.play();
+    if(p&&p.catch) p.catch(function(){v.controls=true;});
   });
 })();
 </script>
