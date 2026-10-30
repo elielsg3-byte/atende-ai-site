@@ -2233,6 +2233,14 @@ document.addEventListener('keydown', function (event) {
   var player=document.querySelector('[data-video-player]');
   if(!player) return;
   var video=null;
+  function isPhone(){return window.matchMedia('(max-width: 767px) and (pointer: coarse)').matches;}
+  function goFullscreen(v){
+    try{
+      if(v.requestFullscreen){var r=v.requestFullscreen({navigationUI:'hide'});if(r&&r.catch)r.catch(function(){});}
+      else if(v.webkitRequestFullscreen){v.webkitRequestFullscreen();}
+      else if(v.webkitEnterFullscreen){v.webkitEnterFullscreen();}
+    }catch(e){}
+  }
   function build(){
     if(video) return video;
     video=document.createElement('video');
@@ -2240,8 +2248,8 @@ document.addEventListener('keydown', function (event) {
     video.poster=player.getAttribute('data-poster');
     video.preload='auto';
     video.controls=true;
-    video.playsInline=true;
-    video.setAttribute('playsinline','');
+    // phones: no playsinline, so iOS opens its native fullscreen player
+    if(!isPhone()){video.playsInline=true;video.setAttribute('playsinline','');}
     video.setAttribute('controlslist','nodownload');
     video.setAttribute('aria-label','Demonstração da Atende.AI em vídeo');
     return video;
@@ -2261,6 +2269,7 @@ document.addEventListener('keydown', function (event) {
     var v=build();
     v.addEventListener('error',youtubeFallback,{once:true});
     player.replaceWith(v);
+    if(isPhone()) goFullscreen(v);
     var p=v.play();
     if(p&&p.catch) p.catch(function(){v.controls=true;});
   });
