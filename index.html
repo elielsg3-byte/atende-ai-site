@@ -2318,5 +2318,24 @@ document.addEventListener('keydown', function (event) {
   });
 })();
 </script>
+<script>
+/* Tracking: repassa utm_*, fbclid, src e sck da URL da página para os links de checkout da Cakto */
+(function(){
+  if(!window.URLSearchParams||!window.URL) return;
+  var keys=/^(utm_[a-z0-9_]+|fbclid|src|sck)$/i;
+  var pass=[];
+  new URLSearchParams(window.location.search).forEach(function(value,key){
+    if(value&&keys.test(key)) pass.push([key,value]);
+  });
+  if(!pass.length) return;
+  document.querySelectorAll('a[href*="pay.cakto.com.br/"]').forEach(function(a){
+    try{
+      var url=new URL(a.getAttribute('href'),window.location.href);
+      pass.forEach(function(item){if(!url.searchParams.has(item[0])) url.searchParams.set(item[0],item[1]);});
+      a.setAttribute('href',url.toString());
+    }catch(e){}
+  });
+})();
+</script>
 </body>
 </html>

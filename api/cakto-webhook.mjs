@@ -6,8 +6,10 @@
 //   EMAIL_FROM             opcional. Padrão: "Atende.AI <contato@atendeaidelivery.com.br>"
 //   EMAIL_REPLY_TO         opcional. Para onde vão as respostas do cliente
 //   EMAIL_BCC              opcional. Recebe uma cópia de cada e-mail enviado (controle interno)
+//   META_CAPI_TOKEN        token da API de Conversões do Meta (envia o Purchase pelo servidor; ver lib/meta-capi.mjs)
 import crypto from 'node:crypto';
 import { buildWelcomeEmail, resolvePlan, isConfigured } from '../lib/welcome-email.mjs';
+import { sendPurchase } from '../lib/meta-capi.mjs';
 
 const MAX_SIGNATURE_AGE_S = 60 * 60; // aceita até 1h de diferença (cobre as retentativas da Cakto)
 
@@ -40,7 +42,7 @@ export async function GET() {
 export async function POST(request) {
   const secret = process.env.CAKTO_WEBHOOK_SECRET;
   const apiKey = process.env.RESEND_API_KEY;
-  if (!secret || !apiKey) return json(500, { error: 'missing_env' });
+  if (!secret) return json(500, { error: 'missing_env' });
 
   const raw = await request.text();
   let body;
@@ -48,9 +50,20 @@ export async function POST(request) {
 
   if (!verify(raw, body, request.headers, secret)) return json(401, { error: 'invalid_signature' });
 
+  // Compra aprovada: envia o Purchase para o Meta pelo servidor, antes e independente do e-mail.
+  let capi = null;
+  if (body.event === 'purchase_approved') {
+    const order = Array.isArray(body.data) ? body.data[0] : body.data;
+    if (order) {
+      try { capi = await sendPurchase(order, resolvePlan(order)); }
+      catch (err) { console.error('meta_capi_exception', err && err.message); capi = { ok: false }; }
+    }
+  }
+
   // E-mail de teste (pedido assinado com o mesmo segredo): {event:'test_email', to, plan:'basic'|'pro'|'upgrade', name}
   const isTest = body.event === 'test_email';
-  if (!isTest && !isConfigured()) return json(500, { error: 'email_not_configured' });
+  if (!apiKey) return json(capi ? 200 : 500, capi ? { capi, email: 'missing_resend_key' } : { error: 'missing_env' });
+  if (!isTest && !isConfigured()) return json(capi ? 200 : 500, capi ? { capi, email: 'not_configured' } : { error: 'email_not_configured' });
 
   // Só e-mail de boas-vindas em compra aprovada; os outros eventos são confirmados e ignorados.
   if (!isTest && body.event !== 'purchase_approved') return json(200, { ignored: body.event || null });
@@ -98,5 +111,5 @@ export async function POST(request) {
     return json(502, { error: 'resend_error', status: res.status });
   }
   const sent = await res.json();
-  return json(200, { sent: true, plan: plan.key, id: sent.id });
+  return json(200, { sent: true, plan: plan.key, id: sent.id, capi });
 }
