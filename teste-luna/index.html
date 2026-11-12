@@ -721,7 +721,7 @@ const STORES = {
       { u: 'Um 500 com granola, banana e leite em pó', l: ['Anotado! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nPor mais R$ 6 vira o de *700 ml*. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotado (+R$ 6,00) 😋 Total: R$ 28,00.\nMais alguma coisa? Morango por cima fica top, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
       { u: 'Só isso mesmo', l: ['Perfeito! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, cartão na entrega ou dinheiro?`] },
+      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
       { u: 'Dinheiro', l: ['Troco pra quanto? 💵'] },
       { u: 'Pra 50', l: ['Confere o pedido 👇\n\n1x Açaí 500 ml (granola, banana, leite em pó + creme de avelã) – R$ 28,00\nEntrega – R$ 6,00\n*Total: R$ 34,00* · Dinheiro (troco p/ R$ 50,00)\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra preparo. Previsão: 30 a 40 min.' },
@@ -733,12 +733,12 @@ const STORES = {
     gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=a627047d', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=1043041f',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*.`,
-    after: 'Pode pedir pelo número do sabor, e meio a meio também vale! 😊',
+    after: 'Pode pedir pelo nome ou pelo número do sabor, e meio a meio também vale! 😊',
     script: [
-      { u: 'Uma média meia 02 meia 04', l: ['Anotado! 🍕 Média meia *Calabresa*, meia *Frango c/ Catupiry*: R$ 45,00.\nPor mais R$ 10 você leva a *Grande*, com 2 fatias a mais. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
+      { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Anotado! 🍕 Média meia *Calabresa*, meia *Frango c/ Catupiry*: R$ 45,00.\nPor mais R$ 10 você leva a *Grande*, com 2 fatias a mais. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Pode ser a grande', l: ['Fechado: Grande por R$ 55,00! 🙌\nMais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
       { u: 'Manda uma Coca 2L', l: ['Anotado! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, cartão na entrega ou dinheiro?`] },
+      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
       { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Pizza Grande (meia Calabresa, meia Frango c/ Catupiry) – R$ 55,00\n1x Coca-Cola 2 L – R$ 15,00\nEntrega – R$ 6,00\n*Total: R$ 76,00* · Pix\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pro forno. Previsão: 40 a 50 min.' },
     ],
@@ -749,17 +749,17 @@ const STORES = {
     gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=c6c35199', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=5ced0748',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*.`,
-    after: 'É só pedir pelo número. Se quiser tirar algum ingrediente, é só falar 😉',
+    after: 'É só pedir pelo nome ou pelo número. Se quiser tirar algum ingrediente, é só falar 😉',
     script: [
-      { u: 'Quero 2 do 3, um sem pimenta', l: ['Anotado! 🔥 2x *O Grande B* (1 sem pimenta vermelha): R$ 85,80.\nQuer uma *batata frita* pra acompanhar por R$ 14,90? 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
+      { u: 'Quero 2 O Grande B, um sem pimenta', l: ['Anotado! 🔥 2x *O Grande B* (1 sem pimenta vermelha): R$ 85,80.\nQuer uma *batata frita* pra acompanhar por R$ 14,90? 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
       { u: 'Quero sim', l: ['Batata anotada! Mais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
       { u: 'Não, só isso', l: ['Beleza! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, cartão na entrega ou dinheiro?`] },
-      { u: 'Cartão na entrega', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x O Grande B (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
+      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
+      { u: '💳 Crédito', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x O Grande B (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra chapa. Previsão: 40 a 50 min.' },
     ],
     comanda: { numero: '0512', itens: [{ q: 2, nome: 'O Grande B', obs: '1 sem pimenta vermelha', p: 85.8 }, { q: 1, nome: 'Batata frita', p: 14.9 }],
-      taxa: 6, tipo: 'Entrega', pagamento: 'Cartão na entrega', previsao: '40 a 50 min' },
+      taxa: 6, tipo: 'Entrega', pagamento: 'Crédito (maquininha na entrega)', previsao: '40 a 50 min' },
   },
   marmitaria: {
     gain: { from: 29.9, to: 38.8 }, name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp?v=10e46293', menuFull: '/teste-luna/a/menu-marmitaria.webp?v=1418ce3d',
@@ -770,7 +770,7 @@ const STORES = {
       { u: 'Uma feijoada', l: ['Anotado! 1 *Feijoada Completa*: R$ 29,90 🍲\nQuer uma Coca lata gelada por R$ 8,90 pra acompanhar? 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
       { u: 'Quero', l: ['Feito! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
       { u: 'Não, só isso', l: ['Beleza! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 4,99.\n\nComo prefere pagar? Pix, cartão na entrega ou dinheiro?`] },
+      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 4,99.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
       { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Feijoada Completa – R$ 29,90\n1x Coca-Cola lata – R$ 8,90\nEntrega – R$ 4,99\n*Total: R$ 43,79* · Pix\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já está sendo montado. Previsão: 30 a 40 min.' },
     ],
@@ -877,7 +877,7 @@ const UI = {
         box.appendChild(b);
       });
       el.querySelector('.ld-col').appendChild(box);
-      place(el, 'in'); setComposer('buttons');
+      place(el, 'in'); setComposer(F.phase === 'faq' ? 'text' : 'buttons');
     });
   },
   list(text, label, title, rows) {
@@ -888,7 +888,7 @@ const UI = {
       const b = document.createElement('button'); b.className = 'ld-reply-btn'; b.innerHTML = IC.list + `<span data-slot="list-label">${esc(label)}</span>`;
       b.addEventListener('click', () => openSheet(title, rows, r => resolve(r)));
       box.appendChild(b); el.querySelector('.ld-col').appendChild(box);
-      place(el, 'in'); setComposer('buttons');
+      place(el, 'in'); setComposer(F.phase === 'faq' ? 'text' : 'buttons');
     });
   },
   error(text, retry) {
@@ -905,7 +905,7 @@ function setSubtitle(t) { sub.textContent = t; sub.classList.toggle('is-typing',
 const comp = $('#ld-composer'), input = $('#ld-input');
 const PH = { text: 'Mensagem', disabled: 'Aguarde…', buttons: 'Escolha acima 👆' };
 function setComposer(s) {
-  comp.dataset.composer = s; input.placeholder = state.os === 'ios' && s === 'text' ? '' : (PH[s] || '');
+  comp.dataset.composer = s; input.placeholder = s === 'text' && F.phase === 'faq' ? 'Digite sua dúvida…' : state.os === 'ios' && s === 'text' ? '' : (PH[s] || '');
   input.disabled = s !== 'text';
 }
 function autosize() {
@@ -1067,6 +1067,7 @@ function nextTips() {
 function submit() { const t = input.value.trim(); if (!t || comp.dataset.composer !== 'text') return; input.value = ''; autosize(); send(t); }
 
 async function send(text) {
+  if (F.phase === 'faq') return faqAsk(text);
   if (F.busy || F.phase !== 'order') return;
   F.busy = true; setTips([]); const run = F.run;
   await userSays(text);
@@ -1115,7 +1116,7 @@ function aiTips(reply, st) {
   if (/possoconfirmar|confirmaropedido|podemosconfirmar|tudocerto/.test(r)) return ['Pode confirmar'];
   if (/entregaouretirada|retiradaouentrega|entregarouretirar/.test(r)) return ['📍 Enviar localização', 'Vou retirar no balcão'];
   if (/troco/.test(r) && !(st && st.pagamento && st.pagamento.troco_para)) return ['Sem troco', 'Pra 100'];
-  if (/(comoprefere|formade)pag|pix/.test(r) && !(st && st.pagamento)) return ['Pix', 'Cartão na entrega', 'Dinheiro'];
+  if (/(comoprefere|formade)pag|pix/.test(r) && !(st && st.pagamento)) return ['Pix', '💳 Débito', '💳 Crédito', 'Dinheiro'];
   if (/endereco/.test(r) && !(st && st.entrega && st.entrega.endereco)) return ['📍 Enviar localização'];
   if (/maisalgumacoisa/.test(r)) return /quer|leva|sai por|r\$/i.test(reply) ? ['Quero sim', 'Não, só isso'] : ['Só isso'];
   if (/\?\s*$/.test(reply.trim()) && /r\$/i.test(reply)) return ['Quero sim', 'Não, obrigado'];
@@ -1218,13 +1219,15 @@ async function quiz(run) {
   if (!await lunaSays(result, run)) return;
   cta(run);
 }
-/* quanto o upsell rendeu neste pedido (e uma projeção conservadora pro mês) */
+/* pitch de faturamento: sempre do ponto de vista do ganho do lojista.
+   Usa o teto da faixa escolhida (ex.: "20 a 50" → 50 pedidos/dia). */
+const PEDIDOS_DIA = { 'Até 20': 20, '20 a 50': 50, 'Mais de 50': 50 };
 function gainLine(vol) {
   const g = F.gain; if (!g || !(g.to > g.from)) return '';
   const inc = g.to - g.from, pct = Math.round(inc / g.from * 100);
-  let t = `E repara: nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${pct}%).`;
-  const n = { 'Até 20': 15, '20 a 50': 35, 'Mais de 50': 60 }[vol];
-  if (n) t += ` Se só 1 em cada 3 clientes aceitar, com uns ${n} pedidos por dia são *${brl(inc * n * 30 / 3)} a mais por mês*.`;
+  let t = `Nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${pct}%).`;
+  const n = PEDIDOS_DIA[vol];
+  if (n) t += `\n\nMantendo a média de *${n} pedidos por dia* a *${brl(g.to)}*, eu consigo adicionar *${brl(inc * n * 30)} de faturamento por mês* pra sua loja 💰`;
   return t;
 }
 function teamUrl(extra) {
@@ -1243,6 +1246,7 @@ const CTA_OPTS = () => [
 ];
 async function cta(run, text) {
   $('#ld-cta').classList.add('is-visible'); syncSideCta();
+  F.phase = 'faq';
   const o = await ask(text || 'Quer ter a Luna atendendo na *sua* loja? 💚', CTA_OPTS(), run); if (!o) return;
   return handleCta(o, run);
 }
@@ -1253,21 +1257,63 @@ function handleCta(o, run) {
 function waitCta(run) { /* botões continuam disponíveis */ }
 
 const FAQ = [
-  { value: 'whats', title: 'Continuo usando meu WhatsApp no celular?', answer: 'Sim! Você conecta pelo QR Code e continua usando o WhatsApp normalmente no celular, como se fosse o WhatsApp Web. Nesta fase inicial a conexão é feita por QR Code; em seguida, os founders migram para a conexão oficial da Meta, sem custo adicional.' },
-  { value: 'custo', title: 'Tem algum custo além dos R$ 97?', answer: 'Não. No plano Founder você paga uma vez e pronto: sem mensalidade, sem comissão e sem custo por mensagem. Os custos de operação ficam por nossa conta 💚' },
-  { value: 'quando', title: 'Quando a Luna começa a atender?', answer: 'Depois da compra você recebe o convite por e-mail em 7 a 30 dias. A configuração é simples: é só mandar seu cardápio que a nossa IA transcreve tudo. E a garantia de 120 dias só começa a contar quando a Luna entra no ar.' },
-  { value: 'outra', title: 'Minha dúvida não está aqui', description: 'Fale direto com a nossa equipe' },
+  { value: 'pedido', title: 'Ela fecha o pedido?', description: 'Ou só responde mensagens', answer: 'Fecho sim! Eu conduzo o atendimento do começo ao fim: mando o cardápio, tiro dúvidas, anoto produtos, adicionais e observações e entrego a comanda completa no painel, igual você acabou de ver.' },
+  { value: 'robo', title: 'Vai parecer robô?', description: 'Como é a conversa', answer: 'Não. Nada de "digite 1". Eu converso de forma natural, entendo o contexto do pedido e atendo cada cliente do jeito dele.' },
+  { value: 'numero', title: 'Troco meu número?', description: 'Meus clientes já têm salvo', answer: 'Não precisa. Você conecta o seu WhatsApp escaneando um QR Code e continua com o mesmo número que seus clientes já conhecem. Eles não precisam instalar nada.' },
+  { value: 'pico', title: 'Vários ao mesmo tempo?', description: 'Horário de pico', answer: 'Eu atendo várias conversas ao mesmo tempo, então o pico não vira fila. No *Founder Basic* são até 3 atendimentos simultâneos; no *Founder PRO*, ilimitados.' },
+  { value: 'custo', title: 'Tem mensalidade?', description: 'Ou comissão por pedido', answer: 'Não. Os planos Founder são pagamento único: *Basic R$ 97* e *PRO R$ 167*. Sem mensalidade e sem comissão por pedido.' },
+  { value: 'config', title: 'É difícil configurar?', description: 'Preciso entender de tecnologia?', answer: 'Nada difícil. Você cadastra os dados da loja, horários e área de entrega, manda o seu cardápio (a nossa IA transcreve tudo) e conecta o WhatsApp. São 5 passos simples.' },
+  { value: 'garantia', title: 'E se não der certo?', description: 'Garantia', answer: 'Você tem *120 dias de garantia*, contados a partir do dia em que eu entro no ar na sua loja. Se eu não entregar, a gente devolve 100% do valor.' },
+  { value: 'digitar', title: 'Quero digitar a minha', description: 'Escreva com as suas palavras' },
 ];
 async function faq(run) {
   if (run !== F.run) return;
+  F.phase = 'faq';
   setSubtitle('digitando...'); await sleep(900); setSubtitle('online');
-  const r = await UI.list('Claro! Escolhe a sua dúvida 👇', 'Ver dúvidas', 'Dúvidas frequentes', FAQ);
+  const r = await UI.list('Claro! Escolhe uma dúvida aqui ou *digite a sua* aí embaixo 👇', 'Ver dúvidas', 'Dúvidas frequentes', FAQ);
   if (run !== F.run) return;
-  if (r.value === 'outra') { await userSays('Minha dúvida não está aqui'); await lunaSays(['Sem problema! Fala direto com a nossa equipe, a gente te responde rapidinho 😊'], run); return cta(run, 'Toque abaixo pra falar com a equipe ou garantir sua vaga 👇'); }
+  if (r.value === 'digitar') { await userSays('Quero digitar a minha dúvida'); await lunaSays(['Manda aí! Pode escrever do seu jeito que eu te respondo 😊'], run); setComposer('text'); input.focus(); return; }
   await userSays(r.title);
   if (!await lunaSays([r.answer], run)) return;
-  const o = await ask('Posso te ajudar com mais alguma coisa?', [{ label: 'Tenho outra dúvida', value: 'faq' }, ...CTA_OPTS().slice(0, 2)], run); if (!o) return;
+  return afterAnswer(run);
+}
+async function afterAnswer(run) {
+  const o = await ask('Posso te ajudar com mais alguma coisa? Se quiser, é só digitar 😉', [{ label: 'Ver outras dúvidas', value: 'faq' }, ...CTA_OPTS().slice(0, 2)], run); if (!o) return;
   return handleCta(o, run);
+}
+/* dúvida digitada: a Luna procura na base de dúvidas (servidor); se não achar, chama a equipe */
+const faqLocal = q => {
+  const w = norm2(q).split(' ').filter(x => x.length > 3);
+  let best = null, score = 0;
+  FAQ.filter(f => f.answer).forEach(f => { const t = norm2(f.title + ' ' + f.description + ' ' + f.answer); const sc = w.filter(x => t.includes(x)).length; if (sc > score) { score = sc; best = f; } });
+  return score >= 2 ? { found: true, answer: best.answer } : { found: false };
+};
+const norm2 = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ');
+async function faqAsk(text) {
+  if (F.busy) return; F.busy = true;
+  const run = F.run; F.faqN = (F.faqN || 0) + 1;
+  await userSays(text);
+  setSubtitle('digitando...');
+  let r = null;
+  if (F.faqN > 8) r = { found: false, limit: true };
+  else if (CONFIG.api) {
+    try {
+      const res = await fetch(CONFIG.api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'faq', question: text }) });
+      if (res.ok) r = await res.json();
+    } catch (e) {}
+  }
+  if (!r) r = faqLocal(text);
+  setSubtitle('online');
+  if (run !== F.run) { F.busy = false; return; }
+  if (r.found && r.answer) {
+    await lunaSays([r.answer], run, true);
+    F.busy = false;
+    return afterAnswer(run);
+  }
+  await lunaSays(['Hmm, essa eu prefiro não chutar 😅\nNossa equipe de suporte pode te explicar um pouco melhor sobre isso.'], run, true);
+  F.busy = false;
+  const o = await ask('É rapidinho, a gente responde pelo WhatsApp 👇', [{ label: 'Vamos lá', value: 'team', primary: true, keep: true, link: true, href: teamUrl(`Minha dúvida: ${text}`) }, { label: 'Ver outras dúvidas', value: 'faq' }], run);
+  if (o) return handleCta(o, run);
 }
 function syncSideCta() { $('#ld-cta-buy').href = CONFIG.links.buy; $('#ld-cta-team').href = teamUrl(); }
 syncSideCta();
