@@ -209,12 +209,20 @@ svg{display:block}
 [data-os=ios] .ld-pblur{display:block;position:absolute;left:0;right:0;top:0;height:calc(var(--top) + 84px);z-index:3;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0%,#000 55%,transparent 100%);pointer-events:none}
 [data-os=ios] .ld-scrim{display:block;position:absolute;left:0;right:0;top:0;height:calc(var(--top) + 84px);z-index:4;pointer-events:none;
-  background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 93%,transparent) 0%,color-mix(in srgb,var(--bg) 88%,transparent) 66%,color-mix(in srgb,var(--bg) 50%,transparent) 83%,transparent 100%)}
+  background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 62%,transparent) 0%,color-mix(in srgb,var(--bg) 38%,transparent) 55%,transparent 100%)}
 /* cabeçalho iOS */
 [data-os=ios] .ld-hdr{position:absolute;left:16px;right:17px;top:calc(var(--top) + 5px);height:44px;z-index:6;display:flex;align-items:center;gap:9px}
-[data-os=ios] #ld-back{height:44px;border-radius:22px;display:flex;align-items:center;padding:0 13px 0 8px;color:var(--ico);font:400 17px/22px var(--f-ios);letter-spacing:-.43px}
+[data-os=ios] #ld-back{height:44px;border-radius:22px;display:flex;align-items:center;gap:1px;flex:none;padding:0 14px 0 8px;color:var(--ico);font:400 17px/22px var(--f-ios);letter-spacing:-.43px}
 [data-os=ios] #ld-back svg{width:23px;height:23px}
 [data-os=ios] #ld-back .ab{display:none}
+[data-os=ios] #ld-back .cnt{font:400 17px/22px var(--f-ios);letter-spacing:-.43px;color:var(--fg)}
+#ld-back .cnt:empty{display:none}
+[data-os=android] #ld-back .cnt{display:none}
+.ld-peer{display:flex;align-items:center;min-width:0}
+[data-os=ios] .ld-peer{flex:0 1 auto;height:44px;border-radius:22px;padding:0 18px 0 3px;gap:9px;margin-right:auto}
+[data-os=ios] .ld-peer .av{width:38px;height:38px}
+[data-os=ios] .ld-peer .who{flex:0 1 auto}
+[data-os=android] .ld-peer{flex:1;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .ld-hdr .av{width:39px;height:39px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:21px;overflow:hidden}
 .ld-hdr .who{flex:1;min-width:0}
 .ld-hdr #ld-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -553,11 +561,11 @@ svg{display:block}
         <div class="ld-pblur"></div><div class="ld-scrim"></div>
         <header class="ld-hdr">
           <button id="ld-back" class="glass" aria-label="Voltar">
-            <svg class="ib" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg>
+            <svg class="ib" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg><span class="cnt" id="ld-unread">3</span>
             <svg class="ab" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
           </button>
-          <div class="av" id="ld-avatar"></div>
-          <div class="who"><b id="ld-name"></b><i id="ld-subtitle">Conta comercial</i></div>
+          <div class="ld-peer glass"><div class="av" id="ld-avatar"></div>
+          <div class="who"><b id="ld-name"></b><i id="ld-subtitle">Conta comercial</i></div></div>
           <div class="ld-calls glass">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8.3 3.6c.4 0 .8.3 1 .7l1.4 3.2c.2.4.1.9-.2 1.2l-1.6 1.5c-.2.2-.3.6-.1.9a13 13 0 0 0 4.2 4.2c.3.2.7.1.9-.1l1.5-1.6c.3-.3.8-.4 1.2-.2l3.2 1.4c.4.2.7.6.7 1v2.6c0 1.3-1.1 2.3-2.4 2.2C10.5 20.2 3.8 13.5 3.4 5.9 3.3 4.6 4.3 3.6 5.6 3.6z"/></svg>
             <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
@@ -634,7 +642,7 @@ svg{display:block}
 /* ---------------- configuração ---------------- */
 const CONFIG = {
   links: {
-    buy: 'https://atendeaidelivery.com.br/lp2#planos',            // TODO: link do checkout Founder Basic
+    buy: 'https://pay.cakto.com.br/p3rgmzw_892813',              // checkout Founder Basic (R$ 97)
     team: 'https://wa.me/5543999999999?text=',                     // TODO: número real da equipe
   },
   // IA ligada automaticamente quando a página roda num servidor com /api/luna (Vercel).
@@ -705,7 +713,7 @@ const LOC = 'Rua das Flores, 120 – Centro';
 
 const STORES = {
   acai: {
-    name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp?v=11cf88c5', menuFull: '/teste-luna/a/menu-acai.webp?v=91ea57fc',
+    gain: { from: 22, to: 28 }, name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp?v=11cf88c5', menuFull: '/teste-luna/a/menu-acai.webp?v=91ea57fc',
     preview: 'Toque aqui pra montar seu açaí 💜',
     hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom te ver por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
@@ -722,7 +730,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Dinheiro', troco: 'Troco p/ R$ 50,00 (R$ 16,00)', previsao: '30 a 40 min' },
   },
   pizzaria: {
-    name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=a627047d', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=1043041f',
+    gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=a627047d', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=1043041f',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*.`,
     after: 'Pode pedir pelo número do sabor, e meio a meio também vale! 😊',
@@ -738,7 +746,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
   },
   hamburgueria: {
-    name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=c6c35199', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=5ced0748',
+    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=c6c35199', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=5ced0748',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*.`,
     after: 'É só pedir pelo número. Se quiser tirar algum ingrediente, é só falar 😉',
@@ -754,7 +762,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Cartão na entrega', previsao: '40 a 50 min' },
   },
   marmitaria: {
-    name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp?v=10e46293', menuFull: '/teste-luna/a/menu-marmitaria.webp?v=1418ce3d',
+    gain: { from: 29.9, to: 38.8 }, name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp?v=10e46293', menuFull: '/teste-luna/a/menu-marmitaria.webp?v=1418ce3d',
     preview: 'Toque aqui pra pedir sua marmita 🍱',
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
@@ -837,19 +845,19 @@ const UI = {
     return place(msgShell(from, `${MAP}<span class="ad"><b>Localização</b>${esc(addr)}<span class="ld-sp"></span></span>`, 'ld-loc', 'sent'), from);
   },
   /* comanda digital: resumo em texto, como a Luna manda no WhatsApp */
+  /* resumo (antes de confirmar) e comanda (depois) seguem o mesmo layout */
+  orderBlock(c, endereco) {
+    const sub = c.itens.reduce((a, i) => a + i.p, 0), line = '────────────';
+    const items = c.itens.map(i => `*${i.q}x ${i.nome}* · ${brl(i.p)}` + (i.obs ? `\n   ↳ _${i.obs}_` : '')).join('\n');
+    const money = [`Subtotal: ${brl(sub)}`, c.taxa ? `Entrega: ${brl(c.taxa)}` : null, `*Total: ${brl(sub + c.taxa)}*`].filter(Boolean).join('\n');
+    const info = [c.tipo === 'Entrega' ? `📍 ${endereco || LOC}` : '🏪 Retirada no balcão',
+      `💳 ${c.pagamento}${c.troco ? ` · troco p/ ${c.troco.match(/R\$ [\d.,]+/)[0]}` : ''}`].join('\n');
+    return [line, items, line, money + '\n\n' + info].join('\n');
+  },
+  summaryText(c, endereco) { return `📝 *Confere o seu pedido:*\n${UI.orderBlock(c, endereco)}\n\nPosso confirmar? ✅`; },
   comandaText(c, storeName, endereco) {
-    const sub = c.itens.reduce((a, i) => a + i.p, 0);
-    const lines = c.itens.map(i => `${i.q}x ${i.nome} – ${brl(i.p)}` + (i.obs ? `\n_${i.obs}_` : ''));
-    const parts = [
-      `✅ *Pedido #${c.numero} confirmado!*`,
-      `*${storeName}*`,
-      lines.join('\n'),
-      [`Subtotal: ${brl(sub)}`, c.taxa ? `Entrega: ${brl(c.taxa)}` : null, `*Total: ${brl(sub + c.taxa)}*`].filter(Boolean).join('\n'),
-      [c.tipo === 'Entrega' ? `📍 Entrega: ${endereco || LOC}` : '🏪 Retirada no balcão',
-       `💳 ${c.pagamento}${c.troco ? ` · ${c.troco}` : ''}`,
-       `⏱️ Previsão: ${c.previsao}`].join('\n'),
-    ];
-    return parts.join('\n\n');
+    const troco = c.troco ? `\n💵 Levar *${c.troco.match(/\(([^)]+)\)/)[1]}* de troco` : '';
+    return `✅ *Pedido confirmado!*\n🧾 Comanda *#${c.numero}*\n${UI.orderBlock(c, endereco)}${troco}\n⏱️ Previsão: *${c.previsao}*`;
   },
   buttons(text, opts) { // opts: [{label, value, primary, icon}]
     return new Promise(resolve => {
@@ -861,8 +869,9 @@ const UI = {
         if (o.href) { b.href = o.href; b.target = '_blank'; b.rel = 'noopener'; b.style.textDecoration = 'none'; }
         b.innerHTML = (o.icon ? IC[o.icon] : (o.primary ? '' : IC.reply)) + `<span data-slot="label">${esc(o.label)}</span>`;
         b.addEventListener('click', () => {
-          if (box.classList.contains('is-used') && !o.keep) return;
-          if (!o.keep) { box.classList.add('is-used'); b.classList.add('is-chosen'); }
+          if (o.keep) { if (o.onTap) o.onTap(); return; }      // links (checkout/equipe) abrem e continuam disponíveis
+          if (box.classList.contains('is-used')) return;
+          box.classList.add('is-used'); b.classList.add('is-chosen');
           resolve(o);
         });
         box.appendChild(b);
@@ -1012,7 +1021,7 @@ async function userSays(text) {
 async function openChat(k) {
   F.run++; const run = F.run;
   F.niche = k; F.step = 0; F.phase = 'opening'; F.quiz = {};
-  F.ai = { hist: [], state: {}, count: 0, tips: null };
+  F.ai = { hist: [], state: {}, count: 0, tips: null }; F.gain = STORES[k].gain || null;
   const s = STORES[k];
   new Image().src = s.menu;   // pré-carrega a miniatura enquanto a abertura acontece
   track.innerHTML = ''; breakGroup(); stick = true; $('#ld-pro-feed').innerHTML = '';
@@ -1085,7 +1094,8 @@ async function respond(input, run) {
   }
   if (typeof input === 'string' && /retir/i.test(input)) { /* retirada: segue igual */ }
   if (st.pro) setTimeout(() => run === F.run && pro(st.pro), typingMs(st.l[0] || '') + 300);
-  if (!await lunaSays(st.l, run)) return;
+  const lines = st.l.map(t => /Confere o pedido/.test(t) ? t.replace(/Confere o pedido[\s\S]*$/, UI.summaryText(s.comanda)) : t);
+  if (!await lunaSays(lines, run)) return;
   F.step++;
   if (st.end) {
     setSubtitle('digitando...'); await sleep(1100); if (run !== F.run) return;
@@ -1102,9 +1112,9 @@ const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '
 /* ---------------- IA real (Vercel /api/luna) ---------------- */
 function aiTips(reply, st) {
   const r = norm(reply);
+  if (/possoconfirmar|confirmaropedido|podemosconfirmar|tudocerto/.test(r)) return ['Pode confirmar'];
   if (/entregaouretirada|retiradaouentrega|entregarouretirar/.test(r)) return ['📍 Enviar localização', 'Vou retirar no balcão'];
-  if (/troco/.test(r)) return ['Sem troco', 'Pra 100'];
-  if (/possoconfirmar|confirmaropedido|podemosconfirmar/.test(r)) return ['Pode confirmar'];
+  if (/troco/.test(r) && !(st && st.pagamento && st.pagamento.troco_para)) return ['Sem troco', 'Pra 100'];
   if (/(comoprefere|formade)pag|pix/.test(r) && !(st && st.pagamento)) return ['Pix', 'Cartão na entrega', 'Dinheiro'];
   if (/endereco/.test(r) && !(st && st.entrega && st.entrega.endereco)) return ['📍 Enviar localização'];
   if (/maisalgumacoisa/.test(r)) return /quer|leva|sai por|r\$/i.test(reply) ? ['Quero sim', 'Não, só isso'] : ['Só isso'];
@@ -1139,7 +1149,12 @@ async function brain(input, run) {
   }
   if (run !== F.run) return;
   if (data.limit) { ai.hist.pop(); return aiLimit(run); }
-  if (data.state) ai.state = data.state;
+  if (data.state) {
+    ai.state = data.state;
+    const sub = (ai.state.cart || []).reduce((a, i) => a + i.p, 0);
+    if (sub && !ai.first) ai.first = sub;
+    if (sub) F.gain = { from: ai.first, to: sub };
+  }
   const replies = (data.replies || []).filter(Boolean);
   (data.pro || []).forEach((p, i) => setTimeout(() => run === F.run && pro(p), 900 + i * 700));
   if (replies.length) {
@@ -1168,9 +1183,8 @@ async function ask(text, labels, run) {
   return o;
 }
 async function quiz(run) {
-  const go = await ask('Agora deixa eu sair do papel de atendente da loja: eu sou a *Luna*, da Atende.AI 💚\nPosso te fazer 3 perguntinhas rápidas pra mostrar como eu ficaria na *sua* loja?', ['Bora!', 'Agora não'], run);
+  const go = await ask('Agora deixa eu sair do papel de atendente da loja: eu sou a *Luna*, da Atende.AI 💚\nPosso te fazer 3 perguntinhas rápidas pra mostrar como eu ficaria na *sua* loja?', ['Bora!'], run);
   if (!go) return;
-  if (go.value === 'Agora não') return cta(run);
   const q1 = await ask('Sua loja já vende pelo WhatsApp?', ['Sim, todo dia', 'Pouco, quero vender mais', 'Ainda não'], run); if (!q1) return;
   F.quiz.q1 = q1.value;
   let result;
@@ -1179,21 +1193,38 @@ async function quiz(run) {
     const q3 = await ask('Quantos pedidos por dia, em média?', ['Até 20', '20 a 50', 'Mais de 50'], run); if (!q3) return;
     const q4 = await ask('O que mais pesa hoje no atendimento?', ['Demora pra responder', 'Erro nos pedidos', 'Custo com atendente', 'Perco venda no pico'], run); if (!q4) return;
     Object.assign(F.quiz, { q2: q2.value, q3: q3.value, q4: q4.value });
-    const who = { 'Eu mesmo': 'é você mesmo quem responde o WhatsApp', 'Um funcionário': 'um funcionário cuida do WhatsApp', 'Ninguém dá conta 😅': 'o WhatsApp está sem ninguém dando conta' }[q2.value];
-    const vol = { 'Até 20': 'com até 20 pedidos por dia', '20 a 50': 'com 20 a 50 pedidos por dia', 'Mais de 50': 'com mais de 50 pedidos por dia' }[q3.value];
-    const pain = { 'Demora pra responder': 'ela responde em segundos, todo mundo ao mesmo tempo', 'Erro nos pedidos': 'ela anota cada observação e monta a comanda sem erro', 'Custo com atendente': 'ela trabalha todos os dias, sem salário, férias ou atestado', 'Perco venda no pico': 'no pico ela atende todo mundo de uma vez, sem fila' }[q4.value];
-    result = `Entendi! Hoje ${who}, ${vol}. Com a Luna, ${pain}. E ainda oferece adicionais em cada pedido, como você acabou de ver. Você volta a cuidar da loja 💚`;
-    if (q3.value === 'Mais de 50') result += '\n\nPro seu movimento, o *Founder PRO* (R$ 167) atende todos os clientes ao mesmo tempo, sem limite.';
+    const pain = {
+      'Demora pra responder': 'Cliente que espera no WhatsApp desiste e vai pro app. Comigo ele é respondido *em segundos*, até no sábado às 23h, mesmo com vários pedidos chegando juntos.',
+      'Erro nos pedidos': 'Eu anoto tudo do jeito que o cliente pediu, confirmo o resumo com ele e mando a comanda pronta pra cozinha. *Sem pizza trocada, sem troco errado.*',
+      'Custo com atendente': 'Um atendente custa mais de *R$ 1.500 por mês*. No plano Founder eu custo *R$ 97, uma vez só*, e trabalho todo dia, sem folga e sem atestado.',
+      'Perco venda no pico': 'No pico eu atendo *todo mundo ao mesmo tempo*. Ninguém fica na fila e nenhum cliente desiste porque ninguém respondeu.',
+    }[q4.value];
+    result = [`Entendi! ${pain}`, gainLine(q3.value)].filter(Boolean);
+    if (q2.value === 'Eu mesmo') result.push('E você para de viver grudado no celular: eu atendo, você cuida da loja 💚');
+    if (q3.value === 'Mais de 50') result.push('Pro seu movimento, o *Founder PRO* (R$ 167) é o ideal: atende todos os clientes ao mesmo tempo, sem limite.');
   } else {
     const q2 = await ask('Onde você vende hoje?', ['Só iFood ou apps', 'Balcão e telefone', 'Ainda vou abrir'], run); if (!q2) return;
     const q3 = await ask('O que te impede de vender pelo WhatsApp?', ['Não tenho tempo pra responder', 'Não tenho quem atenda', 'Não conhecia essa opção'], run); if (!q3) return;
     Object.assign(F.quiz, { q2: q2.value, q3: q3.value });
-    const where = { 'Só iFood ou apps': 'Hoje você depende dos apps', 'Balcão e telefone': 'Hoje você vende no balcão e no telefone', 'Ainda vou abrir': 'Você está abrindo sua operação' }[q2.value];
-    const blk = { 'Não tenho tempo pra responder': 'a Luna responde por você', 'Não tenho quem atenda': 'a Luna é a sua atendente', 'Não conhecia essa opção': 'agora você já conhece 😉' }[q3.value];
-    result = `Entendi! ${where}. Com a Luna, você abre um canal próprio no WhatsApp e ${blk}. E cada pedido que vem por lá é um pedido sem comissão de app 💚`;
+    const where = {
+      'Só iFood ou apps': 'Hoje cada pedido que você vende pelo app paga comissão. Pelo WhatsApp, comigo atendendo, *o pedido é todo seu*: sem comissão e com o contato do cliente pra ele voltar a comprar.',
+      'Balcão e telefone': 'Com o WhatsApp atendido por mim, seu cliente pede de casa a qualquer hora, sem linha ocupada, e o pedido chega certinho pra cozinha.',
+      'Ainda vou abrir': 'Você já começa com atendimento profissional desde o primeiro dia, sem precisar contratar ninguém pra responder o WhatsApp.',
+    }[q2.value];
+    const blk = { 'Não tenho tempo pra responder': 'Tempo deixa de ser problema: eu respondo por você.', 'Não tenho quem atenda': 'Eu sou a sua atendente, todo dia.', 'Não conhecia essa opção': 'Agora você conhece 😉' }[q3.value];
+    result = [`Entendi! ${where}`, `${blk} ${gainLine() || ''}`.trim()];
   }
-  if (!await lunaSays([result], run)) return;
+  if (!await lunaSays(result, run)) return;
   cta(run);
+}
+/* quanto o upsell rendeu neste pedido (e uma projeção conservadora pro mês) */
+function gainLine(vol) {
+  const g = F.gain; if (!g || !(g.to > g.from)) return '';
+  const inc = g.to - g.from, pct = Math.round(inc / g.from * 100);
+  let t = `E repara: nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${pct}%).`;
+  const n = { 'Até 20': 15, '20 a 50': 35, 'Mais de 50': 60 }[vol];
+  if (n) t += ` Se só 1 em cada 3 clientes aceitar, com uns ${n} pedidos por dia são *${brl(inc * n * 30 / 3)} a mais por mês*.`;
+  return t;
 }
 function teamUrl(extra) {
   const q = F.quiz; const parts = [`Oi! Testei a Luna (${STORES[F.niche]?.name || 'demo'}).`];
