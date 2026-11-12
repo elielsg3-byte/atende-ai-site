@@ -650,6 +650,7 @@ const CONFIG = {
   // ?ia=0 força o roteiro de exemplo; no artefato/arquivo local fica sempre o roteiro.
   api: (/^https?:$/.test(location.protocol) && !/claude|localhost|127\.0\.0\.1|^192\.168\./.test(location.hostname) && new URLSearchParams(location.search).get('ia') !== '0') ? '/api/luna' : null,
   maxMsgs: 14,
+  engine: new URLSearchParams(location.search).get('ia') === 'mistral' ? 'mistral' : 'gemini',   // Luna 2: ?ia=mistral
 };
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -1162,7 +1163,7 @@ async function brain(input, run) {
   try {
     const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 40000);
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state, count: ai.count }) });
+      body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state, count: ai.count, engine: CONFIG.engine }) });
     clearTimeout(to);
     if ([401, 403, 404, 503].includes(r.status) || !/json/.test(r.headers.get('content-type') || '')) { /* sem backend: volta pro roteiro */ ai.hist.pop(); ai.count--; CONFIG.api = null; setSubtitle('online'); return respond(input, run); }
     if (!r.ok) throw new Error(r.status);
@@ -1175,6 +1176,7 @@ async function brain(input, run) {
     return;
   }
   if (run !== F.run) return;
+  if (data.engine) console.info('Luna IA:', data.engine);
   if (data.limit) { ai.hist.pop(); return aiLimit(run); }
   if (data.state) {
     ai.state = data.state;
