@@ -3,13 +3,13 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#000000"><title>Teste a Luna · Atende.AI</title>
 <script>(function(){var q=new URLSearchParams(location.search);var d=q.get("theme")||(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.style.background=d==="dark"?"#000":"#fff";})();</script>
-<script>(function(){var a=/Android/i.test(navigator.userAgent),f=a?[4,5]:[0,1,2,3];f.forEach(function(i){var l=document.createElement("link");l.rel="preload";l.as="font";l.type="font/woff2";l.crossOrigin="anonymous";l.href="a/font"+i+".woff2";document.head.appendChild(l);});})();</script><style>/* ===================== Fontes ===================== */
-@font-face{font-family:"InterIOS";src:url(a/font0.woff2) format("woff2");font-weight:400;font-display:swap;size-adjust:95%}
-@font-face{font-family:"InterIOS";src:url(a/font1.woff2) format("woff2");font-weight:500;font-display:swap;size-adjust:95%}
-@font-face{font-family:"InterIOS";src:url(a/font2.woff2) format("woff2");font-weight:600;font-display:swap;size-adjust:95%}
-@font-face{font-family:"InterIOS";src:url(a/font3.woff2) format("woff2");font-weight:700;font-display:swap;size-adjust:95%}
-@font-face{font-family:"RobotoA";src:url(a/font4.woff2) format("woff2");font-weight:400;font-display:swap}
-@font-face{font-family:"RobotoA";src:url(a/font5.woff2) format("woff2");font-weight:500;font-display:swap}
+<script>(function(){var a=/Android/i.test(navigator.userAgent),f=a?[4,5]:[0,1,2,3];f.forEach(function(i){var l=document.createElement("link");l.rel="preload";l.as="font";l.type="font/woff2";l.crossOrigin="anonymous";l.href="/teste-luna/a/font"+i+".woff2";document.head.appendChild(l);});})();</script><style>/* ===================== Fontes ===================== */
+@font-face{font-family:"InterIOS";src:url(/teste-luna/a/font0.woff2) format("woff2");font-weight:400;font-display:swap;size-adjust:95%}
+@font-face{font-family:"InterIOS";src:url(/teste-luna/a/font1.woff2) format("woff2");font-weight:500;font-display:swap;size-adjust:95%}
+@font-face{font-family:"InterIOS";src:url(/teste-luna/a/font2.woff2) format("woff2");font-weight:600;font-display:swap;size-adjust:95%}
+@font-face{font-family:"InterIOS";src:url(/teste-luna/a/font3.woff2) format("woff2");font-weight:700;font-display:swap;size-adjust:95%}
+@font-face{font-family:"RobotoA";src:url(/teste-luna/a/font4.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"RobotoA";src:url(/teste-luna/a/font5.woff2) format("woff2");font-weight:500;font-display:swap}
 
 :root{
   --f-ios:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro","InterIOS","Helvetica Neue",Arial,sans-serif;
@@ -194,8 +194,8 @@ svg{display:block}
 /* ---------- CONVERSA ---------- */
 #ld-screen-chat{background:var(--bg)}
 .ld-wall{position:absolute;inset:0;background-repeat:repeat;background-position:center top;background-image:var(--wall);background-size:auto 614px;z-index:0}
-[data-theme=light] #ld-screen{--wall:url(a/wall-light.webp)}
-[data-theme=dark] #ld-screen{--wall:url(a/wall-dark.webp)}
+[data-theme=light] #ld-screen{--wall:url(/teste-luna/a/wall-light.webp)}
+[data-theme=dark] #ld-screen{--wall:url(/teste-luna/a/wall-dark.webp)}
 [data-os=android] .ld-wall{background-size:auto 560px}
 #ld-messages{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;z-index:1;scrollbar-width:none;overscroll-behavior:contain}
 #ld-messages::-webkit-scrollbar{display:none}
@@ -705,7 +705,7 @@ const LOC = 'Rua das Flores, 120 – Centro';
 
 const STORES = {
   acai: {
-    name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: 'a/menu-acai-thumb.webp', menuFull: 'a/menu-acai.webp',
+    name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp', menuFull: '/teste-luna/a/menu-acai.webp',
     preview: 'Toque aqui pra montar seu açaí 💜',
     hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom te ver por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
@@ -722,7 +722,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Dinheiro', troco: 'Troco p/ R$ 50,00 (R$ 16,00)', previsao: '30 a 40 min' },
   },
   pizzaria: {
-    name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: 'a/menu-pizzaria-thumb.webp', menuFull: 'a/menu-pizzaria.webp',
+    name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp', menuFull: '/teste-luna/a/menu-pizzaria.webp',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*.`,
     after: 'Pode pedir pelo número do sabor, e meio a meio também vale! 😊',
@@ -738,7 +738,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
   },
   hamburgueria: {
-    name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: 'a/menu-hamburgueria-thumb.webp', menuFull: 'a/menu-hamburgueria.webp',
+    name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp', menuFull: '/teste-luna/a/menu-hamburgueria.webp',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*.`,
     after: 'É só pedir pelo número. Se quiser tirar algum ingrediente, é só falar 😉',
@@ -754,7 +754,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Cartão na entrega', previsao: '40 a 50 min' },
   },
   marmitaria: {
-    name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: 'a/menu-marmitaria-thumb.webp', menuFull: 'a/menu-marmitaria.webp',
+    name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp', menuFull: '/teste-luna/a/menu-marmitaria.webp',
     preview: 'Toque aqui pra pedir sua marmita 🍱',
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
