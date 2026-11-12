@@ -1156,7 +1156,10 @@ async function brain(input, run) {
     if (sub && !ai.first) ai.first = sub;
     if (sub) F.gain = { from: ai.first, to: sub };
   }
-  const replies = (data.replies || []).filter(Boolean);
+  const pickup = ai.state.entrega && ai.state.entrega.tipo === 'retirada';
+  const fixPay = t => pickup ? String(t).replace(/maquininha na entrega/g, 'maquininha no balcão') : t;
+  if (data.comanda) data.comanda.pagamento = fixPay(data.comanda.pagamento);
+  const replies = (data.replies || []).filter(Boolean).map(fixPay);
   ai.proShown = ai.proShown || new Set();
   (data.pro || []).filter(p => !ai.proShown.has(p) && ai.proShown.add(p)).forEach((p, i) => setTimeout(() => run === F.run && pro(p), 900 + i * 700));
   if (replies.length) {
