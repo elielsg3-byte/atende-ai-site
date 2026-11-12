@@ -1149,11 +1149,20 @@ function orOptions(reply) {
   const out = parts.map(x => x.replace(/^(a|o|de|da|do|em|na|no|um|uma)\s+/i, '')).map(x => x.charAt(0).toUpperCase() + x.slice(1));
   return out.every(x => x.length && x.length <= 22) ? out : null;
 }
+const pickOne = a => a[Math.floor(Math.random() * a.length)];
+async function aiFallback(run) {
+  const s = STORES[F.niche];
+  F.phase = 'quiz'; setTips([]); setComposer('disabled');
+  if (!await lunaSays(['Eita, tá chegando muito pedido ao mesmo tempo agora 😅 Pra você não ficar esperando, olha como um pedido fechado chega pra loja:'], run, true)) return;
+  setSubtitle('digitando...'); await sleep(900); if (run !== F.run) return; setSubtitle('online');
+  if (!await lunaSays([UI.comandaText(s.comanda, s.name) + '\n\n_(pedido de exemplo)_'], run)) return;
+  setComposer('buttons'); await sleep(1200); quiz(run);
+}
 async function aiLimit(run) {
   if (!await lunaSays(['Por aqui a demonstração vai até ' + CONFIG.maxMsgs + ' mensagens 😊 Já deu pra sentir como eu atendo, né?'], run, true)) return;
   F.phase = 'quiz'; setComposer('buttons'); await sleep(900); quiz(run);
 }
-async function brain(input, run) {
+async function brain(input, run, retry = 0) {
   const ai = F.ai;
   const text = typeof input === 'string' ? input : `[Localização enviada: ${LOC}]`;
   if (ai.count >= CONFIG.maxMsgs) return aiLimit(run);
@@ -1161,7 +1170,7 @@ async function brain(input, run) {
   setSubtitle('digitando...');
   let data;
   try {
-    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 40000);
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 30000);
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state, count: ai.count, engine: CONFIG.engine }) });
     clearTimeout(to);
@@ -1171,9 +1180,15 @@ async function brain(input, run) {
   } catch (e) {
     ai.hist.pop(); ai.count--;
     if (run !== F.run) return;
+    /* 1ª falha: avisa e tenta de novo sozinha; 2ª: segue a demo com a comanda de exemplo (o lead nunca fica travado) */
+    if (!retry) {
+      setSubtitle('online');
+      if (!await lunaSays([pickOne(['Só um instantinho, já te respondo 😊', 'Um segundinho, tô anotando aqui 😊'])], run, true)) return;
+      setSubtitle('digitando...'); await sleep(1200);
+      return brain(input, run, 1);
+    }
     setSubtitle('online');
-    UI.error('A Luna está atendendo muita gente agora. Toque pra tentar de novo.', () => { F.busy = true; brain(input, run).finally(() => { F.busy = false; }); });
-    return;
+    return aiFallback(run);
   }
   if (run !== F.run) return;
   if (data.engine) console.info('Luna IA:', data.engine);
