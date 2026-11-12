@@ -1121,7 +1121,7 @@ async function brain(input, run) {
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state }) });
     clearTimeout(to);
-    if (r.status === 404) { /* sem backend: volta pro roteiro */ ai.hist.pop(); ai.count--; CONFIG.api = null; setSubtitle('online'); return respond(input, run); }
+    if ([401, 403, 404, 503].includes(r.status) || !/json/.test(r.headers.get('content-type') || '')) { /* sem backend: volta pro roteiro */ ai.hist.pop(); ai.count--; CONFIG.api = null; setSubtitle('online'); return respond(input, run); }
     if (!r.ok) throw new Error(r.status);
     data = await r.json();
   } catch (e) {
