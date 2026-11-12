@@ -211,17 +211,23 @@ svg{display:block}
 [data-os=ios] .ld-scrim{display:block;position:absolute;left:0;right:0;top:0;height:calc(var(--top) + 84px);z-index:4;pointer-events:none;
   background:linear-gradient(to bottom,color-mix(in srgb,var(--bg) 93%,transparent) 0%,color-mix(in srgb,var(--bg) 88%,transparent) 66%,color-mix(in srgb,var(--bg) 50%,transparent) 83%,transparent 100%)}
 /* cabeçalho iOS */
-[data-os=ios] .ld-hdr{position:absolute;left:16px;right:17px;top:calc(var(--top) + 5px);height:44px;z-index:6;display:flex;align-items:center;gap:9px}
-[data-os=ios] #ld-back{height:44px;border-radius:22px;display:flex;align-items:center;padding:0 13px 0 8px;color:var(--ico);font:400 17px/22px var(--f-ios);letter-spacing:-.43px}
-[data-os=ios] #ld-back svg{width:23px;height:23px}
+/* iOS 26: três cápsulas de vidro — voltar (com contador), identidade (foto + nome) e ligação */
+[data-os=ios] .ld-hdr{position:absolute;left:16px;right:16px;top:calc(var(--top) + 4px);height:46px;z-index:6;display:flex;align-items:center;gap:8px}
+[data-os=ios] #ld-back{height:46px;border-radius:23px;display:flex;align-items:center;gap:1px;padding:0 15px 0 9px;color:var(--ico);font:400 17px/22px var(--f-ios);letter-spacing:-.43px;flex:none}
+[data-os=ios] #ld-back svg{width:24px;height:24px}
 [data-os=ios] #ld-back .ab{display:none}
+[data-os=ios] #ld-back .cnt{font:400 17px/22px var(--f-ios);letter-spacing:-.43px;font-variant-numeric:tabular-nums}
+[data-os=ios] .ld-id{height:46px;border-radius:23px;display:flex;align-items:center;gap:9px;padding:0 16px 0 4px;min-width:0;flex:0 1 auto;margin-right:auto}
+[data-os=ios] .ld-id .who{flex:0 1 auto}
+[data-os=android] .ld-id{display:contents}
 .ld-hdr .av{width:39px;height:39px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:21px;overflow:hidden}
+[data-os=ios] .ld-hdr .av{width:38px;height:38px;font-size:20px}
 .ld-hdr .who{flex:1;min-width:0}
 .ld-hdr #ld-name{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ld-hdr #ld-subtitle{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:normal}
-[data-os=ios] #ld-name{font:600 17px/21px var(--f-ios);letter-spacing:-.43px;color:var(--fg)}
-[data-os=ios] #ld-subtitle{font:400 13px/17px var(--f-ios);letter-spacing:-.08px;color:var(--sub)}
-[data-os=ios] .ld-calls{height:44px;border-radius:22px;display:flex;align-items:center;gap:2px;padding:0 12px;color:var(--ico);flex:none}
+[data-os=ios] #ld-name{font:600 16px/20px var(--f-ios);letter-spacing:-.31px;color:var(--fg)}
+[data-os=ios] #ld-subtitle{font:400 12.5px/16px var(--f-ios);letter-spacing:-.08px;color:var(--sub);opacity:.9}
+[data-os=ios] .ld-calls{height:46px;border-radius:23px;display:flex;align-items:center;gap:3px;padding:0 13px 0 14px;color:var(--ico);flex:none}
 [data-os=ios] .ld-calls svg{width:24px;height:24px}
 [data-os=ios] .ld-calls .chev{width:10px;height:10px;margin-left:1px}
 [data-os=ios] .ld-calls .and{display:none}
@@ -309,7 +315,7 @@ svg{display:block}
 .ld-reply-btn svg{width:18px;height:18px;flex:none}
 .ld-reply-btn.is-primary{background:var(--lime);color:#0b2a17}
 .ld-reply-btn.is-chosen{box-shadow:inset 0 0 0 2px var(--btn)}
-.ld-btns.is-used .ld-reply-btn{opacity:.45;pointer-events:none}
+.ld-btns.is-used button.ld-reply-btn{opacity:.45;pointer-events:none}
 .ld-btns.is-used .ld-reply-btn.is-chosen{opacity:1}
 .ld-msg.has-btns .ld-col{min-width:250px}
 
@@ -555,9 +561,12 @@ svg{display:block}
           <button id="ld-back" class="glass" aria-label="Voltar">
             <svg class="ib" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg>
             <svg class="ab" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+            <span class="cnt">3</span>
           </button>
-          <div class="av" id="ld-avatar"></div>
-          <div class="who"><b id="ld-name"></b><i id="ld-subtitle">Conta comercial</i></div>
+          <div class="ld-id glass">
+            <div class="av" id="ld-avatar"></div>
+            <div class="who"><b id="ld-name"></b><i id="ld-subtitle">Conta comercial</i></div>
+          </div>
           <div class="ld-calls glass">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M8.3 3.6c.4 0 .8.3 1 .7l1.4 3.2c.2.4.1.9-.2 1.2l-1.6 1.5c-.2.2-.3.6-.1.9a13 13 0 0 0 4.2 4.2c.3.2.7.1.9-.1l1.5-1.6c.3-.3.8-.4 1.2-.2l3.2 1.4c.4.2.7.6.7 1v2.6c0 1.3-1.1 2.3-2.4 2.2C10.5 20.2 3.8 13.5 3.4 5.9 3.3 4.6 4.3 3.6 5.6 3.6z"/></svg>
             <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg>
@@ -634,7 +643,7 @@ svg{display:block}
 /* ---------------- configuração ---------------- */
 const CONFIG = {
   links: {
-    buy: 'https://atendeaidelivery.com.br/lp2#planos',            // TODO: link do checkout Founder Basic
+    buy: 'https://pay.cakto.com.br/p3rgmzw_892813',               // checkout Cakto · Founder Basic R$ 97
     team: 'https://wa.me/5543999999999?text=',                     // TODO: número real da equipe
   },
   // IA ligada automaticamente quando a página roda num servidor com /api/luna (Vercel).
@@ -838,16 +847,24 @@ const UI = {
   },
   /* comanda digital: resumo em texto, como a Luna manda no WhatsApp */
   comandaText(c, storeName, endereco) {
-    const sub = c.itens.reduce((a, i) => a + i.p, 0);
-    const lines = c.itens.map(i => `${i.q}x ${i.nome} – ${brl(i.p)}` + (i.obs ? `\n_${i.obs}_` : ''));
+    const itens = c.itens || [];
+    const sub = itens.reduce((a, i) => a + (+i.p || 0), 0);
+    const taxa = +c.taxa || 0;
+    const lines = itens.map(i => `• ${i.q}x ${i.nome} — ${brl(+i.p || 0)}` + (i.obs ? `\n   _${i.obs}_` : ''));
+    const pg = String(c.pagamento || '');
+    const ico = /dinheiro/i.test(pg) ? '💵' : /pix/i.test(pg) ? '💠' : '💳';
+    let troco = '';
+    if (c.troco) {
+      const m = String(c.troco).match(/R\$\s*([\d.,]+)[^()]*\(\s*R\$\s*([\d.,]+)\s*\)/);
+      troco = m ? `\n   ↳ troco pra R$ ${m[1]}: o motoboy leva *R$ ${m[2]}*` : `\n   ↳ ${c.troco}`;
+    }
     const parts = [
-      `✅ *Pedido #${c.numero} confirmado!*`,
-      `*${storeName}*`,
-      lines.join('\n'),
-      [`Subtotal: ${brl(sub)}`, c.taxa ? `Entrega: ${brl(c.taxa)}` : null, `*Total: ${brl(sub + c.taxa)}*`].filter(Boolean).join('\n'),
-      [c.tipo === 'Entrega' ? `📍 Entrega: ${endereco || LOC}` : '🏪 Retirada no balcão',
-       `💳 ${c.pagamento}${c.troco ? ` · ${c.troco}` : ''}`,
-       `⏱️ Previsão: ${c.previsao}`].join('\n'),
+      `✅ *Pedido #${c.numero} confirmado!*\n${storeName}`,
+      `🧾 *Itens*\n${lines.join('\n')}`,
+      [`Subtotal: ${brl(sub)}`, taxa ? `Entrega: ${brl(taxa)}` : null, `*Total: ${brl(sub + taxa)}*`].filter(Boolean).join('\n'),
+      [c.tipo === 'Entrega' ? `📍 *Entrega:* ${endereco || LOC}` : '🏪 *Retirada no balcão*',
+       `${ico} *Pagamento:* ${pg}${troco}`,
+       `⏱️ *Previsão:* ${c.previsao}`].join('\n'),
     ];
     return parts.join('\n\n');
   },
@@ -861,8 +878,11 @@ const UI = {
         if (o.href) { b.href = o.href; b.target = '_blank'; b.rel = 'noopener'; b.style.textDecoration = 'none'; }
         b.innerHTML = (o.icon ? IC[o.icon] : (o.primary ? '' : IC.reply)) + `<span data-slot="label">${esc(o.label)}</span>`;
         b.addEventListener('click', () => {
-          if (box.classList.contains('is-used') && !o.keep) return;
-          if (!o.keep) { box.classList.add('is-used'); b.classList.add('is-chosen'); }
+          /* links (checkout, equipe) só abrem a página: não encerram a escolha,
+             então "Ainda tenho dúvidas" continua funcionando depois deles */
+          if (o.href) return;
+          if (box.classList.contains('is-used')) return;
+          box.classList.add('is-used'); b.classList.add('is-chosen');
           resolve(o);
         });
         box.appendChild(b);
@@ -1100,12 +1120,41 @@ const endLine = end => end.replace(/^Pedido confirmado! 🎉\s*/, '').replace(/\
 const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
 
 /* ---------------- IA real (Vercel /api/luna) ---------------- */
+/* organiza o resumo que a IA manda antes de confirmar: itens, valores e dados de entrega em blocos */
+function tidy(t) {
+  t = String(t).replace(/^[ \t]*[*\-•][ \t]+(?=\d+\s*x)/gim, '').replace(/\n{3,}/g, '\n\n').trim();
+  if (!(/total/i.test(t) && /\d+\s*x\s/i.test(t))) return t;
+  const L = t.split('\n').map(x => x.trim()).filter(Boolean);
+  const isItem = x => /^_?\d+\s*x\s/i.test(x) || /^_.*_$/.test(x);
+  const isMoney = x => /^\**\s*(subtotal|taxa|entrega|total)\b[^:]*:\**\s*R\$/i.test(x);
+  const isInfo = x => /^\*?(📍|💳|💵|💠|⏱️)?\s*\*?(entrega|endere[cç]o|retirada|pagamento|forma de pagamento|previs[aã]o)\b/i.test(x) && !isMoney(x);
+  const head = [], items = [], money = [], info = [], tail = [];
+  let seen = false;
+  for (const x of L) {
+    if (isItem(x)) { items.push(x); seen = true; }
+    else if (isMoney(x)) { money.push(x); seen = true; }
+    else if (isInfo(x)) { info.push(x); seen = true; }
+    else (seen ? tail : head).push(x);
+  }
+  if (!items.length) return t;
+  const it = items.map(x => /^_/.test(x) ? '   ' + x : '• ' + x.replace(/\s+[–-]\s+R\$/, ' — R$'));
+  const mn = money.map(x => { const c = x.replace(/\*/g, ''); return /^total/i.test(c) ? `*${c}*` : c; });
+  const inf = info.map(x => {
+    const c = x.replace(/\*/g, '').replace(/^(📍|💳|💵|💠|⏱️)\s*/, '');
+    const k = /^(entrega|endere|retirada)/i.test(c) ? '📍' : /^previs/i.test(c) ? '⏱️' : /dinheiro/i.test(c) ? '💵' : /pix/i.test(c) ? '💠' : '💳';
+    return k + ' ' + c.replace(/^([^:]+):/, '*$1:*');
+  });
+  return [head.join('\n'), '🧾 *Seu pedido*\n' + it.join('\n'), mn.join('\n'), inf.join('\n'), tail.join('\n')].filter(Boolean).join('\n\n');
+}
 function aiTips(reply, st) {
   const r = norm(reply);
+  /* olha a pergunta final da mensagem: o resumo cita "troco" mas pergunta "posso confirmar?" */
+  const last = norm(reply.trim().split('\n').filter(x => x.trim()).pop() || '');
+  const pg = (st && st.pagamento) || {};
+  if (/possoconfirmar|confirmaropedido|podemosconfirmar|possofechar|tudocerto|confirma/.test(last)) return ['Pode confirmar'];
   if (/entregaouretirada|retiradaouentrega|entregarouretirar/.test(r)) return ['📍 Enviar localização', 'Vou retirar no balcão'];
-  if (/troco/.test(r)) return ['Sem troco', 'Pra 100'];
-  if (/possoconfirmar|confirmaropedido|podemosconfirmar/.test(r)) return ['Pode confirmar'];
-  if (/(comoprefere|formade)pag|pix/.test(r) && !(st && st.pagamento)) return ['Pix', 'Cartão na entrega', 'Dinheiro'];
+  if (/troco/.test(last) && !pg.troco) return ['Sem troco', 'Pra 100'];
+  if (/(comoprefere|formade)pag|pix/.test(last) && !(st && st.pagamento)) return ['Pix', 'Cartão na entrega', 'Dinheiro'];
   if (/endereco/.test(r) && !(st && st.entrega && st.entrega.endereco)) return ['📍 Enviar localização'];
   if (/maisalgumacoisa/.test(r)) return /quer|leva|sai por|r\$/i.test(reply) ? ['Quero sim', 'Não, só isso'] : ['Só isso'];
   if (/\?\s*$/.test(reply.trim()) && /r\$/i.test(reply)) return ['Quero sim', 'Não, obrigado'];
@@ -1140,7 +1189,7 @@ async function brain(input, run) {
   if (run !== F.run) return;
   if (data.limit) { ai.hist.pop(); return aiLimit(run); }
   if (data.state) ai.state = data.state;
-  const replies = (data.replies || []).filter(Boolean);
+  const replies = (data.replies || []).filter(Boolean).map(tidy);
   (data.pro || []).forEach((p, i) => setTimeout(() => run === F.run && pro(p), 900 + i * 700));
   if (replies.length) {
     if (!await lunaSays(replies, run, true)) return;
@@ -1168,31 +1217,51 @@ async function ask(text, labels, run) {
   return o;
 }
 async function quiz(run) {
-  const go = await ask('Agora deixa eu sair do papel de atendente da loja: eu sou a *Luna*, da Atende.AI 💚\nPosso te fazer 3 perguntinhas rápidas pra mostrar como eu ficaria na *sua* loja?', ['Bora!', 'Agora não'], run);
+  const go = await ask('Posso te contar uma coisa? Quem te atendeu agora fui eu, a *Luna* 💚 Sou a atendente digital da Atende.AI e faço tudo isso na *sua* loja também.\n\nMe responde 3 perguntinhas rápidas? Leva menos de 1 minuto, e eu te mostro como eu ficaria aí.', ['Bora!'], run);
   if (!go) return;
-  if (go.value === 'Agora não') return cta(run);
-  const q1 = await ask('Sua loja já vende pelo WhatsApp?', ['Sim, todo dia', 'Pouco, quero vender mais', 'Ainda não'], run); if (!q1) return;
+  const q1 = await ask('Sua loja já recebe pedido pelo WhatsApp?', ['Sim, todo dia', 'Pouco, quero vender mais', 'Ainda não'], run); if (!q1) return;
   F.quiz.q1 = q1.value;
   let result;
   if (q1.value !== 'Ainda não') {
-    const q2 = await ask('Quem responde o WhatsApp hoje?', ['Eu mesmo', 'Um funcionário', 'Ninguém dá conta 😅'], run); if (!q2) return;
-    const q3 = await ask('Quantos pedidos por dia, em média?', ['Até 20', '20 a 50', 'Mais de 50'], run); if (!q3) return;
-    const q4 = await ask('O que mais pesa hoje no atendimento?', ['Demora pra responder', 'Erro nos pedidos', 'Custo com atendente', 'Perco venda no pico'], run); if (!q4) return;
+    const q2 = await ask('E quem responde o WhatsApp aí hoje?', ['Eu mesmo', 'Um funcionário', 'Ninguém dá conta 😅'], run); if (!q2) return;
+    const q3 = await ask('Mais ou menos quantos pedidos por dia?', ['Até 20', '20 a 50', 'Mais de 50'], run); if (!q3) return;
+    const q4 = await ask('E o que mais te dá dor de cabeça no atendimento hoje?', ['Demora pra responder', 'Erro nos pedidos', 'Custo com atendente', 'Perco venda no pico'], run); if (!q4) return;
     Object.assign(F.quiz, { q2: q2.value, q3: q3.value, q4: q4.value });
-    const who = { 'Eu mesmo': 'é você mesmo quem responde o WhatsApp', 'Um funcionário': 'um funcionário cuida do WhatsApp', 'Ninguém dá conta 😅': 'o WhatsApp está sem ninguém dando conta' }[q2.value];
-    const vol = { 'Até 20': 'com até 20 pedidos por dia', '20 a 50': 'com 20 a 50 pedidos por dia', 'Mais de 50': 'com mais de 50 pedidos por dia' }[q3.value];
-    const pain = { 'Demora pra responder': 'ela responde em segundos, todo mundo ao mesmo tempo', 'Erro nos pedidos': 'ela anota cada observação e monta a comanda sem erro', 'Custo com atendente': 'ela trabalha todos os dias, sem salário, férias ou atestado', 'Perco venda no pico': 'no pico ela atende todo mundo de uma vez, sem fila' }[q4.value];
-    result = `Entendi! Hoje ${who}, ${vol}. Com a Luna, ${pain}. E ainda oferece adicionais em cada pedido, como você acabou de ver. Você volta a cuidar da loja 💚`;
-    if (q3.value === 'Mais de 50') result += '\n\nPro seu movimento, o *Founder PRO* (R$ 167) atende todos os clientes ao mesmo tempo, sem limite.';
+    const who = {
+      'Eu mesmo': 'Então hoje é você que para tudo pra responder cliente, né? Eu assumo o celular e você volta pra cozinha, pro caixa, pra loja.',
+      'Um funcionário': 'Então hoje você paga alguém só pra ficar no WhatsApp.',
+      'Ninguém dá conta 😅': 'Então tem cliente esperando resposta aí. E cliente que espera muito acaba pedindo no concorrente.',
+    }[q2.value];
+    const pain = {
+      'Demora pra responder': 'Eu respondo em segundos, de manhã, de madrugada e no domingo, e atendo quantos clientes chegarem ao mesmo tempo. Ninguém fica no vácuo.',
+      'Erro nos pedidos': 'Eu anoto cada detalhe (meio a meio, "sem cebola", troco) e mando a comanda certinha pra cozinha. Chega de lanche refeito e cliente bravo.',
+      'Custo com atendente': 'Um atendente CLT passa fácil de R$ 2.000 por mês com encargos, fora falta, férias e atestado. Eu saio por R$ 97, pagamento único, e não falto nunca.',
+      'Perco venda no pico': 'Sexta à noite, 15 mensagens chegando juntas? Eu respondo todas na hora. Aquele pedido que você perdia por demora vira venda.',
+    }[q4.value];
+    const vol = {
+      'Até 20': 'Mesmo com até 20 pedidos por dia, são horas por semana no celular que voltam pra você.',
+      '20 a 50': 'E lembra que eu te ofereci tamanho maior e bebida? Com 20 a 50 pedidos por dia, esses adicionais sozinhos já pagam os R$ 97 rapidinho.',
+      'Mais de 50': 'Com mais de 50 pedidos por dia, os adicionais que eu ofereço em cada pedido viram um bom dinheiro no fim do mês. Pro seu movimento, o ideal é o *Founder PRO* (R$ 167): atendo todo mundo ao mesmo tempo, sem limite.',
+    }[q3.value];
+    const r2 = (q4.value === 'Custo com atendente' && q2.value === 'Um funcionário') ? 'Seu funcionário pode ir pra onde a loja mais precisa, e o WhatsApp fica comigo.' : '';
+    result = [`${who} ${pain}`, [r2, vol].filter(Boolean).join(' ') + '\n\nE tem *garantia de 120 dias*, que só começa a contar quando eu entro no ar na sua loja 💚'];
   } else {
-    const q2 = await ask('Onde você vende hoje?', ['Só iFood ou apps', 'Balcão e telefone', 'Ainda vou abrir'], run); if (!q2) return;
-    const q3 = await ask('O que te impede de vender pelo WhatsApp?', ['Não tenho tempo pra responder', 'Não tenho quem atenda', 'Não conhecia essa opção'], run); if (!q3) return;
+    const q2 = await ask('E onde você vende hoje?', ['Só iFood ou apps', 'Balcão e telefone', 'Ainda vou abrir'], run); if (!q2) return;
+    const q3 = await ask('O que te segura de vender pelo WhatsApp?', ['Não tenho tempo pra responder', 'Não tenho quem atenda', 'Não conhecia essa opção'], run); if (!q3) return;
     Object.assign(F.quiz, { q2: q2.value, q3: q3.value });
-    const where = { 'Só iFood ou apps': 'Hoje você depende dos apps', 'Balcão e telefone': 'Hoje você vende no balcão e no telefone', 'Ainda vou abrir': 'Você está abrindo sua operação' }[q2.value];
-    const blk = { 'Não tenho tempo pra responder': 'a Luna responde por você', 'Não tenho quem atenda': 'a Luna é a sua atendente', 'Não conhecia essa opção': 'agora você já conhece 😉' }[q3.value];
-    result = `Entendi! ${where}. Com a Luna, você abre um canal próprio no WhatsApp e ${blk}. E cada pedido que vem por lá é um pedido sem comissão de app 💚`;
+    const where = {
+      'Só iFood ou apps': 'Então hoje uma parte de cada pedido fica com o app, né? No seu WhatsApp, o pedido é 100% seu, sem comissão.',
+      'Balcão e telefone': 'Então hoje alguém precisa parar pra atender telefone. No WhatsApp eu anoto tudo por escrito, sem erro de ouvido.',
+      'Ainda vou abrir': 'Que demais! Abrir já com atendimento pronto no WhatsApp te poupa de contratar alguém só pra isso.',
+    }[q2.value];
+    const blk = {
+      'Não tenho tempo pra responder': 'E tempo não vai ser problema: eu respondo por você, na hora, a qualquer hora.',
+      'Não tenho quem atenda': 'E agora você tem: eu sou a sua atendente, todos os dias da semana.',
+      'Não conhecia essa opção': 'E você acabou de ver na prática: cardápio, adicionais, entrega, troco e comanda, tudo sozinha.',
+    }[q3.value];
+    result = [`${where} ${blk}`, 'Por R$ 97, pagamento único, e com *garantia de 120 dias* que só começa a contar quando eu entro no ar 💚'];
   }
-  if (!await lunaSays([result], run)) return;
+  if (!await lunaSays(result, run)) return;
   cta(run);
 }
 function teamUrl(extra) {
@@ -1211,7 +1280,7 @@ const CTA_OPTS = () => [
 ];
 async function cta(run, text) {
   $('#ld-cta').classList.add('is-visible'); syncSideCta();
-  const o = await ask(text || 'Quer ter a Luna atendendo na *sua* loja? 💚', CTA_OPTS(), run); if (!o) return;
+  const o = await ask(text || 'E aí, posso começar a atender na *sua* loja? 💚', CTA_OPTS(), run); if (!o) return;
   return handleCta(o, run);
 }
 function handleCta(o, run) {
@@ -1229,12 +1298,12 @@ const FAQ = [
 async function faq(run) {
   if (run !== F.run) return;
   setSubtitle('digitando...'); await sleep(900); setSubtitle('online');
-  const r = await UI.list('Claro! Escolhe a sua dúvida 👇', 'Ver dúvidas', 'Dúvidas frequentes', FAQ);
+  const r = await UI.list('Claro! Toca abaixo e escolhe a sua dúvida 👇', 'Ver dúvidas', 'Dúvidas frequentes', FAQ);
   if (run !== F.run) return;
   if (r.value === 'outra') { await userSays('Minha dúvida não está aqui'); await lunaSays(['Sem problema! Fala direto com a nossa equipe, a gente te responde rapidinho 😊'], run); return cta(run, 'Toque abaixo pra falar com a equipe ou garantir sua vaga 👇'); }
   await userSays(r.title);
   if (!await lunaSays([r.answer], run)) return;
-  const o = await ask('Posso te ajudar com mais alguma coisa?', [{ label: 'Tenho outra dúvida', value: 'faq' }, ...CTA_OPTS().slice(0, 2)], run); if (!o) return;
+  const o = await ask('Ficou alguma outra dúvida? Pode perguntar, viu 😊', [{ label: 'Tenho outra dúvida', value: 'faq' }, ...CTA_OPTS().slice(0, 2)], run); if (!o) return;
   return handleCta(o, run);
 }
 function syncSideCta() { $('#ld-cta-buy').href = CONFIG.links.buy; $('#ld-cta-team').href = teamUrl(); }
