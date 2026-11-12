@@ -715,13 +715,13 @@ const STORES = {
   acai: {
     gain: { from: 22, to: 28 }, name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp?v=11cf88c5', menuFull: '/teste-luna/a/menu-acai.webp?v=91ea57fc',
     preview: 'Toque aqui pra montar seu açaí 💜',
-    hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom te ver por aqui!`,
+    hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom ter você por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
     script: [
-      { u: 'Um 500 com granola, banana e leite em pó', l: ['Anotado! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nPor mais R$ 6 vira o de *700 ml*. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
-      { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotado (+R$ 6,00) 😋 Total: R$ 28,00.\nMais alguma coisa? Morango por cima fica top, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
+      { u: 'Um 500 com granola, banana e leite em pó', l: ['Hmm, combinação perfeita! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nE olha: por mais R$ 6 ele vira o de *700 ml*. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
+      { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotadinho (+R$ 6,00) 😋 Ficou R$ 28,00.\nQuer mais alguma coisa? Um morango por cima fica uma delícia, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
       { u: 'Só isso mesmo', l: ['Perfeito! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
       { u: 'Dinheiro', l: ['Troco pra quanto? 💵'] },
       { u: 'Pra 50', l: ['Confere o pedido 👇\n\n1x Açaí 500 ml (granola, banana, leite em pó + creme de avelã) – R$ 28,00\nEntrega – R$ 6,00\n*Total: R$ 34,00* · Dinheiro (troco p/ R$ 50,00)\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra preparo. Previsão: 30 a 40 min.' },
@@ -732,13 +732,13 @@ const STORES = {
   pizzaria: {
     gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=00bb39bd', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=f00cc8e3',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
-    hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*.`,
+    hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*. Que bom ter você por aqui!`,
     after: 'É só pedir pelo nome do sabor, e meio a meio também vale! 😊',
     script: [
-      { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Anotado! 🍕 Média meia *Calabresa*, meia *Frango c/ Catupiry*: R$ 45,00.\nPor mais R$ 10 você leva a *Grande*, com 2 fatias a mais. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
-      { u: 'Pode ser a grande', l: ['Fechado: Grande por R$ 55,00! 🙌\nMais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
-      { u: 'Manda uma Coca 2L', l: ['Anotado! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
+      { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Ótima escolha! 🍕 Média meia *Calabresa* e meia *Frango c/ Catupiry*: R$ 45,00.\nE por mais R$ 10 ela vira *Grande*, com 2 fatias a mais. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
+      { u: 'Pode ser a grande', l: ['Eba, Grande por R$ 55,00! 🙌\nQuer mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
+      { u: 'Manda uma Coca 2L', l: ['Anotadinho! Vai ser entrega ou retirada?'] },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
       { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Pizza Grande (meia Calabresa, meia Frango c/ Catupiry) – R$ 55,00\n1x Coca-Cola 2 L – R$ 15,00\nEntrega – R$ 6,00\n*Total: R$ 76,00* · Pix\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pro forno. Previsão: 40 a 50 min.' },
     ],
@@ -746,15 +746,15 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
   },
   hamburgueria: {
-    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=5c335cf1', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=300f3bd5',
+    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=d02e51c3', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=54768ea2',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
-    hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*.`,
+    hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*. Bora matar essa fome?`,
     after: 'É só pedir pelo nome do lanche. Se quiser tirar algum ingrediente, é só falar 😉',
     script: [
-      { u: 'Quero dois Barbecue, um sem pimenta', l: ['Fechou! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nQuer uma *batata frita* pra acompanhar por R$ 14,90? 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
-      { u: 'Quero sim', l: ['Batata anotada! Mais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
-      { u: 'Não, só isso', l: ['Beleza! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
+      { u: 'Quero dois Barbecue, um sem pimenta', l: ['Boa escolha! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nUma *batata frita* sequinha pra acompanhar? Sai R$ 14,90 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
+      { u: 'Quero sim', l: ['Batata garantida! Mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
+      { u: 'Não, só isso', l: ['Combinado! Vai ser entrega ou retirada?'] },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
       { u: '💳 Crédito', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x Barbecue (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra chapa. Previsão: 40 a 50 min.' },
     ],
@@ -767,10 +767,10 @@ const STORES = {
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
     script: [
-      { u: 'Uma feijoada', l: ['Anotado! 1 *Feijoada Completa*: R$ 29,90 🍲\nQuer uma Coca lata gelada por R$ 8,90 pra acompanhar? 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
-      { u: 'Quero', l: ['Feito! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
-      { u: 'Não, só isso', l: ['Beleza! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 4,99.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
+      { u: 'Uma feijoada', l: ['Ótima pedida! 1x *Feijoada Completa*: R$ 29,90 🍲\nUma Coca lata geladinha pra acompanhar? Sai R$ 8,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
+      { u: 'Quero', l: ['Prontinho! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
+      { u: 'Não, só isso', l: ['Combinado! Vai ser entrega ou retirada?'] },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 4,99.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
       { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Feijoada Completa – R$ 29,90\n1x Coca-Cola lata – R$ 8,90\nEntrega – R$ 4,99\n*Total: R$ 43,79* · Pix\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já está sendo montado. Previsão: 30 a 40 min.' },
     ],
@@ -1107,7 +1107,7 @@ async function respond(input, run) {
   nextTips();
 }
 /* depois da comanda: só o "já foi pra cozinha" + agradecimento (sem repetir previsão) */
-const endLine = end => end.replace(/^Pedido confirmado! 🎉\s*/, '').replace(/\s*Previsão: .*$/, '') + ' Obrigada pela preferência! 💚';
+const endLine = end => end.replace(/^Pedido confirmado! 🎉\s*/, '').replace(/\s*Previsão: .*$/, '') + ' Obrigada pela preferência, volte sempre! 💚';
 const norm = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]/g, '');
 
 /* ---------------- IA real (Vercel /api/luna) ---------------- */
@@ -1119,7 +1119,7 @@ function aiTips(reply, st) {
   if (/(comoprefere|formade)pag|pix/.test(r) && !(st && st.pagamento)) return ['Pix', '💳 Débito', '💳 Crédito', 'Dinheiro'];
   if (/endereco/.test(r) && !(st && st.entrega && st.entrega.endereco)) return ['📍 Enviar localização'];
   if (/maisalgumacoisa/.test(r)) return /quer|leva|sai por|r\$/i.test(reply) ? ['Quero sim', 'Não, só isso'] : ['Só isso'];
-  if (/\?\s*$/.test(reply.trim()) && /r\$/i.test(reply)) return ['Quero sim', 'Não, obrigado'];
+  if (/\?\s*$/.test(reply.trim()) && /r\$/i.test(reply)) return ['Quero sim', 'Não, valeu'];
   return [];
 }
 async function aiLimit(run) {
@@ -1194,7 +1194,7 @@ async function quiz(run) {
   F.quiz.q1 = q1.value;
   let result;
   if (q1.value !== 'Ainda não') {
-    const q2 = await ask('Quem responde o WhatsApp hoje?', ['Eu mesmo', 'Um funcionário', 'Ninguém dá conta 😅'], run); if (!q2) return;
+    const q2 = await ask('Quem responde o WhatsApp hoje?', ['Sou eu', 'Alguém da equipe', 'Ninguém dá conta 😅'], run); if (!q2) return;
     const q3 = await ask('Quantos pedidos por dia, em média?', ['Até 20', '20 a 50', 'Mais de 50'], run); if (!q3) return;
     const q4 = await ask('O que mais pesa hoje no atendimento?', ['Demora pra responder', 'Erro nos pedidos', 'Custo com atendente', 'Perco venda no pico'], run); if (!q4) return;
     Object.assign(F.quiz, { q2: q2.value, q3: q3.value, q4: q4.value });
@@ -1205,7 +1205,7 @@ async function quiz(run) {
       'Perco venda no pico': 'No pico eu atendo *todo mundo ao mesmo tempo*. Ninguém fica na fila e nenhum cliente desiste porque ninguém respondeu.',
     }[q4.value];
     result = [`Entendi! ${pain}`, gainLine(q3.value)].filter(Boolean);
-    if (q2.value === 'Eu mesmo') result.push('E você para de viver grudado no celular: eu atendo, você cuida da loja 💚');
+    if (q2.value === 'Sou eu') result.push('E chega de viver com o celular na mão: eu atendo, e você cuida da loja 💚');
     if (q3.value === 'Mais de 50') result.push('Pro seu movimento, o *Founder PRO* (R$ 167) é o ideal: atende todos os clientes ao mesmo tempo, sem limite.');
   } else {
     const q2 = await ask('Onde você vende hoje?', ['Só iFood ou apps', 'Balcão e telefone', 'Ainda vou abrir'], run); if (!q2) return;
