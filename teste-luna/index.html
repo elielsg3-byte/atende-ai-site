@@ -1162,7 +1162,7 @@ async function brain(input, run) {
   try {
     const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 40000);
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state }) });
+      body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state, count: ai.count }) });
     clearTimeout(to);
     if ([401, 403, 404, 503].includes(r.status) || !/json/.test(r.headers.get('content-type') || '')) { /* sem backend: volta pro roteiro */ ai.hist.pop(); ai.count--; CONFIG.api = null; setSubtitle('online'); return respond(input, run); }
     if (!r.ok) throw new Error(r.status);
@@ -1319,6 +1319,15 @@ const faqLocal = q => {
   FAQ.filter(f => f.answer).forEach(f => { const t = norm2(f.title + ' ' + f.description + ' ' + f.answer); const sc = w.filter(x => t.includes(x)).length; if (sc > score) { score = sc; best = f; } });
   return score >= 2 ? { found: true, answer: best.answer } : { found: false };
 };
+/* sem IA só quando a dúvida digitada é praticamente uma das perguntas da lista (risco zero de resposta trocada) */
+const STOP = new Set('voce voces para pela pelo como qual quais quanto quando onde tenho posso pode isso essa esse esta este minha meu mais tem uma umas uns com sem que por the'.split(' '));
+const faqExact = q => {
+  const w = norm2(q).split(' ').filter(x => x.length > 2 && !STOP.has(x));
+  if (!w.length || (w.length < 2 && w[0].length < 6)) return null;
+  let best = null, ratio = 0;
+  FAQ.filter(f => f.answer).forEach(f => { const t = ' ' + norm2(f.title) + ' '; const r = w.filter(x => t.includes(' ' + x)).length / w.length; if (r > ratio) { ratio = r; best = f; } });
+  return ratio >= 0.8 ? { found: true, answer: best.answer } : null;
+};
 const norm2 = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ');
 /* depois de 3 dúvidas digitadas, a conversa segue com uma pessoa da equipe */
 async function handoff(run, answered) {
@@ -1331,10 +1340,11 @@ async function faqAsk(text) {
   const run = F.run; F.faqN = (F.faqN || 0) + 1;
   await userSays(text);
   setSubtitle('digitando...');
-  let r = null;
+  let r = faqExact(text);
   F.faqQs = (F.faqQs || []).concat(text);
   if (F.faqN > 3) { setSubtitle('online'); F.busy = false; return handoff(run); }
-  if (CONFIG.api) {
+  if (r) await sleep(700);
+  else if (CONFIG.api) {
     try {
       const res = await fetch(CONFIG.api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'faq', question: text }) });
       if (res.ok) r = await res.json();
