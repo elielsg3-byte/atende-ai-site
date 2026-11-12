@@ -643,6 +643,7 @@ svg{display:block}
 const CONFIG = {
   links: {
     buy: 'https://pay.cakto.com.br/p3rgmzw_892813',              // checkout Founder Basic (R$ 97)
+    pro: 'https://pay.cakto.com.br/fwrej9i_1220822',             // checkout Founder PRO (R$ 167)
     team: 'https://wa.me/5543999999999?text=',                     // TODO: número real da equipe
   },
   // IA ligada automaticamente quando a página roda num servidor com /api/luna (Vercel).
@@ -721,10 +722,10 @@ const STORES = {
       { u: 'Um 500 com granola, banana e leite em pó', l: ['Hmm, combinação perfeita! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nE olha: por mais R$ 6 ele vira o de *700 ml*. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotadinho (+R$ 6,00) 😋 Ficou R$ 28,00.\nQuer mais alguma coisa? Um morango por cima fica uma delícia, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
       { u: 'Só isso mesmo', l: ['Perfeito! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.`, '%%RESUMO%%'] },
+      { u: 'Pode confirmar', l: ['Eba, confirmado! 🎉 Agora só falta o pagamento: Pix, débito, crédito ou dinheiro?'] },
       { u: 'Dinheiro', l: ['Troco pra quanto? 💵'] },
-      { u: 'Pra 50', l: ['Confere o pedido 👇\n\n1x Açaí 500 ml (granola, banana, leite em pó + creme de avelã) – R$ 28,00\nEntrega – R$ 6,00\n*Total: R$ 34,00* · Dinheiro (troco p/ R$ 50,00)\n\nPosso confirmar?'] },
-      { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra preparo. Previsão: 30 a 40 min.' },
+      { u: 'Pra 50', l: [], end: 'Pedido confirmado! 🎉 Já foi pra preparo. Previsão: 30 a 40 min.' },
     ],
     comanda: { numero: '0318', itens: [{ q: 1, nome: 'Açaí 500 ml', obs: 'Granola, banana, leite em pó + creme de avelã', p: 28 }],
       taxa: 6, tipo: 'Entrega', pagamento: 'Dinheiro', troco: 'Troco p/ R$ 50,00 (R$ 16,00)', previsao: '30 a 40 min' },
@@ -738,9 +739,9 @@ const STORES = {
       { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Ótima escolha! 🍕 Média meia *Calabresa* e meia *Frango c/ Catupiry*: R$ 45,00.\nE por mais R$ 10 ela vira *Grande*, com 2 fatias a mais. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Pode ser a grande', l: ['Eba, Grande por R$ 55,00! 🙌\nQuer mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
       { u: 'Manda uma Coca 2L', l: ['Anotadinho! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
-      { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Pizza Grande (meia Calabresa, meia Frango c/ Catupiry) – R$ 55,00\n1x Coca-Cola 2 L – R$ 15,00\nEntrega – R$ 6,00\n*Total: R$ 76,00* · Pix\n\nPosso confirmar?'] },
-      { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pro forno. Previsão: 40 a 50 min.' },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.`, '%%RESUMO%%'] },
+      { u: 'Pode confirmar', l: ['Eba, confirmado! 🎉 Agora só falta o pagamento: Pix, débito, crédito ou dinheiro?'] },
+      { u: 'Pix', l: [], end: 'Pedido confirmado! 🎉 Já foi pro forno. Previsão: 40 a 50 min.' },
     ],
     comanda: { numero: '0427', itens: [{ q: 1, nome: 'Pizza Grande', obs: 'Meia Calabresa / meia Frango c/ Catupiry', p: 55 }, { q: 1, nome: 'Coca-Cola 2 L', p: 15 }],
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
@@ -754,9 +755,9 @@ const STORES = {
       { u: 'Quero dois Barbecue, um sem pimenta', l: ['Boa escolha! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nUma *batata frita* sequinha pra acompanhar? Sai R$ 14,90 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
       { u: 'Quero sim', l: ['Batata garantida! Mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
       { u: 'Não, só isso', l: ['Combinado! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
-      { u: '💳 Crédito', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x Barbecue (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
-      { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra chapa. Previsão: 40 a 50 min.' },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 6,00.`, '%%RESUMO%%'] },
+      { u: 'Pode confirmar', l: ['Eba, confirmado! 🎉 Agora só falta o pagamento: Pix, débito, crédito ou dinheiro?'] },
+      { u: '💳 Crédito', l: [], end: 'Pedido confirmado! 🎉 Já foi pra chapa. Previsão: 40 a 50 min.' },
     ],
     comanda: { numero: '0512', itens: [{ q: 2, nome: 'Barbecue', obs: '1 sem pimenta vermelha', p: 85.8 }, { q: 1, nome: 'Batata frita', p: 14.9 }],
       taxa: 6, tipo: 'Entrega', pagamento: 'Crédito (maquininha na entrega)', previsao: '40 a 50 min' },
@@ -770,9 +771,9 @@ const STORES = {
       { u: 'Uma feijoada', l: ['Ótima pedida! 1x *Feijoada Completa*: R$ 29,90 🍲\nUma Coca lata geladinha pra acompanhar? Sai R$ 8,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
       { u: 'Quero', l: ['Prontinho! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
       { u: 'Não, só isso', l: ['Combinado! Vai ser entrega ou retirada?'] },
-      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 4,99.\n\nE pra pagar: Pix, débito, crédito ou dinheiro?`] },
-      { u: 'Pix', l: ['Confere o pedido 👇\n\n1x Feijoada Completa – R$ 29,90\n1x Coca-Cola lata – R$ 8,90\nEntrega – R$ 4,99\n*Total: R$ 43,79* · Pix\n\nPosso confirmar?'] },
-      { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já está sendo montado. Previsão: 30 a 40 min.' },
+      { loc: true, l: [`Prontinho, endereço anotado: *${LOC}* 📍\nA taxa de entrega é R$ 4,99.`, '%%RESUMO%%'] },
+      { u: 'Pode confirmar', l: ['Eba, confirmado! 🎉 Agora só falta o pagamento: Pix, débito, crédito ou dinheiro?'] },
+      { u: 'Pix', l: [], end: 'Pedido confirmado! 🎉 Já está sendo montado. Previsão: 30 a 40 min.' },
     ],
     comanda: { numero: '0209', itens: [{ q: 1, nome: 'Feijoada Completa', p: 29.9 }, { q: 1, nome: 'Coca-Cola lata', p: 8.9 }],
       taxa: 4.99, tipo: 'Entrega', pagamento: 'Pix', previsao: '30 a 40 min' },
@@ -851,10 +852,10 @@ const UI = {
     const items = c.itens.map(i => `*${i.q}x ${i.nome}* · ${brl(i.p)}` + (i.obs ? `\n   ↳ _${i.obs}_` : '')).join('\n');
     const money = [`Subtotal: ${brl(sub)}`, c.taxa ? `Entrega: ${brl(c.taxa)}` : null, `*Total: ${brl(sub + c.taxa)}*`].filter(Boolean).join('\n');
     const info = [c.tipo === 'Entrega' ? `📍 ${endereco || LOC}` : '🏪 Retirada no balcão',
-      `💳 ${c.pagamento}${c.troco ? ` · troco p/ ${c.troco.match(/R\$ [\d.,]+/)[0]}` : ''}`].join('\n');
+      c.pagamento ? `💳 ${c.pagamento}${c.troco ? ` · troco p/ ${c.troco.match(/R\$ [\d.,]+/)[0]}` : ''}` : null].filter(Boolean).join('\n');
     return [line, items, line, money + '\n\n' + info].join('\n');
   },
-  summaryText(c, endereco) { return `📝 *Confere o seu pedido:*\n${UI.orderBlock(c, endereco)}\n\nPosso confirmar? ✅`; },
+  summaryText(c, endereco) { return `📝 *Confere o seu pedido:*\n${UI.orderBlock({ ...c, pagamento: null, troco: null }, endereco)}\n\nPosso confirmar? ✅`; },
   comandaText(c, storeName, endereco) {
     const troco = c.troco ? `\n💵 Levar *${c.troco.match(/\(([^)]+)\)/)[1]}* de troco` : '';
     return `✅ *Pedido confirmado!*\n🧾 Comanda *#${c.numero}*\n${UI.orderBlock(c, endereco)}${troco}\n⏱️ Previsão: *${c.previsao}*`;
@@ -1095,7 +1096,7 @@ async function respond(input, run) {
   }
   if (typeof input === 'string' && /retir/i.test(input)) { /* retirada: segue igual */ }
   if (st.pro) setTimeout(() => run === F.run && pro(st.pro), typingMs(st.l[0] || '') + 300);
-  const lines = st.l.map(t => /Confere o pedido/.test(t) ? t.replace(/Confere o pedido[\s\S]*$/, UI.summaryText(s.comanda)) : t);
+  const lines = st.l.map(t => t === '%%RESUMO%%' ? UI.summaryText(s.comanda) : t);
   if (!await lunaSays(lines, run)) return;
   F.step++;
   if (st.end) {
@@ -1242,8 +1243,10 @@ function teamUrl(extra) {
   if (extra) parts.push(extra);
   return CONFIG.links.team + encodeURIComponent(parts.join(' '));
 }
+const proFit = () => F.quiz && F.quiz.q3 === 'Mais de 50';
 const CTA_OPTS = () => [
-  { label: 'Quero a Luna por R$ 97', value: 'buy', primary: true, keep: true, link: true, href: CONFIG.links.buy },
+  ...(proFit() ? [{ label: 'Quero a Luna PRO por R$ 167', value: 'buy', primary: true, keep: true, link: true, href: CONFIG.links.pro }] : []),
+  { label: proFit() ? 'Founder Basic por R$ 97' : 'Quero a Luna por R$ 97', value: 'buy', primary: !proFit(), icon: proFit() ? 'link' : null, keep: true, link: true, href: CONFIG.links.buy },
   { label: 'Falar com a equipe', value: 'team', icon: 'link', keep: true, link: true, href: teamUrl() },
   { label: 'Ainda tenho dúvidas', value: 'faq' },
 ];
@@ -1281,7 +1284,7 @@ async function faq(run) {
   return afterAnswer(run);
 }
 async function afterAnswer(run) {
-  const o = await ask('Posso te ajudar com mais alguma coisa? Se quiser, é só digitar 😉', [{ label: 'Ver outras dúvidas', value: 'faq' }, ...CTA_OPTS().slice(0, 2)], run); if (!o) return;
+  const o = await ask('Posso te ajudar com mais alguma coisa? Se quiser, é só digitar 😉', [{ label: 'Ver outras dúvidas', value: 'faq' }, ...CTA_OPTS().filter(o => o.value !== 'faq')], run); if (!o) return;
   return handleCta(o, run);
 }
 /* dúvida digitada: a Luna procura na base de dúvidas (servidor); se não achar, chama a equipe */
