@@ -730,10 +730,10 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Dinheiro', troco: 'Troco p/ R$ 50,00 (R$ 16,00)', previsao: '30 a 40 min' },
   },
   pizzaria: {
-    gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=a627047d', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=1043041f',
+    gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=00bb39bd', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=f00cc8e3',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*.`,
-    after: 'Pode pedir pelo nome ou pelo número do sabor, e meio a meio também vale! 😊',
+    after: 'É só pedir pelo nome do sabor, e meio a meio também vale! 😊',
     script: [
       { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Anotado! 🍕 Média meia *Calabresa*, meia *Frango c/ Catupiry*: R$ 45,00.\nPor mais R$ 10 você leva a *Grande*, com 2 fatias a mais. Quer?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Pode ser a grande', l: ['Fechado: Grande por R$ 55,00! 🙌\nMais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
@@ -746,19 +746,19 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
   },
   hamburgueria: {
-    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=c6c35199', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=5ced0748',
+    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=5c335cf1', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=300f3bd5',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*.`,
-    after: 'É só pedir pelo nome ou pelo número. Se quiser tirar algum ingrediente, é só falar 😉',
+    after: 'É só pedir pelo nome do lanche. Se quiser tirar algum ingrediente, é só falar 😉',
     script: [
-      { u: 'Quero 2 O Grande B, um sem pimenta', l: ['Anotado! 🔥 2x *O Grande B* (1 sem pimenta vermelha): R$ 85,80.\nQuer uma *batata frita* pra acompanhar por R$ 14,90? 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
+      { u: 'Quero dois Barbecue, um sem pimenta', l: ['Fechou! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nQuer uma *batata frita* pra acompanhar por R$ 14,90? 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
       { u: 'Quero sim', l: ['Batata anotada! Mais alguma coisa? Uma Coca-Cola 2 L sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
       { u: 'Não, só isso', l: ['Beleza! Vai ser entrega ou retirada?'] },
       { loc: true, l: [`Endereço anotado ✅ *${LOC}*.\nTaxa de entrega: R$ 6,00.\n\nComo prefere pagar? Pix, débito, crédito ou dinheiro?`] },
-      { u: '💳 Crédito', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x O Grande B (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
+      { u: '💳 Crédito', l: ['O motoboy leva a maquininha 💳\n\nConfere o pedido 👇\n\n2x Barbecue (1 sem pimenta vermelha) – R$ 85,80\n1x Batata frita – R$ 14,90\nEntrega – R$ 6,00\n*Total: R$ 106,70* · Cartão na entrega\n\nPosso confirmar?'] },
       { u: 'Pode confirmar', l: [], end: 'Pedido confirmado! 🎉 Já foi pra chapa. Previsão: 40 a 50 min.' },
     ],
-    comanda: { numero: '0512', itens: [{ q: 2, nome: 'O Grande B', obs: '1 sem pimenta vermelha', p: 85.8 }, { q: 1, nome: 'Batata frita', p: 14.9 }],
+    comanda: { numero: '0512', itens: [{ q: 2, nome: 'Barbecue', obs: '1 sem pimenta vermelha', p: 85.8 }, { q: 1, nome: 'Batata frita', p: 14.9 }],
       taxa: 6, tipo: 'Entrega', pagamento: 'Crédito (maquininha na entrega)', previsao: '40 a 50 min' },
   },
   marmitaria: {
@@ -1292,14 +1292,21 @@ const faqLocal = q => {
   return score >= 2 ? { found: true, answer: best.answer } : { found: false };
 };
 const norm2 = t => String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9 ]/g, ' ');
+/* depois de 3 dúvidas digitadas, a conversa segue com uma pessoa da equipe */
+async function handoff(run, answered) {
+  F.phase = 'handoff';
+  await lunaSays([answered ? 'Se ficou mais alguma dúvida, nossa equipe te atende pessoalmente, rapidinho 😊' : 'Você tá com dúvidas bem específicas, e isso é ótimo 😊\nPra ninguém ficar sem resposta, nossa equipe continua com você.'], run, true);
+  await ask('Toca aqui que a gente segue pelo WhatsApp 👇', [{ label: 'Falar com a equipe', value: 'team', primary: true, keep: true, link: true, href: teamUrl(`Minhas dúvidas: ${(F.faqQs || []).join(' | ')}`) }, { ...CTA_OPTS()[0], primary: false }], run);
+}
 async function faqAsk(text) {
   if (F.busy) return; F.busy = true;
   const run = F.run; F.faqN = (F.faqN || 0) + 1;
   await userSays(text);
   setSubtitle('digitando...');
   let r = null;
-  if (F.faqN > 8) r = { found: false, limit: true };
-  else if (CONFIG.api) {
+  F.faqQs = (F.faqQs || []).concat(text);
+  if (F.faqN > 3) { setSubtitle('online'); F.busy = false; return handoff(run); }
+  if (CONFIG.api) {
     try {
       const res = await fetch(CONFIG.api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mode: 'faq', question: text }) });
       if (res.ok) r = await res.json();
@@ -1311,8 +1318,9 @@ async function faqAsk(text) {
   if (r.found && r.answer) {
     await lunaSays([r.answer], run, true);
     F.busy = false;
-    return afterAnswer(run);
+    return F.faqN >= 3 ? handoff(run, true) : afterAnswer(run);
   }
+  if (F.faqN >= 3) F.phase = 'handoff';
   await lunaSays(['Hmm, essa eu prefiro não chutar 😅\nNossa equipe de suporte pode te explicar um pouco melhor sobre isso.'], run, true);
   F.busy = false;
   const o = await ask('É rapidinho, a gente responde pelo WhatsApp 👇', [{ label: 'Vamos lá', value: 'team', primary: true, keep: true, link: true, href: teamUrl(`Minha dúvida: ${text}`) }, { label: 'Ver outras dúvidas', value: 'faq' }], run);
