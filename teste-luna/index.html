@@ -720,6 +720,7 @@ const STORES = {
     hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom ter você por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
     ex: 'Ex.: um de 500 com granola e banana',
+    sug: 'Um de 500 ml com granola, banana e leite em pó, sem confete',
     script: [
       { u: 'Um 500 com granola, banana e leite em pó', l: ['Hmm, combinação perfeita! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nE olha: por mais R$ 6 ele vira o de *700 ml*. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotadinho (+R$ 6,00) 😋 Ficou R$ 28,00.\nQuer mais alguma coisa? Um morango por cima fica uma delícia, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
@@ -738,6 +739,7 @@ const STORES = {
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*. Que bom ter você por aqui!`,
     after: 'É só pedir pelo nome do sabor, e meio a meio também vale! 😊',
     ex: 'Ex.: grande meia calabresa, meia frango',
+    sug: 'Uma grande meia Calabresa, meia Frango c/ Catupiry, sem cebola',
     script: [
       { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Ótima escolha! 🍕 Média meia *Calabresa* e meia *Frango c/ Catupiry*: R$ 45,00.\nE por mais R$ 10 ela vira *Grande*, com 2 fatias a mais. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Pode ser a grande', l: ['Eba, Grande por R$ 55,00! 🙌\nQuer mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
@@ -755,6 +757,7 @@ const STORES = {
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*. Bora matar essa fome?`,
     after: 'É só pedir pelo nome do lanche. Se quiser tirar algum ingrediente, é só falar 😉',
     ex: 'Ex.: um Buffalo sem cebola e uma batata',
+    sug: 'Um Combo Bacon sem queijo',
     script: [
       { u: 'Quero dois Barbecue, um sem pimenta', l: ['Boa escolha! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nUma *batata frita* sequinha pra acompanhar? Sai R$ 14,90 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
       { u: 'Quero sim', l: ['Batata garantida! Mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
@@ -772,6 +775,7 @@ const STORES = {
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
     ex: 'Ex.: duas de frango e uma Coca lata',
+    sug: 'Uma Feijoada Completa sem couve',
     script: [
       { u: 'Uma feijoada', l: ['Ótima pedida! 1x *Feijoada Completa*: R$ 29,90 🍲\nUma Coca lata geladinha pra acompanhar? Sai R$ 8,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
       { u: 'Quero', l: ['Prontinho! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
@@ -1049,7 +1053,10 @@ async function openChat(k) {
   if (!await lunaSays([s.after], run)) return;
   F.ai.hist.push({ role: 'user', text: 'Oi, quero ver o cardápio' }, { role: 'model', text: s.hello().replace(/\*/g, '') + '\n[cardápio enviado em imagem]\n' + s.after });
   F.phase = 'order'; setComposer('text');
-  if (CONFIG.api) { setTips([]); if (state.device === 'desktop') input.focus(); } else nextTips();
+  if (CONFIG.api) {   /* lead pode digitar livre (exemplo no campo) ou tocar na sugestão pronta */
+    setTips([{ label: s.sug, run: () => send(s.sug) }]);
+    if (state.device === 'mobile' || !app.classList.contains('wide')) tips.classList.add('is-open');
+  } else nextTips();
 }
 function backToList() {
   F.run++; closeSheet(); $('#ld-viewer').classList.remove('is-open');
@@ -1260,7 +1267,7 @@ async function quiz(run) {
       'Ainda vou abrir': 'Você já começa com atendimento profissional desde o primeiro dia, sem precisar contratar ninguém pra responder o WhatsApp.',
     }[q2.value];
     const blk = { 'Não tenho tempo pra responder': 'Tempo deixa de ser problema: eu respondo por você.', 'Não tenho quem atenda': 'Eu sou a sua atendente, todo dia.', 'Não conhecia essa opção': 'Agora você conhece 😉' }[q3.value];
-    result = [`Entendi! ${where}`, `${blk} ${gainLine() || ''}`.trim()];
+    result = [`Entendi! ${where}`, blk, gainLine()].filter(Boolean);
   }
   if (!await lunaSays(result, run)) return;
   cta(run);
@@ -1268,13 +1275,25 @@ async function quiz(run) {
 /* pitch de faturamento: sempre do ponto de vista do ganho do lojista.
    Usa o teto da faixa escolhida (ex.: "20 a 50" → 50 pedidos/dia). */
 const PEDIDOS_DIA = { 'Até 20': 20, '20 a 50': 50, 'Mais de 50': 50 };
+/* fecha sempre com números. Já vende: usa o teto da faixa; ainda não vende: estima 20 pedidos/dia no ticket desse pedido.
+   Só fala em "eu ofereci e subiu" quando houve oferta de verdade na conversa. */
 function gainLine(vol) {
-  const g = F.gain; if (!g || !(g.to > g.from)) return '';
-  const inc = g.to - g.from, pct = Math.round(inc / g.from * 100);
-  let t = `Nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${pct}%).`;
-  const n = PEDIDOS_DIA[vol];
-  if (n) t += `\n\nMantendo a média de *${n} pedidos por dia* a *${brl(g.to)}*, eu consigo adicionar *${brl(inc * n * 30)} de faturamento por mês* pra sua loja 💰`;
-  return t;
+  const s = STORES[F.niche] || {};
+  const g = (F.gain && F.gain.to) ? F.gain : (s.gain || { from: 0, to: 0 });
+  const ticket = g.to; if (!ticket) return '';
+  const offered = !CONFIG.api || ((F.ai && F.ai.state && F.ai.state.ofertas) || []).length > 0;
+  const inc = offered && g.to > g.from ? g.to - g.from : 0;
+  const lines = [];
+  if (inc) lines.push(`Nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${Math.round(inc / g.from * 100)}%).`);
+  if (vol) {
+    const n = PEDIDOS_DIA[vol] || 20;
+    lines.push(inc
+      ? `Mantendo a média de *${n} pedidos por dia* a *${brl(g.to)}*, eu consigo adicionar *${brl(inc * n * 30)} de faturamento por mês* pra sua loja 💰`
+      : `Com *${n} pedidos por dia* a *${brl(ticket)}*, são *${brl(ticket * n * 30)} por mês* passando por mim, e no pico eu atendo todo mundo ao mesmo tempo: *nenhuma venda se perde* 💰`);
+  } else {
+    lines.push(`Começando com só *20 pedidos por dia* a *${brl(ticket)}* (o valor desse pedido), são *${brl(ticket * 20 * 30)} por mês* em vendas pelo WhatsApp, sem comissão de app. E como eu respondo na hora, *você não perde venda* por demora 💰`);
+  }
+  return lines.join('\n\n');
 }
 function teamUrl(extra) {
   const q = F.quiz; const parts = [`Oi! Testei a Luna (${STORES[F.niche]?.name || 'demo'}).`];
