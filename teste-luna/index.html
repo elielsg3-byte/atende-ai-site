@@ -649,7 +649,7 @@ const CONFIG = {
   // IA ligada automaticamente quando a página roda num servidor com /api/luna (Vercel).
   // ?ia=0 força o roteiro de exemplo; no artefato/arquivo local fica sempre o roteiro.
   api: (/^https?:$/.test(location.protocol) && !/claude|localhost|127\.0\.0\.1|^192\.168\./.test(location.hostname) && new URLSearchParams(location.search).get('ia') !== '0') ? '/api/luna' : null,
-  maxMsgs: 10,
+  maxMsgs: 14,
 };
 
 const $ = (s, r = document) => r.querySelector(s);
@@ -718,6 +718,7 @@ const STORES = {
     preview: 'Toque aqui pra montar seu açaí 💜',
     hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom ter você por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
+    ex: 'Ex.: um de 500 com granola e banana',
     script: [
       { u: 'Um 500 com granola, banana e leite em pó', l: ['Hmm, combinação perfeita! 💜 Açaí *500 ml* com granola, banana e leite em pó: R$ 22,00.\nE olha: por mais R$ 6 ele vira o de *700 ml*. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Não, mas coloca creme de avelã', l: ['Creme de avelã anotadinho (+R$ 6,00) 😋 Ficou R$ 28,00.\nQuer mais alguma coisa? Um morango por cima fica uma delícia, +R$ 4,00 🍓'], pro: 'A Luna ofereceu um <b>adicional</b> no momento certo' },
@@ -735,6 +736,7 @@ const STORES = {
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*. Que bom ter você por aqui!`,
     after: 'É só pedir pelo nome do sabor, e meio a meio também vale! 😊',
+    ex: 'Ex.: grande meia calabresa, meia frango',
     script: [
       { u: 'Uma média meia Calabresa e meia Frango c/ Catupiry', l: ['Ótima escolha! 🍕 Média meia *Calabresa* e meia *Frango c/ Catupiry*: R$ 45,00.\nE por mais R$ 10 ela vira *Grande*, com 2 fatias a mais. Bora?'], pro: 'A Luna ofereceu um <b>tamanho maior</b> sozinha' },
       { u: 'Pode ser a grande', l: ['Eba, Grande por R$ 55,00! 🙌\nQuer mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,00 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
@@ -751,6 +753,7 @@ const STORES = {
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*. Bora matar essa fome?`,
     after: 'É só pedir pelo nome do lanche. Se quiser tirar algum ingrediente, é só falar 😉',
+    ex: 'Ex.: um Buffalo sem cebola e uma batata',
     script: [
       { u: 'Quero dois Barbecue, um sem pimenta', l: ['Boa escolha! 🔥 2x *Barbecue* (1 sem pimenta vermelha): R$ 85,80.\nUma *batata frita* sequinha pra acompanhar? Sai R$ 14,90 🍟'], pro: 'A Luna ofereceu um <b>acompanhamento</b> sozinha' },
       { u: 'Quero sim', l: ['Batata garantida! Mais alguma coisa? Uma Coca-Cola 2 L geladinha sai por R$ 15,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> no momento certo' },
@@ -767,6 +770,7 @@ const STORES = {
     preview: 'Toque aqui pra pedir sua marmita 🍱',
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
+    ex: 'Ex.: duas de frango e uma Coca lata',
     script: [
       { u: 'Uma feijoada', l: ['Ótima pedida! 1x *Feijoada Completa*: R$ 29,90 🍲\nUma Coca lata geladinha pra acompanhar? Sai R$ 8,90 🥤'], pro: 'A Luna ofereceu uma <b>bebida</b> sozinha' },
       { u: 'Quero', l: ['Prontinho! Mais alguma coisa? A *Carne Assada* tá saindo bastante hoje, quer levar uma pra alguém aí? 😋'], pro: 'A Luna sugeriu <b>mais um prato</b> pra aumentar o pedido' },
@@ -906,7 +910,8 @@ function setSubtitle(t) { sub.textContent = t; sub.classList.toggle('is-typing',
 const comp = $('#ld-composer'), input = $('#ld-input');
 const PH = { text: 'Mensagem', disabled: 'Aguarde…', buttons: 'Escolha acima 👆' };
 function setComposer(s) {
-  comp.dataset.composer = s; input.placeholder = s === 'text' && F.phase === 'faq' ? 'Digite sua dúvida…' : state.os === 'ios' && s === 'text' ? '' : (PH[s] || '');
+  const ex = s === 'text' && F.phase === 'order' && CONFIG.api && F.ai && !F.ai.count && STORES[F.niche] && STORES[F.niche].ex;
+  comp.dataset.composer = s; input.placeholder = ex ? ex : s === 'text' && F.phase === 'faq' ? 'Digite sua dúvida…' : state.os === 'ios' && s === 'text' ? '' : (PH[s] || '');
   input.disabled = s !== 'text';
 }
 function autosize() {
@@ -1042,7 +1047,8 @@ async function openChat(k) {
   setSubtitle('online'); UI.image('in', s.menu, s.menuFull); await sleep(400);
   if (!await lunaSays([s.after], run)) return;
   F.ai.hist.push({ role: 'user', text: 'Oi, quero ver o cardápio' }, { role: 'model', text: s.hello().replace(/\*/g, '') + '\n[cardápio enviado em imagem]\n' + s.after });
-  F.phase = 'order'; setComposer('text'); nextTips();
+  F.phase = 'order'; setComposer('text');
+  if (CONFIG.api) { setTips([]); if (state.device === 'desktop') input.focus(); } else nextTips();
 }
 function backToList() {
   F.run++; closeSheet(); $('#ld-viewer').classList.remove('is-open');
@@ -1121,10 +1127,29 @@ function aiTips(reply, st) {
   if (/endereco/.test(r) && !(st && st.entrega && st.entrega.endereco)) return ['📍 Enviar localização'];
   if (/maisalgumacoisa/.test(r)) return /quer|leva|sai por|r\$/i.test(reply) ? ['Quero sim', 'Não, só isso'] : ['Só isso'];
   if (/\?\s*$/.test(reply.trim()) && /r\$/i.test(reply)) return ['Quero sim', 'Não, valeu'];
+  const opts = orOptions(reply); if (opts) return opts;
+  const q = lastQuestion(reply);
+  if (q && /^(e )?(quer|vai querer|bora|topa|posso|pode ser|aproveita|leva|gostaria|fecha|bate)\b/i.test(q)) return ['Sim', 'Não'];
   return [];
 }
+/* "Média ou grande?" / "Laranja ou Uva?" → vira botão de cada opção */
+function lastQuestion(t) {
+  const m = String(t).replace(/[*_~]/g, '').replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF\uFE0F]/gu, '').trim().match(/([^.!?\n]*\?)\s*$/);
+  return m ? m[1].trim() : '';
+}
+function orOptions(reply) {
+  const q = lastQuestion(reply).replace(/\?$/, '').replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF]/gu, '').trim();
+  if (!/ ou /i.test(q)) return null;
+  const parts = q.split(/,\s*| ou /i).map(x => x.trim()).filter(Boolean);
+  if (parts.length < 2 || parts.length > 4) return null;
+  const last = parts[parts.length - 1].split(/\s+/), n = Math.min(Math.max(last.length, 1), 3);
+  const head = parts[0].replace(/^.*:\s*/, '').split(/\s+/);
+  parts[0] = head.slice(-Math.min(n, head.length)).join(' ');
+  const out = parts.map(x => x.replace(/^(a|o|de|da|do|em|na|no|um|uma)\s+/i, '')).map(x => x.charAt(0).toUpperCase() + x.slice(1));
+  return out.every(x => x.length && x.length <= 22) ? out : null;
+}
 async function aiLimit(run) {
-  if (!await lunaSays(['Por aqui a demonstração vai até 10 mensagens 😊 Já deu pra sentir como eu atendo, né?'], run, true)) return;
+  if (!await lunaSays(['Por aqui a demonstração vai até ' + CONFIG.maxMsgs + ' mensagens 😊 Já deu pra sentir como eu atendo, né?'], run, true)) return;
   F.phase = 'quiz'; setComposer('buttons'); await sleep(900); quiz(run);
 }
 async function brain(input, run) {
@@ -1135,7 +1160,7 @@ async function brain(input, run) {
   setSubtitle('digitando...');
   let data;
   try {
-    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 25000);
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 30000);
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state }) });
     clearTimeout(to);
