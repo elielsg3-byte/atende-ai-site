@@ -1160,7 +1160,7 @@ async function brain(input, run) {
   setSubtitle('digitando...');
   let data;
   try {
-    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 30000);
+    const ctl = new AbortController(); const to = setTimeout(() => ctl.abort(), 40000);
     const r = await fetch(CONFIG.api, { method: 'POST', signal: ctl.signal, headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ niche: F.niche, history: ai.hist, state: ai.state }) });
     clearTimeout(to);
