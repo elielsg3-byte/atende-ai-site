@@ -497,6 +497,17 @@ svg{display:block}
 [data-os=ios] .ld-ltop .and-more{display:none}
 [data-os=android] .ld-tabbar.glass{background:var(--list-bg)}
 [data-os=android] #ld-back.glass{background:none}
+
+/* digitando: 3 pontinhos */
+.ld-typing{display:flex;margin-top:10px;animation:ldIn .16s ease-out both}
+[data-os=android] .ld-typing{padding:0 8px}
+.ld-typing-b{position:relative;display:flex;align-items:center;gap:5px;padding:13px 15px;border-radius:20px;background:var(--in)}
+.ld-typing-b::after{content:'';position:absolute;left:-3px;bottom:-3px;width:9px;height:9px;border-radius:50%;background:var(--in)}
+.ld-typing-b i{width:8px;height:8px;border-radius:50%;background:var(--meta-in);opacity:.35;animation:ldDot 1.3s infinite ease-in-out}
+.ld-typing-b i:nth-child(2){animation-delay:.18s}
+.ld-typing-b i:nth-child(3){animation-delay:.36s}
+@keyframes ldDot{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.ld-typing-b i{animation:none;opacity:.7}}
 </style></head><body><div id="luna-app" data-device="" data-os="" data-theme="" data-screen="chats">
 
   <aside class="ld-side" id="ld-side-left">
@@ -828,8 +839,14 @@ function place(el, from) {
     el.dataset.pos = 'last';
   } else el.dataset.pos = 'single';
   lastFrom = from; lastEl = el;
-  track.appendChild(el); scrollEnd();
+  track.appendChild(el); if (typingEl) track.appendChild(typingEl); scrollEnd();
   return el;
+}
+/* "digitando...": balão com 3 pontinhos animados no fim da conversa, igual ao WhatsApp */
+let typingEl = null;
+function showTyping(on) {
+  if (on && !typingEl) { typingEl = document.createElement('div'); typingEl.className = 'ld-typing'; typingEl.setAttribute('aria-label', 'digitando'); typingEl.innerHTML = '<div class="ld-typing-b"><i></i><i></i><i></i></div>'; track.appendChild(typingEl); scrollEnd(); }
+  else if (!on && typingEl) { typingEl.remove(); typingEl = null; }
 }
 function msgShell(from, inner, cls = '', status) {
   const el = document.createElement('div'); el.className = 'ld-msg';
@@ -911,7 +928,7 @@ const UI = {
 
 /* ---------------- cabeçalho, composer, sheet, toast ---------------- */
 const sub = $('#ld-subtitle');
-function setSubtitle(t) { sub.textContent = t; sub.classList.toggle('is-typing', t === 'digitando...'); }
+function setSubtitle(t) { sub.textContent = t; sub.classList.toggle('is-typing', t === 'digitando...'); showTyping(t === 'digitando...'); }
 const comp = $('#ld-composer'), input = $('#ld-input');
 const PH = { text: 'Mensagem', disabled: 'Aguarde…', buttons: 'Escolha acima 👆' };
 function setComposer(s) {
@@ -1035,7 +1052,7 @@ async function openChat(k) {
   F.ai = { hist: [], state: {}, count: 0, tips: null }; F.gain = STORES[k].gain || null;
   const s = STORES[k];
   new Image().src = s.menu;   // pré-carrega a miniatura enquanto a abertura acontece
-  track.innerHTML = ''; breakGroup(); stick = true; $('#ld-pro-feed').innerHTML = '';
+  track.innerHTML = ''; typingEl = null; breakGroup(); stick = true; $('#ld-pro-feed').innerHTML = '';
   $('#ld-pro-side').innerHTML = '<div class="empty">Os recursos aparecem aqui conforme a conversa acontece.</div>';
   $('#ld-cta').classList.remove('is-visible');
   $('#ld-avatar').style.background = s.color; $('#ld-avatar').textContent = s.emoji;
