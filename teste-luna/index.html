@@ -726,7 +726,7 @@ const LOC = 'Rua das Flores, 120 – Centro';
 
 const STORES = {
   acai: {
-    gain: { from: 22, to: 28 }, name: 'Açaí da Praça', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp?v=11cf88c5', menuFull: '/teste-luna/a/menu-acai.webp?v=91ea57fc',
+    gain: { from: 22, to: 28 }, name: 'Açaí da Praça', logo: '/teste-luna/a/logo-acai.webp?v=70e31cef', emoji: '🍧', color: '#5A1690', menu: '/teste-luna/a/menu-acai-thumb.webp?v=11cf88c5', menuFull: '/teste-luna/a/menu-acai.webp?v=91ea57fc',
     preview: 'Toque aqui pra montar seu açaí 💜',
     hello: () => `${greet()}! 💜 Aqui é a Luna, do *Açaí da Praça*. Que bom ter você por aqui!`,
     after: 'É só me dizer o que vai querer: pode escolher o tamanho e até 3 complementos grátis, ou um dos copos prontos 😊',
@@ -745,7 +745,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Dinheiro', troco: 'Troco p/ R$ 50,00 (R$ 16,00)', previsao: '30 a 40 min' },
   },
   pizzaria: {
-    gain: { from: 45, to: 70 }, name: 'Forno di Casa', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=00bb39bd', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=f00cc8e3',
+    gain: { from: 45, to: 70 }, name: 'Forno di Casa', logo: '/teste-luna/a/logo-pizzaria.webp?v=46f8baf1', emoji: '🍕', color: '#C2271D', menu: '/teste-luna/a/menu-pizzaria-thumb.webp?v=00bb39bd', menuFull: '/teste-luna/a/menu-pizzaria.webp?v=f00cc8e3',
     preview: 'Toque aqui pra pedir sua pizza 🍕',
     hello: () => `${greet()}! 🍕 Aqui é a Luna, da *Forno di Casa*. Que bom ter você por aqui!`,
     after: 'É só pedir pelo nome do sabor, e meio a meio também vale! 😊',
@@ -763,7 +763,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Pix', previsao: '40 a 50 min' },
   },
   hamburgueria: {
-    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=d02e51c3', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=54768ea2',
+    gain: { from: 85.8, to: 100.7 }, name: 'Monster BBQ', logo: '/teste-luna/a/logo-hamburgueria.webp?v=16130fe9', emoji: '🔥', color: '#E8641B', menu: '/teste-luna/a/menu-hamburgueria-thumb.webp?v=d02e51c3', menuFull: '/teste-luna/a/menu-hamburgueria.webp?v=54768ea2',
     preview: 'Toque aqui pra pedir seu lanche 🍔',
     hello: () => `${greet()}! 🔥 Aqui é a Luna, da *Monster BBQ*. Bora matar essa fome?`,
     after: 'É só pedir pelo nome do lanche. Se quiser tirar algum ingrediente, é só falar 😉',
@@ -781,7 +781,7 @@ const STORES = {
       taxa: 6, tipo: 'Entrega', pagamento: 'Crédito (maquininha na entrega)', previsao: '40 a 50 min' },
   },
   marmitaria: {
-    gain: { from: 29.9, to: 38.8 }, name: 'Arrumadinho Marmitas', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp?v=10e46293', menuFull: '/teste-luna/a/menu-marmitaria.webp?v=1418ce3d',
+    gain: { from: 29.9, to: 38.8 }, name: 'Arrumadinho Marmitas', logo: '/teste-luna/a/logo-marmitaria.webp?v=7f826d0e', emoji: '🍱', color: '#7A1E1E', menu: '/teste-luna/a/menu-marmitaria-thumb.webp?v=10e46293', menuFull: '/teste-luna/a/menu-marmitaria.webp?v=1418ce3d',
     preview: 'Toque aqui pra pedir sua marmita 🍱',
     hello: () => `${greet()}, tudo bem? 😊 Aqui é a Luna, do *Arrumadinho Marmitas*.`,
     after: 'Hoje tem Feijoada, Carne Assada e Frango Assado, todas tamanho grande. Qual vai ser?',
@@ -1017,7 +1017,7 @@ function renderList() {
   ORDER.forEach((k, i) => {
     const s = STORES[k];
     const b = document.createElement('button'); b.className = 'ld-chat-row unread'; b.dataset.niche = k;
-    b.innerHTML = `<span class="av" data-slot="avatar" style="background:${s.color}">${s.emoji}</span>
+    b.innerHTML = `<span class="av" data-slot="avatar" role="img" aria-label="${esc(s.name)}" style="background:${s.color} url(${s.logo}) center/cover no-repeat"></span>
       <span class="tx"><span class="l1"><span data-slot="name">${esc(s.name)}</span><span data-slot="time">${hhmm(new Date(Date.now() - i * 60000))}</span></span>
       <span class="l2"><span data-slot="preview">${esc(s.preview)}</span><span data-slot="unread">1</span></span></span>`;
     b.onclick = () => openChat(k);
@@ -1055,7 +1055,7 @@ async function openChat(k) {
   track.innerHTML = ''; typingEl = null; breakGroup(); stick = true; $('#ld-pro-feed').innerHTML = '';
   $('#ld-pro-side').innerHTML = '<div class="empty">Os recursos aparecem aqui conforme a conversa acontece.</div>';
   $('#ld-cta').classList.remove('is-visible');
-  $('#ld-avatar').style.background = s.color; $('#ld-avatar').textContent = s.emoji;
+  $('#ld-avatar').style.background = `${s.color} url(${s.logo}) center/cover no-repeat`; $('#ld-avatar').textContent = '';
   $('#ld-name').textContent = s.name; setSubtitle('Conta comercial');
   setTips([]); setComposer('disabled'); input.value = ''; autosize();
   scr.dataset.screen = 'chat'; state.screen = 'chat'; app.dataset.screen = 'chat'; applyEnv();
