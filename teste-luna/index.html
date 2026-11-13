@@ -932,7 +932,7 @@ function setSubtitle(t) { sub.textContent = t; sub.classList.toggle('is-typing',
 const comp = $('#ld-composer'), input = $('#ld-input');
 const PH = { text: 'Mensagem', disabled: 'Aguarde…', buttons: 'Escolha acima 👆' };
 function setComposer(s) {
-  const ex = s === 'text' && F.phase === 'order' && CONFIG.api && F.ai && !F.ai.count && STORES[F.niche] && STORES[F.niche].ex;
+  const ex = (s === 'text' && F.phase === 'form' && F.formPh) || (s === 'text' && F.phase === 'order' && CONFIG.api && F.ai && !F.ai.count && STORES[F.niche] && STORES[F.niche].ex);
   comp.dataset.composer = s; input.placeholder = ex ? ex : s === 'text' && F.phase === 'faq' ? 'Digite sua dúvida…' : state.os === 'ios' && s === 'text' ? '' : (PH[s] || '');
   input.disabled = s !== 'text';
 }
@@ -1048,7 +1048,7 @@ async function userSays(text) {
 
 async function openChat(k) {
   F.run++; const run = F.run;
-  F.niche = k; F.step = 0; F.phase = 'opening'; F.quiz = {};
+  F.niche = k; F.step = 0; F.phase = 'opening'; F.quiz = {}; F.lead = null; F.formResolve = null;
   F.ai = { hist: [], state: {}, count: 0, tips: null }; F.gain = STORES[k].gain || null;
   const s = STORES[k];
   new Image().src = s.menu;   // pré-carrega a miniatura enquanto a abertura acontece
@@ -1099,6 +1099,7 @@ function nextTips() {
 function submit() { const t = input.value.trim(); if (!t || comp.dataset.composer !== 'text') return; input.value = ''; autosize(); send(t); }
 
 async function send(text) {
+  if (F.phase === 'form') { const done = F.formResolve; if (!done) return; F.formResolve = null; setTips([]); setComposer('disabled'); await userSays(text); return done(text); }
   if (F.phase === 'faq') return faqAsk(text);
   if (F.busy || F.phase !== 'order') return;
   F.busy = true; setTips([]); const run = F.run;
@@ -1323,8 +1324,8 @@ function teamUrl(extra) {
 }
 const proFit = () => F.quiz && F.quiz.q3 === 'Mais de 50';
 const CTA_OPTS = () => [
-  ...(proFit() ? [{ label: 'Quero a Luna PRO por R$ 167', value: 'buy', primary: true, keep: true, link: true, href: CONFIG.links.pro }] : []),
-  { label: proFit() ? 'Founder Basic por R$ 97' : 'Quero a Luna por R$ 97', value: 'buy', primary: !proFit(), icon: proFit() ? 'link' : null, keep: true, link: true, href: CONFIG.links.buy },
+  ...(proFit() ? [{ label: 'Quero a Luna PRO por R$ 167', value: 'buy', plan: 'pro', primary: true }] : []),
+  { label: proFit() ? 'Founder Basic por R$ 97' : 'Quero a Luna por R$ 97', value: 'buy', plan: 'basic', primary: !proFit() },
   { label: 'Falar com a equipe', value: 'team', icon: 'link', keep: true, link: true, href: teamUrl() },
   { label: 'Ainda tenho dúvidas', value: 'faq' },
 ];
@@ -1335,10 +1336,69 @@ async function cta(run, text) {
   return handleCta(o, run);
 }
 function handleCta(o, run) {
-  if (o.value === 'buy' || o.value === 'team') return waitCta(run);
+  if (o.value === 'buy') return onboarding(run, o.plan || 'basic');
+  if (o.value === 'team') return waitCta(run);
   if (o.value === 'faq') return faq(run);
 }
 function waitCta(run) { /* botões continuam disponíveis */ }
+
+/* ---------------- depois do "Quero a Luna": 5 perguntas rápidas que geram compromisso, depois o checkout ---------------- */
+function askText(text, ph, skip, run) {
+  return new Promise(async resolve => {
+    if (!await lunaSays([text], run)) return resolve(null);
+    F.phase = 'form'; F.formPh = ph; F.formResolve = resolve;
+    setComposer('text');
+    if (skip) { setTips([{ label: skip, run: () => { if (!F.formResolve) return; F.formResolve = null; setTips([]); setComposer('disabled'); userSays(skip).then(() => resolve('')); } }]); tips.classList.add('is-open'); }
+    else setTips([]);
+    if (state.device === 'desktop') input.focus();
+  });
+}
+const fmtPhone = d => d.length === 11 ? `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}` : `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+async function onboarding(run, plan) {
+  const L = F.lead = { plano: plan === 'pro' ? 'PRO' : 'Basic' };
+  F.phase = 'form'; F.formResolve = null; setTips([]); setComposer('disabled');   /* nada digitado agora vai pro FAQ */
+  const name = await askText('Bora! 🚀 Pra eu já deixar tudo no jeito: *como se chama a sua loja?*', 'Ex.: Pizzaria do Zé', null, run);
+  if (name == null || run !== F.run) return;
+  L.loja = name.replace(/\s+/g, ' ').trim().slice(0, 60);
+  if (!await lunaSays([`Que nome bom! A Luna da *${L.loja}* vai ficar demais 😊`], run)) return;
+  let tel = '';
+  for (let i = 0; i < 2; i++) {
+    const t = await askText(i ? 'Hmm, acho que faltou algum número 😅 Me manda com DDD, tipo *(43) 99999-9999*:' : 'Qual o *seu WhatsApp*? É só pra gente te avisar quando a sua Luna estiver pronta.', '(DDD) 99999-9999', 'Pular por agora', run);
+    if (t == null || run !== F.run) return;
+    if (t === '') break;
+    const d = t.replace(/\D/g, '').replace(/^55(?=\d{10,11}$)/, '');
+    if (d.length === 10 || d.length === 11) { tel = fmtPhone(d); break; }
+  }
+  L.whatsapp = tel;
+  F.phase = 'quiz';
+  const q1 = await ask('Quando você pretende começar a atender com a Luna?', ['Hoje', 'Esta semana', 'Este mês', 'Ainda estou decidindo'], run); if (!q1) return;
+  L.quando = q1.value;
+  const q2 = await ask('Você tem computador ou notebook na loja?', ['Tenho', 'Só celular'], run); if (!q2) return;
+  L.computador = q2.value;
+  const soCel = q2.value === 'Só celular';
+  const q3 = await ask(`${soCel ? 'Sem problema! Com só celular a gente te ajuda a configurar 😉\n' : ''}Quer ajuda da nossa equipe pra deixar tudo pronto rapidinho? *É sem custo.*`,
+    [{ label: 'Quero ajuda', value: 'Quero ajuda', primary: soCel }, { label: 'Eu mesmo faço', value: 'Eu mesmo faço' }], run); if (!q3) return;
+  L.ajuda = q3.value;
+  sendLead(L);
+  const href = L.plano === 'PRO' ? CONFIG.links.pro : CONFIG.links.buy;
+  const quando = { 'Hoje': 'hoje', 'Esta semana': 'esta semana', 'Este mês': 'este mês' }[L.quando];
+  const resumo = `*Sua Luna* ✅\n🏪 ${L.loja}` + (quando ? `\n📅 Começa ${quando}` : '') + `\n🤝 ${L.ajuda === 'Quero ajuda' ? 'Com ajuda da nossa equipe, sem custo' : 'Configuração por sua conta (5 passos simples)'}`;
+  if (!await lunaSays([resumo], run)) return;
+  F.phase = 'faq';
+  const o = await ask(`Agora é só garantir a sua Luna no plano *Founder ${L.plano}*. Pagamento único, sem mensalidade e com *120 dias de garantia* 👇`, [
+    { label: `Ir para o pagamento · R$ ${L.plano === 'PRO' ? '167' : '97'}`, value: 'pay', primary: true, keep: true, link: true, href },
+    { label: 'Falar com a equipe', value: 'team', icon: 'link', keep: true, link: true, href: teamUrl(`Loja: ${L.loja}. Começar: ${L.quando}. Computador: ${L.computador}. Ajuda: ${L.ajuda}.`) },
+    { label: 'Ainda tenho dúvidas', value: 'faq' },
+  ], run);
+  if (o) return handleCta(o, run);
+}
+function sendLead(L) {
+  if (!CONFIG.api) return;
+  const qs2 = new URLSearchParams(location.search), utm = {};
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(k => { if (qs2.get(k)) utm[k] = qs2.get(k); });
+  const body = { mode: 'lead', lead: { ...L, nicho_demo: F.niche, quiz: F.quiz, utm, aparelho: state.device + '/' + state.os } };
+  try { fetch(CONFIG.api, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), keepalive: true }).catch(() => {}); } catch (e) {}
+}
 
 const FAQ = [
   { value: 'pedido', title: 'Ela fecha o pedido?', description: 'Ou só responde mensagens', answer: 'Fecho sim! Eu conduzo o atendimento do começo ao fim: mando o cardápio, tiro dúvidas, anoto produtos, adicionais e observações e entrego a comanda completa no painel, igual você acabou de ver.' },
@@ -1418,6 +1478,7 @@ async function faqAsk(text) {
   if (o) return handleCta(o, run);
 }
 function syncSideCta() { $('#ld-cta-buy').href = CONFIG.links.buy; $('#ld-cta-team').href = teamUrl(); }
+$('#ld-cta-buy').addEventListener('click', e => { if (F.niche && F.phase !== 'form' && !F.lead) { e.preventDefault(); F.run++; onboarding(F.run, proFit() ? 'pro' : 'basic'); } });
 syncSideCta();
 $('#ld-cta-faq').onclick = () => { if (F.niche) { F.run++; F.phase = 'quiz'; faq(F.run); } };
 
