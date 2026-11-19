@@ -1019,6 +1019,406 @@ src="https://www.facebook.com/tr?id=1444232587293553&amp;ev=PageView&amp;noscrip
   </div>
 </section>
 
+<!-- ============ SEÇÃO TESTE A LUNA (abaixo da Demonstração real) ============ -->
+<style>
+/* ---- Teste a Luna · prefixo tst- (seção) e lip- (iPhone) · mobile first ---- */
+.tst{--ink:#101312;--muted:#5d6561;--lime:#baf91a;--lime-ink:#3f6200;--soft:#f4f6f2;
+  position:relative;isolation:isolate;overflow:hidden;padding:64px 0 56px;color:var(--ink);text-align:center;
+  background:radial-gradient(ellipse 120% 60% at 50% 0%,#eefbd2 0%,#f7fdeb 35%,#fff 70%);font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.tst *{box-sizing:border-box}
+.tst-wrap{width:calc(100% - 32px);max-width:1180px;margin:0 auto}
+.tst-pill{display:inline-block;padding:6px 12px;border-radius:99px;background:rgba(186,249,26,.35);color:#2f4a00;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.tst-title{margin:18px auto 0;max-width:760px;font-family:'DM Sans','Inter',ui-sans-serif,sans-serif;font-size:36px;line-height:1.08;font-weight:500;letter-spacing:-.035em;color:var(--ink);text-wrap:balance}
+.tst-title em{font-style:normal;position:relative;white-space:nowrap;z-index:0}
+.tst-title em::after{content:"";position:absolute;z-index:-1;left:-2%;right:-2%;bottom:.06em;height:.36em;border-radius:6px;background:var(--lime)}
+.tst-sub{max-width:560px;margin:16px auto 0;color:var(--muted);font-size:16px;line-height:1.6}
+
+/* lojas de teste */
+.tst-stores{width:100%;max-width:640px;margin:24px auto 0;padding:16px;border-radius:20px;background:#fff;text-align:left;box-shadow:0 1px 2px rgba(16,19,18,.04),0 8px 24px -14px rgba(16,19,18,.16)}
+.tst-label{margin:0 2px 12px;color:var(--muted);font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+.tst-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.tst-store{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;padding:0 12px;border:0;border-radius:14px;background:var(--soft);color:var(--ink);
+  font-family:'DM Sans','Inter',sans-serif;font-size:15px;font-weight:500;text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease,color .18s ease}
+.tst-store i{flex:none;width:8px;height:8px;border-radius:50%;background:#9fd60f;transition:transform .18s ease}
+.tst-store:hover{transform:translateY(-2px);background:#f1fbdc;box-shadow:inset 0 0 0 1.5px var(--lime),0 8px 18px -10px rgba(16,19,18,.3)}
+.tst-store:hover i{transform:scale(1.35)}
+.tst-store:active{transform:scale(.96)}
+.tst-store[aria-pressed="true"]{background:var(--ink);color:#fff;box-shadow:none}
+.tst-store[aria-pressed="true"] i{background:var(--lime)}
+.tst-store:focus-visible,.tst-start:focus-visible,.tst-btn:focus-visible{outline:3px solid #876dff;outline-offset:3px}
+a.tst-store{color:var(--ink)}
+.tst-start{display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;margin-top:10px;border-radius:14px;background:var(--ink);color:#fff!important;font-size:15px;font-weight:700;text-decoration:none}
+.tst-start[hidden]{display:none}
+.tst-start:hover{background:#1d2220}
+.tst-arrow{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:var(--lime);color:var(--ink);font-size:15px;line-height:1}
+.tst-note{margin:12px 0 0;color:var(--muted);font-size:12.5px;line-height:1.5;text-align:center}
+.tst-note b{color:var(--lime-ink);font-weight:700}
+
+/* palco */
+.tst-stage{position:relative;margin-top:24px;padding:20px 16px 28px;border-radius:28px;background:linear-gradient(180deg,#f1fbdc 0%,#f7fbf1 55%,#fbfcf9 100%);box-shadow:inset 0 0 0 1px rgba(16,19,18,.05)}
+.tst-grid{display:grid;gap:10px}
+.tst-phone{width:100%;max-width:270px;margin:0 auto 10px;text-align:left;filter:drop-shadow(0 24px 34px rgba(16,19,18,.22))}
+.tst-card{display:flex;gap:14px;align-items:center;padding:12px 16px;border-radius:18px;background:#fff;text-align:left;box-shadow:0 1px 2px rgba(16,19,18,.04),0 8px 24px -14px rgba(16,19,18,.16)}
+.tst-ic{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--lime)}
+.tst-card b{display:block;font-family:'DM Sans','Inter',sans-serif;font-size:16px;font-weight:500;letter-spacing:-.01em;line-height:1.3}
+.tst-card p{display:none;margin:3px 0 0;color:var(--muted);font-size:13.5px;line-height:1.5}
+
+/* botão principal + seletor */
+.tst-cta{margin-top:12px}
+.tst-btn{display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 8px 0 24px;border:0;border-radius:99px;background:var(--ink);color:#fff;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;
+  box-shadow:0 10px 24px -10px rgba(16,19,18,.45);transition:transform .2s,box-shadow .2s}
+.tst-btn .tst-arrow{width:40px;height:40px;font-size:17px;transition:transform .2s}
+.tst-btn:hover{transform:translateY(-1px)}
+.tst-btn[aria-expanded="true"] .tst-arrow{transform:rotate(90deg)}
+.tst-picker{max-width:420px;margin:14px auto 0;padding:14px;border-radius:18px;background:#fff;text-align:left;box-shadow:0 1px 2px rgba(16,19,18,.04),0 10px 28px -14px rgba(16,19,18,.22)}
+.tst .tst-picker .tst-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tst-picker[hidden]{display:none}
+.tst-cta .tst-note{margin-top:14px}
+
+/* tablet */
+@media (min-width:640px){
+  .tst{padding:80px 0 64px}
+  .tst-title{font-size:48px}
+  .tst-choices{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .tst-stage{padding:28px 24px 28px;border-radius:32px}
+  .tst-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tst-phone{grid-column:1/-1;max-width:300px}
+  .tst-cta{grid-column:1/-1}
+  .tst-c3{grid-column:1/-1}
+}
+/* desktop: botão abaixo do subtítulo; lojas dentro do palco, abaixo do iPhone */
+@media (min-width:1024px){
+  .tst{padding:104px 0 88px}
+  .tst-title{font-size:60px}
+  .tst-cta{margin-top:26px}
+  .tst-stage{margin-top:44px;padding:48px 48px 40px}
+  .tst-grid{grid-template-columns:minmax(0,1fr) 330px minmax(0,1fr);grid-template-areas:"a phone c" "b phone c" "st st st";align-items:center;column-gap:44px;row-gap:20px}
+  .tst-phone{grid-area:phone;max-width:330px;margin:0}
+  .tst-c1{grid-area:a;align-self:end}
+  .tst-c2{grid-area:b;align-self:start;margin-left:34px}
+  .tst-c3{grid-area:c;margin-right:34px}
+  .tst-c3{grid-column:auto}
+  .tst-card{align-items:flex-start;padding:20px}
+  .tst-card .tst-ic{width:40px;height:40px}
+  .tst-card p{display:block}
+  .tst-grid>.tst-stores{grid-area:st;margin:12px auto 0}
+}
+@media (prefers-reduced-motion:reduce){.tst-store,.tst-store i,.tst-btn,.tst-btn .tst-arrow{transition:none}}
+/* ====== Luna no iPhone · componente isolado (prefixo lip-) ====== */
+.lip-wrap{--phone-w:393px;width:100%;max-width:360px;margin:0 auto;aspect-ratio:417/876;position:relative}
+.lip-scale{position:absolute;left:0;top:0;width:417px;height:876px;transform-origin:0 0}
+.lip-phone{position:absolute;inset:0;border-radius:68px;padding:12px;
+  background:linear-gradient(145deg,#cfd2d6 0%,#8e9297 18%,#5d6166 50%,#9a9ea3 82%,#d7dadd 100%);
+  box-shadow:0 0 0 1px #2b2d30 inset,0 40px 80px -20px rgba(10,20,15,.45),0 18px 36px -18px rgba(10,20,15,.35)}
+.lip-phone::before{content:"";position:absolute;inset:3px;border-radius:65px;background:#050505}
+.lip-btn{position:absolute;background:linear-gradient(90deg,#6f7378,#a3a7ab);border-radius:2px;width:4px}
+.lip-btn.a{left:-3px;top:150px;height:34px}.lip-btn.b{left:-3px;top:212px;height:62px}.lip-btn.c{left:-3px;top:290px;height:62px}
+.lip-btn.d{right:-3px;top:250px;height:96px}.lip-btn.e{right:-3px;top:520px;height:58px;width:3px;opacity:.85}
+.lip-screen{position:relative;width:393px;height:852px;border-radius:56px;overflow:hidden;background:#efe7de;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","Segoe UI",Roboto,Arial,sans-serif;color:#111b21;
+  -webkit-font-smoothing:antialiased;isolation:isolate}
+.lip-wall{position:absolute;inset:0;z-index:0;background-color:#efe7de;background-repeat:repeat;background-size:auto 614px;background-position:center top;opacity:1;transition:opacity .4s}
+.lip-island{position:absolute;z-index:30;left:50%;top:11px;width:124px;height:36px;margin-left:-62px;border-radius:20px;background:#000}
+/* barra de status */
+.lip-sb{position:absolute;z-index:25;top:0;left:0;right:0;height:54px;font:600 17px/22px -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;letter-spacing:-.4px}
+.lip-sb .t{position:absolute;left:0;width:150px;top:17px;text-align:center}
+.lip-sb .ic{position:absolute;right:30px;top:20px;display:flex;gap:6px;align-items:center}
+/* cabeçalho estilo iOS (vidro) */
+.lip-hd{position:absolute;z-index:20;top:54px;left:0;right:0;height:60px;display:flex;align-items:center;gap:8px;padding:0 14px}
+.lip-hd::before{content:"";position:absolute;inset:-54px 0 -14px;z-index:-1;background:linear-gradient(#efe7de 55%,rgba(239,231,222,0))}
+.lip-glass{background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(14px) saturate(1.6);backdrop-filter:blur(14px) saturate(1.6);
+  box-shadow:0 0 0 .5px rgba(0,0,0,.06),0 6px 16px -6px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.9);border-radius:22px;height:44px;display:flex;align-items:center}
+.lip-back{padding:0 13px 0 7px;gap:2px;font-size:17px;letter-spacing:-.4px}
+.lip-who{flex:1;min-width:0;padding:0 14px 0 4px;gap:9px}
+.lip-av{width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;font:600 15px/1 -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#fff;background:linear-gradient(135deg,#7aa7c7,#4a7da3)}
+.lip-nm{min-width:0;line-height:1.15}
+.lip-nm b{display:block;font-size:17px;font-weight:600;letter-spacing:-.4px}
+.lip-nm span{display:block;font-size:13px;color:#667781;letter-spacing:-.1px;transition:color .2s}
+.lip-nm span.typ{color:#1daa61}
+.lip-call{width:72px;justify-content:center;gap:16px;color:#0a0a0a}
+/* área das mensagens */
+.lip-chat{position:absolute;z-index:5;left:0;right:0;top:118px;bottom:92px;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:0 10px 6px}
+.lip-list{display:flex;flex-direction:column;transition:opacity .5s}
+.lip-day{align-self:center;margin:4px 0 10px;padding:5px 11px;border-radius:10px;background:rgba(255,255,255,.92);font:600 13px/17px -apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;color:#54656f;box-shadow:0 1px .5px rgba(11,20,26,.08)}
+.lip-row{display:grid;grid-template-rows:1fr;animation:lipGrow .32s ease-out both}
+.lip-row>div{min-height:0;overflow:visible;display:flex;flex-direction:column}
+@keyframes lipGrow{from{grid-template-rows:0fr;opacity:0}to{grid-template-rows:1fr;opacity:1}}
+.lip-m{display:flex;margin-top:2px;animation:lipPop .3s cubic-bezier(.2,.9,.3,1.2) both}
+.lip-m.gap{margin-top:9px}
+@keyframes lipPop{from{transform:translateY(8px) scale(.97);opacity:0}to{transform:none;opacity:1}}
+.lip-m.out{justify-content:flex-end}
+.lip-b{position:relative;max-width:300px;padding:7px 11px 8px 12px;border-radius:19px;font-size:17px;line-height:22px;letter-spacing:-.4px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px .5px rgba(11,20,26,.08)}
+.lip-m.in .lip-b{background:#fff}
+.lip-m.out .lip-b{background:#d9fdd3}
+.lip-m.tl.in .lip-b{border-bottom-left-radius:4px}
+.lip-m.tl.out .lip-b{border-bottom-right-radius:4px}
+.lip-b b{font-weight:600}
+.lip-b i{font-style:italic}
+.lip-meta{float:right;position:relative;top:7px;margin:-4px -2px 0 10px;display:inline-flex;align-items:center;gap:3px;font-size:12px;line-height:14px;letter-spacing:0;color:#667781}
+.lip-m.out .lip-meta{color:#5c7a68}
+.lip-tk{width:17px;height:11px;color:#8696a0;transition:color .3s}
+.lip-tk.read{color:#34b7f1}
+/* monoespaçado (resumo alinhado, como o ``` do WhatsApp) */
+.lip-mono{display:block;margin:6px 0 4px;font:400 14.5px/20px ui-monospace,"SF Mono",Menlo,Consolas,monospace;letter-spacing:-.2px;white-space:pre;color:#1f2c34}
+/* imagem (cardápio) */
+.lip-img{padding:3px;width:272px}
+.lip-img .ph{width:266px;height:355px;border-radius:16px;background:#1b1b1b center top/cover no-repeat}
+.lip-img .lip-meta.on{position:absolute;right:10px;bottom:9px;top:auto;margin:0;padding:2px 6px;border-radius:9px;background:rgba(0,0,0,.35);color:#fff}
+.lip-img .lip-meta.on .lip-tk{color:#fff}.lip-img .lip-meta.on .lip-tk.read{color:#7fd3ff}
+/* comanda digital */
+.lip-cmd{padding:4px;width:300px}
+.lip-cmd .cap{padding:6px 8px 3px}
+.rc{border-radius:15px;overflow:hidden;background:#fff;font-size:14px;line-height:18px;letter-spacing:-.2px;color:#16181a;box-shadow:0 0 0 .5px rgba(0,0,0,.08)}
+.rc-top{display:flex;align-items:center;gap:9px;padding:10px 11px;background:#141414;color:#fff}
+.rc-logo{width:34px;height:34px;border-radius:50%;flex:none;background:#E8641B center/cover no-repeat;box-shadow:0 0 0 1.5px #E8641B}
+.rc-top b{display:block;font-size:14px;letter-spacing:.6px;font-weight:800}
+.rc-top span{display:block;font-size:11.5px;color:#b9b9b9}
+.rc-top em{margin-left:auto;font-style:normal;font-size:11.5px;font-weight:700;color:#141414;background:#ffb347;padding:4px 8px;border-radius:99px;white-space:nowrap}
+.rc-id{display:flex;align-items:baseline;gap:6px;padding:10px 12px 6px;border-bottom:1px dashed #d9dcdf}
+.rc-id span{font-size:12px;color:#6b7176}.rc-id b{font-size:20px;font-weight:800;letter-spacing:-.4px}.rc-id .r{margin-left:auto}
+.rc-it{display:flex;align-items:flex-start;gap:8px;padding:8px 12px 0}
+.rc-it i{font-style:normal;font-weight:700;font-size:12px;min-width:26px;text-align:center;padding:2px 0;border-radius:6px;background:#fff1e6;color:#c4520f}
+.rc-it div{flex:1;min-width:0}.rc-it b{font-weight:600}.rc-it small{display:block;font-size:12px;color:#c4520f;margin-top:1px}
+.rc-it span{font-weight:600;font-variant-numeric:tabular-nums}
+.rc-sum{margin:10px 12px 0;padding-top:8px;border-top:1px dashed #d9dcdf}
+.rc-sum p{display:flex;justify-content:space-between;margin:0 0 3px;font-size:13px;color:#555b60;font-variant-numeric:tabular-nums}
+.rc-sum p.tot{margin-top:6px;font-size:16px;font-weight:800;color:#16181a}
+.rc-ft{margin-top:9px;padding:8px 12px 10px;background:#f6f7f8;font-size:12.5px;color:#3d4246}
+.rc-ft p{margin:0 0 3px}.rc-ft p:last-child{margin:0}
+/* documento (cardápio) */
+.lip-doc{padding:4px;width:290px}
+.lip-doc .box{display:flex;align-items:center;gap:10px;padding:11px 10px;border-radius:14px;background:rgba(0,0,0,.045)}
+.lip-doc .pdf{width:34px;height:40px;flex:none;border-radius:5px;background:#e53935;color:#fff;font:700 10px/40px -apple-system,BlinkMacSystemFont,Arial,sans-serif;text-align:center;letter-spacing:.3px}
+.lip-doc .fn{min-width:0;flex:1}
+.lip-doc .fn b{display:block;font-size:16px;line-height:20px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lip-doc .fn span{font-size:13px;color:#667781}
+.lip-doc .lip-meta{margin:2px 6px 2px 0;top:0}
+/* compositor (teclado recolhido) */
+.lip-cp{position:absolute;z-index:20;left:0;right:0;bottom:0;height:92px;padding:8px 12px 0;display:flex;align-items:flex-start;gap:10px;color:#0a0a0a}
+.lip-cp::before{content:"";position:absolute;inset:-18px 0 0;z-index:-1;background:linear-gradient(rgba(239,231,222,0),#efe7de 40%)}
+.lip-cp .rnd{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.lip-cp .fld{flex:1;height:44px;border-radius:22px;padding:0 10px 0 16px;display:flex;align-items:center;justify-content:space-between;color:#8a8f93;font-size:17px;letter-spacing:-.4px}
+.lip-cp .mic{background:#1daa61;color:#fff;box-shadow:none}
+.lip-home{position:absolute;z-index:30;bottom:8px;left:50%;width:140px;height:5px;margin-left:-70px;border-radius:3px;background:#0a0a0a}
+@media (prefers-reduced-motion:reduce){.lip-row,.lip-m{animation:none}}
+</style>
+
+<section id="teste-luna" class="tst" aria-labelledby="tst-title">
+  <div class="tst-wrap">
+    <span class="tst-pill">Teste agora · grátis</span>
+    <h2 id="tst-title" class="tst-title">Faça um pedido. <em>A Luna atende.</em></h2>
+    <p class="tst-sub">Escolha uma das lojas de teste e faça um pedido de verdade pelo WhatsApp. Ela mostra o cardápio, anota cada observação, oferece na hora certa e fecha com a comanda pronta.</p>
+
+    <div class="tst-slot-top">
+      <div class="tst-stores" id="tst-stores">
+        <p class="tst-label" id="tst-stores-label">Escolha uma loja pra testar</p>
+        <div class="tst-choices" role="group" aria-labelledby="tst-stores-label">
+          <button type="button" class="tst-store" data-loja="pizzaria" aria-pressed="false"><i aria-hidden="true"></i>Pizzaria</button>
+          <button type="button" class="tst-store" data-loja="hamburgueria" aria-pressed="false"><i aria-hidden="true"></i>Hamburgueria</button>
+          <button type="button" class="tst-store" data-loja="acai" aria-pressed="false"><i aria-hidden="true"></i>Açaí</button>
+          <button type="button" class="tst-store" data-loja="marmitaria" aria-pressed="false"><i aria-hidden="true"></i>Marmitaria</button>
+        </div>
+        <a class="tst-start" id="tst-start" href="/teste-luna/" data-track="teste-luna-start" hidden>Começar o teste · <span id="tst-start-name"></span> <span class="tst-arrow" aria-hidden="true">→</span></a>
+        <p class="tst-note">Leva 2 minutos · Sem cadastro · <b>Funciona no celular</b></p>
+      </div>
+      <div class="tst-cta-desk"></div>
+    </div>
+
+    <div class="tst-stage">
+      <div class="tst-grid">
+        <div class="tst-phone">
+<!-- ====== INÍCIO DO COMPONENTE ====== -->
+<div class="lip-wrap" id="lip" data-wall="/assets/teste-luna/wall-light.webp" data-menu="/assets/teste-luna/cardapio-monster.webp" data-logo="/assets/teste-luna/logo-monster.webp" role="img" aria-label="Animação: a Luna atendendo um pedido de 2 combos da Monster BBQ no WhatsApp, do boa noite até a comanda">
+  <div class="lip-scale">
+    <div class="lip-phone">
+      <i class="lip-btn a"></i><i class="lip-btn b"></i><i class="lip-btn c"></i><i class="lip-btn d"></i><i class="lip-btn e"></i>
+      <div class="lip-screen" aria-hidden="true">
+        <div class="lip-wall"></div>
+        <div class="lip-island"></div>
+        <div class="lip-sb"><span class="t">19:42</span>
+          <span class="ic">
+            <svg width="19" height="12" viewBox="0 0 19 12"><rect x="0" y="8" width="3.2" height="4" rx="1"/><rect x="5" y="5.5" width="3.2" height="6.5" rx="1"/><rect x="10" y="3" width="3.2" height="9" rx="1"/><rect x="15" y="0" width="3.2" height="12" rx="1"/></svg>
+            <svg width="17" height="12" viewBox="0 0 17 12"><path d="M8.5 2.3c2.3 0 4.4.9 6 2.4l1.2-1.2A10.2 10.2 0 0 0 8.5.6 10.2 10.2 0 0 0 1.3 3.5l1.2 1.2a8.5 8.5 0 0 1 6-2.4Zm0 3.4c1.4 0 2.6.5 3.6 1.4l1.2-1.2a6.8 6.8 0 0 0-9.6 0l1.2 1.2c1-.9 2.2-1.4 3.6-1.4Zm0 3.4c.5 0 1 .2 1.3.5L8.5 11 7.2 9.6c.3-.3.8-.5 1.3-.5Z"/></svg>
+            <svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.8" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="17" height="9" rx="2.5"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2Z" opacity=".45"/></svg>
+          </span>
+        </div>
+        <div class="lip-hd">
+          <div class="lip-glass lip-back"><svg width="12" height="20" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2 2 10l8 8"/></svg><span>12</span></div>
+          <div class="lip-glass lip-who"><div class="lip-av">R</div><div class="lip-nm"><b>Rafael</b><span class="lip-st">online</span></div></div>
+          <div class="lip-glass lip-call">
+            <svg width="22" height="16" viewBox="0 0 24 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="1" y="2" width="15" height="12" rx="3"/><path d="m16 6.5 6-3.5v10l-6-3.5"/></svg>
+          </div>
+        </div>
+        <div class="lip-chat"><div class="lip-list"></div></div>
+        <div class="lip-cp">
+          <div class="rnd"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v16M4 12h16"/></svg></div>
+          <div class="fld lip-glass"><span></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 12.5V7a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h5.5"/><path d="M20 12.5 12.5 20c0-4.1 3.4-7.5 7.5-7.5Z"/></svg></div>
+          <div class="rnd lip-glass"><svg width="22" height="20" viewBox="0 0 24 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h2.5L9 3h6l1.5 2H19a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="12" r="3.6"/></svg></div>
+          <div class="rnd mic"><svg width="18" height="22" viewBox="0 0 18 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="2" width="8" height="13" rx="4" fill="currentColor" stroke="none"/><path d="M2 11a7 7 0 0 0 14 0M9 18v4"/></svg></div>
+        </div>
+        <div class="lip-home"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(function () {
+  var root = document.getElementById('lip'); if (!root) return;
+  var scaleEl = root.querySelector('.lip-scale'), list = root.querySelector('.lip-list'),
+      st = root.querySelector('.lip-st'), wall = root.querySelector('.lip-wall');
+
+  /* roteiro: in = cliente, out = Luna (conta da loja) */
+  var SCRIPT = [
+    { day: 'Hoje' },
+    { in: 'Boa noite! Vocês tão abertos?', t: '19:42' },
+    { out: 'Boa noite! 🔥 Aqui é a Luna, da *Monster BBQ*.\nTamos abertos sim! Olha o cardápio de hoje 👇', t: '19:42' },
+    { img: 'menu', t: '19:42' },
+    { in: 'Quero 2 Combo Mostarda, um sem pimenta vermelha', t: '19:43' },
+    { out: 'Ótima escolha! 🍔\n\n*2x Combo Mostarda* · R$ 109,80\n_Batata inclusa · 1 sem pimenta_\n\nPra acompanhar, uma *Coca-Cola 2 L* bem gelada por *R$ 15,90*? 🥤', t: '19:43' },
+    { in: 'Manda sim!', t: '19:43' },
+    { out: 'Anotado! 🥤\nVai ser *entrega* ou *retirada*?', t: '19:43' },
+    { in: 'Entrega. Rua das Palmeiras, 245, Jardim América', t: '19:44' },
+    { out: '📍 Endereço anotado!\n\n*Resumo do pedido*\n```2x Combo Mostarda   109,80\n   1 sem pimenta\n1x Coca-Cola 2 L     15,90\nTaxa de entrega       6,00\n--------------------------\nTotal            R$ 131,70```\n\nPosso confirmar?', t: '19:44' },
+    { in: 'Pode confirmar! Crédito na entrega 💳', t: '19:44' },
+    { comanda: true, cap: '✅ *Pedido confirmado!* Já foi pra chapa 🔥', t: '19:44' },
+    { out: 'Previsão de entrega: *40 a 50 min* 🛵\nObrigada pela preferência! 💚', t: '19:44' }
+  ];
+
+  var COMANDA =
+    '<div class="rc"><div class="rc-top"><div class="rc-logo" data-logo></div><div><b>MONSTER BBQ</b><span>Comanda digital</span></div><em>🔥 Na chapa</em></div>' +
+    '<div class="rc-id"><span>Pedido</span><b>#0518</b><span class="r">19:44 · Entrega</span></div>' +
+    '<div class="rc-it"><i>2x</i><div><b>Combo Mostarda</b><small>1 sem pimenta vermelha</small></div><span>109,80</span></div>' +
+    '<div class="rc-it"><i>1x</i><div><b>Coca-Cola 2 L</b></div><span>15,90</span></div>' +
+    '<div class="rc-sum"><p><span>Subtotal</span><span>125,70</span></p><p><span>Taxa de entrega</span><span>6,00</span></p><p class="tot"><span>Total</span><span>R$ 131,70</span></p></div>' +
+    '<div class="rc-ft"><p>💳 Crédito · maquininha na entrega</p><p>📍 Rua das Palmeiras, 245 · Jardim América</p><p>⏱️ Previsão: 40 a 50 min</p></div></div>';
+  var TK = '<svg class="lip-tk" viewBox="0 0 17 11" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M1 5.9 4.1 9l6.6-7.6M8 8.3l.7.7 6.6-7.6"/></svg>';
+  var esc = function (s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); };
+  var inl = function (s) { return s.replace(/\*([^*\n]+)\*/g, '<b>$1</b>').replace(/_([^_\n]+)_/g, '<i>$1</i>'); };
+  var fmt = function (s) { return esc(s).split('```').map(function (p, i) { return i % 2 ? '<code class="lip-mono">' + p + '</code>' : inl(p); }).join('').replace(/<\/code>\n/g, '</code>').replace(/\n<code/g, '<code'); };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var visible = false, running = false, last = null;
+
+  /* escala o iPhone para caber na largura disponível */
+  function fit() { scaleEl.style.transform = 'scale(' + (root.clientWidth / 417) + ')'; }
+  fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(root); else addEventListener('resize', fit);
+
+  function wait(ms) { return new Promise(function (r) { (function tick() { if (visible) setTimeout(r, ms); else setTimeout(tick, 300); })(); }); }
+
+  function add(step, instant) {
+    var row = document.createElement('div'); row.className = 'lip-row'; var inner = document.createElement('div'); row.appendChild(inner);
+    if (step.day) { inner.innerHTML = '<div class="lip-day">' + step.day + '</div>'; list.appendChild(row); last = null; return; }
+    var from = step.in ? 'in' : 'out', m = document.createElement('div');
+    m.className = 'lip-m ' + from + (last !== from ? ' gap' : '');
+    if (last === from && list.lastElementChild) { var prev = list.lastElementChild.querySelector('.lip-m'); if (prev) prev.classList.remove('tl'); }
+    m.classList.add('tl');
+    var meta = '<span class="lip-meta">' + step.t + (from === 'out' ? ' ' + TK : '') + '</span>';
+    if (step.img) m.innerHTML = '<div class="lip-b lip-img"><div class="ph" data-src="' + (root.getAttribute('data-menu') || '') + '"></div>' + meta.replace('lip-meta', 'lip-meta on') + '</div>';
+    else if (step.comanda) m.innerHTML = '<div class="lip-b lip-cmd">' + COMANDA + '<div class="cap">' + fmt(step.cap) + meta + '</div></div>';
+    else if (step.doc) m.innerHTML = '<div class="lip-b lip-doc"><div class="box"><div class="pdf">PDF</div><div class="fn"><b>' + esc(step.doc) + '</b><span>2 páginas · PDF · 1,2 MB</span></div></div>' + meta + '</div>';
+    else m.innerHTML = '<div class="lip-b">' + fmt(step.in || step.out) + meta + '</div>';
+    inner.appendChild(m); list.appendChild(row); last = from;
+    var lg = m.querySelector('[data-logo]'); if (lg && root.getAttribute('data-logo')) lg.style.backgroundImage = 'url(' + root.getAttribute('data-logo') + ')';
+    var ph = m.querySelector('.ph'); if (ph && ph.dataset.src) ph.style.backgroundImage = 'url(' + ph.dataset.src + ')';
+    if (instant) { row.style.animation = m.style.animation = 'none'; }
+  }
+  function readAll() { list.querySelectorAll('.lip-tk').forEach(function (t) { t.classList.add('read'); }); }
+
+  async function play() {
+    if (running) return; running = true;
+    while (true) {
+      list.style.opacity = 1; list.innerHTML = ''; last = null; st.textContent = 'online'; st.classList.remove('typ');
+      for (var i = 0; i < SCRIPT.length; i++) {
+        var s = SCRIPT[i];
+        if (s.day) { add(s); await wait(500); continue; }
+        if (s.in) {
+          await wait(700); readAll();
+          st.textContent = 'digitando…'; st.classList.add('typ');
+          await wait(Math.min(2400, 900 + s.in.length * 28));
+          st.textContent = 'online'; st.classList.remove('typ');
+          add(s); await wait(500);
+        } else {
+          await wait(s.img ? 450 : 950);          /* a Luna responde rápido */
+          add(s);
+          await wait(s.comanda ? 3800 : s.img ? 1800 : Math.min(2800, 900 + (s.out || '').length * 10));
+        }
+      }
+      readAll(); await wait(5500);
+      list.style.opacity = 0; await wait(600);
+    }
+  }
+  function staticFinal() { list.innerHTML = ''; SCRIPT.forEach(function (s) { add(s, true); }); readAll(); }
+
+  function loadWall() {
+    var u = root.getAttribute('data-wall'); if (u && !wall.style.backgroundImage) wall.style.backgroundImage = 'url(' + u + ')';
+    ['data-menu', 'data-logo'].forEach(function (a) { var v = root.getAttribute(a); if (v) (new Image()).src = v; });   /* pré-carrega só quando aparece */
+  }
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) {
+      visible = e[0].isIntersecting;
+      if (visible) { loadWall(); if (reduce) staticFinal(); else play(); }
+    }, { rootMargin: '120px' }).observe(root);
+  } else { visible = true; loadWall(); reduce ? staticFinal() : play(); }
+  document.addEventListener('visibilitychange', function () { if (document.hidden) visible = false; else { var r = root.getBoundingClientRect(); visible = r.bottom > 0 && r.top < innerHeight; } });
+})();
+</script>
+<!-- ====== FIM DO COMPONENTE ====== -->
+        </div>
+        <div class="tst-card tst-c1"><span class="tst-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12Z"/></svg></span><div><b>Peça do seu jeito</b><p>Escreva como seu cliente escreve. Sem "digite 1".</p></div></div>
+        <div class="tst-card tst-c2"><span class="tst-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg></span><div><b>Tire um ingrediente</b><p>"Sem cebola", "sem pimenta": ela anota tudo.</p></div></div>
+        <div class="tst-card tst-c3"><span class="tst-ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg></span><div><b>Veja a comanda</b><p>O pedido fecha completo, pronto pra cozinha.</p></div></div>
+        <div class="tst-cta" id="tst-cta">
+          <button type="button" class="tst-btn" id="tst-btn" aria-expanded="false" aria-controls="tst-picker" data-track="teste-luna-cta">Testar a Luna agora <span class="tst-arrow" aria-hidden="true">→</span></button>
+          <div class="tst-picker" id="tst-picker" hidden>
+            <p class="tst-label">Qual loja você quer testar?</p>
+            <div class="tst-choices">
+              <a class="tst-store" href="/teste-luna/?loja=pizzaria"><i aria-hidden="true"></i>Pizzaria</a>
+              <a class="tst-store" href="/teste-luna/?loja=hamburgueria"><i aria-hidden="true"></i>Hamburgueria</a>
+              <a class="tst-store" href="/teste-luna/?loja=acai"><i aria-hidden="true"></i>Açaí</a>
+              <a class="tst-store" href="/teste-luna/?loja=marmitaria"><i aria-hidden="true"></i>Marmitaria</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  var sec = document.getElementById('teste-luna'); if (!sec) return;
+  var NAMES = { pizzaria: 'Pizzaria', hamburgueria: 'Hamburgueria', acai: 'Açaí', marmitaria: 'Marmitaria' };
+  var stores = document.getElementById('tst-stores'), start = document.getElementById('tst-start'), startName = document.getElementById('tst-start-name');
+  var btn = document.getElementById('tst-btn'), picker = document.getElementById('tst-picker'), cta = document.getElementById('tst-cta');
+  var slotTop = sec.querySelector('.tst-slot-top'), slotDesk = sec.querySelector('.tst-cta-desk'), grid = sec.querySelector('.tst-grid');
+
+  /* escolher a loja: marca e mostra o botão de começar */
+  stores.querySelectorAll('.tst-store').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var k = b.getAttribute('data-loja');
+      stores.querySelectorAll('.tst-store').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+      start.href = '/teste-luna/?loja=' + k; startName.textContent = NAMES[k]; start.hidden = false;
+    });
+  });
+  /* botão principal: abre o seletor de loja */
+  btn.addEventListener('click', function () {
+    var open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open)); picker.hidden = !open;
+    if (open) { var f = picker.querySelector('a'); if (f && matchMedia('(pointer:fine)').matches) f.focus({ preventScroll: true }); }
+  });
+
+  /* posição no layout: celular = lojas abaixo do subtítulo e botão no fim do palco;
+     computador = botão abaixo do subtítulo e lojas dentro do palco, abaixo do iPhone */
+  var mq = matchMedia('(min-width:1024px)');
+  function place() {
+    if (mq.matches) { slotDesk.appendChild(cta); grid.appendChild(stores); }
+    else { slotTop.insertBefore(stores, slotDesk); grid.appendChild(cta); }
+  }
+  place(); (mq.addEventListener ? mq.addEventListener('change', place) : mq.addListener(place));
+})();
+</script>
+<!-- ============ FIM DA SEÇÃO TESTE A LUNA ============ -->
+
+
 <section id="resultados" class="results-v4" aria-labelledby="results-v4-title">
   <div class="rv4-container">
     <header class="rv4-intro">
