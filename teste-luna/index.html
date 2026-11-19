@@ -508,6 +508,10 @@ svg{display:block}
 .ld-typing-b i:nth-child(3){animation-delay:.36s}
 @keyframes ldDot{0%,60%,100%{opacity:.35;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.ld-typing-b i{animation:none;opacity:.7}}
+
+/* entrada direta por loja: sem voltar pra lista */
+#luna-app.is-direct #ld-back{pointer-events:none}
+#luna-app.is-direct #ld-back .cnt{visibility:hidden}
 </style></head><body><div id="luna-app" data-device="" data-os="" data-theme="" data-screen="chats">
 
   <aside class="ld-side" id="ld-side-left">
@@ -635,7 +639,7 @@ svg{display:block}
     <div class="feed" id="ld-pro-side"><div class="empty">Os recursos aparecem aqui conforme a conversa acontece.</div></div>
     <div id="ld-cta">
       <h4>Gostou da Luna?</h4>
-      <a class="pri" id="ld-cta-buy" target="_blank" rel="noopener">Quero a Luna na minha loja por R$ 97</a>
+      <a class="pri" id="ld-cta-buy" target="_blank" rel="noopener">Ativar e começar a faturar</a>
       <a id="ld-cta-team" target="_blank" rel="noopener">Falar com a equipe pelo WhatsApp</a>
       <button id="ld-cta-faq">Ainda tenho dúvidas</button>
     </div>
@@ -656,6 +660,7 @@ const CONFIG = {
     buy: 'https://pay.cakto.com.br/p3rgmzw_892813',              // checkout Founder Basic (R$ 97)
     pro: 'https://pay.cakto.com.br/fwrej9i_1220822',             // checkout Founder PRO (R$ 167)
     team: 'https://wa.me/5518996750836?text=',
+    activate: 'https://www.atendeaidelivery.com.br/monte-sua-luna/',   // página de ativação (Monte sua Luna)
   },
   // IA ligada automaticamente quando a página roda num servidor com /api/luna (Vercel).
   // ?ia=0 força o roteiro de exemplo; no artefato/arquivo local fica sempre o roteiro.
@@ -810,6 +815,7 @@ const IC = {
   lock: '<svg viewBox="0 0 11 13" fill="currentColor"><path d="M5.5 0A3.3 3.3 0 0 0 2.2 3.3V5H1.4C.6 5 0 5.6 0 6.4v5.2c0 .8.6 1.4 1.4 1.4h8.2c.8 0 1.4-.6 1.4-1.4V6.4C11 5.6 10.4 5 9.6 5h-.8V3.3A3.3 3.3 0 0 0 5.5 0zm2 5h-4V3.3a2 2 0 0 1 4 0z"/></svg>',
   reply: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6 4 11.5 9.5 17"/><path d="M4.5 11.5H14a6 6 0 0 1 6 6v.5"/></svg>',
   list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8.5 6.5h11M8.5 12h11M8.5 17.5h11"/><circle cx="4.5" cy="6.5" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="17.5" r="1" fill="currentColor"/></svg>',
+  arrow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>',
 };
 const MAP = `<svg class="map" viewBox="0 0 260 150" preserveAspectRatio="xMidYMid slice"><rect width="260" height="150" fill="#e8eef0"/>
@@ -894,7 +900,7 @@ const UI = {
       opts.forEach(o => {
         const b = document.createElement(o.href ? 'a' : 'button'); b.className = 'ld-reply-btn' + (o.primary ? ' is-primary' : ''); b.dataset.value = o.value;
         if (o.href) { b.href = o.href; b.target = '_blank'; b.rel = 'noopener'; b.style.textDecoration = 'none'; }
-        b.innerHTML = (o.icon ? IC[o.icon] : (o.primary ? '' : IC.reply)) + `<span data-slot="label">${esc(o.label)}</span>`;
+        b.innerHTML = (o.icon ? IC[o.icon] : (o.primary ? '' : IC.reply)) + `<span data-slot="label">${esc(o.label)}</span>` + (o.after ? IC[o.after] : '');
         b.addEventListener('click', () => {
           if (o.keep) { if (o.onTap) o.onTap(); return; }      // links (checkout/equipe) abrem e continuam disponíveis
           if (box.classList.contains('is-used')) return;
@@ -1301,13 +1307,16 @@ function gainLine(vol) {
   const offered = !CONFIG.api || ((F.ai && F.ai.state && F.ai.state.ofertas) || []).length > 0;
   const inc = offered && g.to > g.from ? g.to - g.from : 0;
   const lines = [];
+  F.cta = null;
   if (inc) lines.push(`Nesse pedido eu ofereci na hora certa e ele subiu de *${brl(g.from)}* pra *${brl(g.to)}* (+${Math.round(inc / g.from * 100)}%).`);
   if (vol) {
     const n = PEDIDOS_DIA[vol] || 20;
+    F.cta = inc ? { kind: 'add', v: inc * n * 30 } : { kind: 'total', v: ticket * n * 30 };
     lines.push(inc
       ? `Mantendo a média de *${n} pedidos por dia* a *${brl(g.to)}*, eu consigo adicionar *${brl(inc * n * 30)} de faturamento por mês* pra sua loja 💰`
       : `Com *${n} pedidos por dia* a *${brl(ticket)}*, são *${brl(ticket * n * 30)} por mês* passando por mim, e no pico eu atendo todo mundo ao mesmo tempo: *nenhuma venda se perde* 💰`);
   } else {
+    F.cta = { kind: 'start', v: ticket * 20 * 30 };
     lines.push(`Começando com só *20 pedidos por dia* a *${brl(ticket)}* (o valor desse pedido), são *${brl(ticket * 20 * 30)} por mês* em vendas pelo WhatsApp, sem comissão de app. E como eu respondo na hora, *você não perde venda* por demora 💰`);
   }
   return lines.join('\n\n');
@@ -1322,16 +1331,31 @@ function teamUrl(extra) {
   return CONFIG.links.team + encodeURIComponent(parts.join(' '));
 }
 const proFit = () => F.quiz && F.quiz.q3 === 'Mais de 50';
+/* convite para a ativação: amarrado ao faturamento calculado no pitch */
+function ctaText() {
+  const c = F.cta;
+  if (!c || !c.v) return 'Quer ter a Luna atendendo na *sua* loja? 💚';
+  if (c.kind === 'add') return `Esses *${brl(c.v)} por mês* podem começar a entrar já 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.`;
+  if (c.kind === 'total') return `Com uma atendente assim, esses *${brl(c.v)} por mês* chegam sem perder nenhuma venda 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.`;
+  return `Com uma atendente assim, você já começa faturando *${brl(c.v)} por mês* sem perder nenhuma venda 💰\nBora ativar? Em 1 minutinho você deixa tudo configurado.`;
+}
+function activateUrl() {
+  const u = new URL(CONFIG.links.activate), qs = new URLSearchParams(location.search);
+  u.searchParams.set('plano', proFit() ? 'pro' : 'basic');
+  if (F.niche) u.searchParams.set('nicho', F.niche);
+  Object.entries(F.quiz || {}).forEach(([k, v]) => v && u.searchParams.set(k, v));
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'utm_id', 'src', 'sck'].forEach(k => { if (qs.get(k)) u.searchParams.set(k, qs.get(k)); });
+  return u.href;
+}
 const CTA_OPTS = () => [
-  ...(proFit() ? [{ label: 'Quero a Luna PRO por R$ 167', value: 'buy', primary: true, keep: true, link: true, href: CONFIG.links.pro }] : []),
-  { label: proFit() ? 'Founder Basic por R$ 97' : 'Quero a Luna por R$ 97', value: 'buy', primary: !proFit(), keep: true, link: true, href: CONFIG.links.buy },
+  { label: 'Ativar e começar a faturar', value: 'activate', primary: true, keep: true, link: true, href: activateUrl(), after: 'arrow' },
   { label: 'Falar com a equipe', value: 'team', icon: 'link', keep: true, link: true, href: teamUrl() },
   { label: 'Ainda tenho dúvidas', value: 'faq' },
 ];
 async function cta(run, text) {
   $('#ld-cta').classList.add('is-visible'); syncSideCta();
   F.phase = 'faq';
-  const o = await ask(text || 'Quer ter a Luna atendendo na *sua* loja? 💚', CTA_OPTS(), run); if (!o) return;
+  const o = await ask(text || ctaText(), CTA_OPTS(), run); if (!o) return;
   return handleCta(o, run);
 }
 function handleCta(o, run) {
@@ -1418,7 +1442,7 @@ async function faqAsk(text) {
   const o = await ask('É rapidinho, a gente responde pelo WhatsApp 👇', [{ label: 'Vamos lá', value: 'team', primary: true, keep: true, link: true, href: teamUrl(`Minha dúvida: ${text}`) }, { label: 'Ver outras dúvidas', value: 'faq' }], run);
   if (o) return handleCta(o, run);
 }
-function syncSideCta() { $('#ld-cta-buy').href = CONFIG.links.buy; $('#ld-cta-team').href = teamUrl(); }
+function syncSideCta() { $('#ld-cta-buy').href = activateUrl(); $('#ld-cta-team').href = teamUrl(); }
 syncSideCta();
 $('#ld-cta-faq').onclick = () => { if (F.niche) { F.run++; F.phase = 'quiz'; faq(F.run); } };
 
@@ -1445,7 +1469,14 @@ if (DEBUG) {
 
 /* ---------------- início ---------------- */
 applyEnv(); renderList(); setComposer('disabled'); autosize();
-if (qs.get('loja') && STORES[qs.get('loja')]) openChat(qs.get('loja'));
+/* entrada direta (?loja=pizzaria|hamburgueria|acai|marmitaria): abre a conversa e não deixa voltar pra lista */
+const DIRECT = qs.get('loja') && STORES[qs.get('loja')] ? qs.get('loja') : null;
+if (DIRECT) {
+  app.classList.add('is-direct');
+  $('#ld-back').onclick = null; $('#ld-back').setAttribute('aria-disabled', 'true'); $('#ld-back').tabIndex = -1;
+  $('#ld-switch').hidden = true;
+  openChat(DIRECT);
+}
 window.LUNA = { UI, openChat, backToList, state, CONFIG };
 })();
 </script></body></html>
