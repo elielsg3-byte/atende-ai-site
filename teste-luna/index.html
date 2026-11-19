@@ -1335,9 +1335,9 @@ const proFit = () => F.quiz && F.quiz.q3 === 'Mais de 50';
 function ctaText() {
   const c = F.cta;
   if (!c || !c.v) return 'Quer ter a Luna atendendo na *sua* loja? 💚';
-  if (c.kind === 'add') return `Esses *${brl(c.v)} por mês* podem começar a entrar já 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.`;
-  if (c.kind === 'total') return `Com uma atendente assim, esses *${brl(c.v)} por mês* chegam sem perder nenhuma venda 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.`;
-  return `Com uma atendente assim, você já começa faturando *${brl(c.v)} por mês* sem perder nenhuma venda 💰\nBora ativar? Em 1 minutinho você deixa tudo configurado.`;
+  if (c.kind === 'add') return `Esses *${brl(c.v)} por mês* podem começar a entrar já 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.\n\n_No lote Founder é pagamento único. Depois dele vira mensalidade, mas quem entra agora nunca paga._`;
+  if (c.kind === 'total') return `Com uma atendente assim, esses *${brl(c.v)} por mês* chegam sem perder nenhuma venda 💰\nLeva 1 minutinho pra ativar sua atendente e deixar tudo pronto.\n\n_No lote Founder é pagamento único. Depois dele vira mensalidade, mas quem entra agora nunca paga._`;
+  return `Com uma atendente assim, você já começa faturando *${brl(c.v)} por mês* sem perder nenhuma venda 💰\nBora ativar? Em 1 minutinho você deixa tudo configurado.\n\n_No lote Founder é pagamento único. Depois dele vira mensalidade, mas quem entra agora nunca paga._`;
 }
 function activateUrl() {
   const u = new URL(CONFIG.links.activate), qs = new URLSearchParams(location.search);
@@ -1370,7 +1370,7 @@ const FAQ = [
   { value: 'robo', title: 'Vai parecer robô?', description: 'Como é a conversa', answer: 'Não. Nada de "digite 1". Eu converso de forma natural, entendo o contexto do pedido e atendo cada cliente do jeito dele.' },
   { value: 'numero', title: 'Troco meu número?', description: 'Meus clientes já têm salvo', answer: 'Não precisa. Você conecta o seu WhatsApp escaneando um QR Code e continua com o mesmo número que seus clientes já conhecem. Eles não precisam instalar nada.' },
   { value: 'pico', title: 'Vários ao mesmo tempo?', description: 'Horário de pico', answer: 'Eu atendo várias conversas ao mesmo tempo, então o pico não vira fila. No *Founder Basic* são até 3 atendimentos simultâneos; no *Founder PRO*, ilimitados.' },
-  { value: 'custo', title: 'Tem mensalidade?', description: 'Ou comissão por pedido', answer: 'Não. Os planos Founder são pagamento único: *Basic R$ 97* e *PRO R$ 167*. Sem mensalidade e sem comissão por pedido.' },
+  { value: 'custo', title: 'Tem mensalidade?', description: 'Ou comissão por pedido', answer: 'No lote Founder, não: é pagamento único (*Basic R$ 97* e *PRO R$ 167*), sem comissão por pedido. Depois deste lote a Atende.AI passa a ser por mensalidade, mas *quem entrou como Founder nunca paga mensalidade*.' },
   { value: 'config', title: 'É difícil configurar?', description: 'Preciso entender de tecnologia?', answer: 'Nada difícil. Você cadastra os dados da loja, horários e área de entrega, manda o seu cardápio (a nossa IA transcreve tudo) e conecta o WhatsApp. São 5 passos simples.' },
   { value: 'garantia', title: 'E se não der certo?', description: 'Garantia', answer: 'Você tem *120 dias de garantia*, contados a partir do dia em que eu entro no ar na sua loja. Se eu não entregar, a gente devolve 100% do valor.' },
   { value: 'digitar', title: 'Quero digitar a minha', description: 'Escreva com as suas palavras' },

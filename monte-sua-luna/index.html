@@ -528,6 +528,8 @@
     .review-payment { display: flex; align-items: baseline; flex-wrap: wrap; gap: 3px 10px; margin-top: 16px; color: var(--muted); font-size: 12px }
     .review-payment strong { color: var(--ink); font-size: 18px; letter-spacing: -.025em }
     .review-payment + .actions { margin-top: 8px }
+    .founder-note { margin: 6px 0 0; padding: 8px 10px; border-radius: 10px; background: #f1fbdc; color: #2f4a00; font-size: 12px; line-height: 1.45 }
+    .founder-note + .actions { margin-top: 10px }
     .review-footnotes { text-align: center }
     @media (min-width: 741px) {
       .shell {
@@ -596,6 +598,8 @@
     .next-steps li + li { margin-top: 5px }
     .review-payment { margin-top: var(--form-section-gap) }
     .workspace .review-payment + .actions { margin-top: 8px }
+    .founder-note { margin: 6px 0 0; padding: 8px 10px; border-radius: 10px; background: #f1fbdc; color: #2f4a00; font-size: 12px; line-height: 1.45 }
+    .founder-note + .actions { margin-top: 10px }
     .workspace .review-footnotes { margin-top: 8px }
     .review-footnotes .lock-icon { width: 12px; height: 12px; margin-inline-end: 4px; vertical-align: -2px }
 
@@ -992,7 +996,8 @@
         '<li>O acesso ao painel chega por e-mail.</li>' +
         '<li>' + (wantsHelp ? 'Nossa equipe conecta o WhatsApp da loja com você.' : 'Conecte o WhatsApp da loja pelo QR Code.') + '</li>' +
         '<li>Pronto! ' + name + ' estará atendendo em sua loja.</li></ul>' +
-        '<div class="review-payment"><strong>' + plan.price + '</strong><span>Pagamento único · Sem mensalidade</span></div>' +
+        '<div class="review-payment"><strong>' + plan.price + '</strong><span>Pagamento único · Sem mensalidade pra sempre</span></div>' +
+        '<p class="founder-note">Lote Founder: depois dele, a Atende.AI passa a ser por mensalidade. Quem ativa agora nunca paga mensalidade.</p>' +
         '<div class="actions"><a id="checkout" class="primary activation-button" href="' + escapeHtml(checkoutUrl(plan)) + '"><span class="button-label">Continuar para ativar ' + name + '</span>' + arrow + '</a></div>' +
         '<p class="field-note review-footnotes"><svg class="icon lock-icon" aria-hidden="true"><use href="#i-lock"></use></svg>Pagamento seguro · 120 dias de garantia</p>' +
         '</section>';
