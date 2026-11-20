@@ -878,6 +878,9 @@ body .mobile-menu .site-button.site-button--mobile{min-height:52px;padding:14px 
 @media(min-width:601px){.ftc-company:not(:has(.ftc-api)){grid-template-columns:1fr auto}.ftc-company:not(:has(.ftc-api)) .ftc-legal{padding-left:0;border-left:0}}
 @media(max-width:600px){.ftc.ftc--nobar{padding-bottom:0}}
 
+/* integra com a seção de FAQ logo acima: mesmo fundo, sem faixa entre as duas */
+.ftc{--ink:#0b1712;border-top-color:rgba(244,245,239,.08)}
+.faq-section:has(+ .ftc),.faq-section{padding-bottom:clamp(56px,6vw,88px)}
 </style>
 </head>
 <body>
@@ -1640,108 +1643,6 @@ src="https://www.facebook.com/tr?id=1444232587293553&amp;ev=PageView&amp;noscrip
   </div>
 </div>
 </main>
-
-<footer class="site-footer"> atual por este
-   bloco e colar este <style> no <head> da página.
-   ===================================================================== */
-body{margin:0;background:#f7f9fb;font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
-.demo-above{padding:80px 20px;text-align:center;color:#5d6561;font-size:14px}
-
-.ftc{--ink:#0e1812;--line:#25382b;--txt:#f4f5ef;--muted:#9bad9c;--dim:#7f9583;--lime:#baf91a;--wa:#25d366;
-  background:var(--ink);color:var(--txt);border-top:1px solid var(--line);padding:0;content-visibility:auto;contain-intrinsic-size:auto 900px;overflow-wrap:anywhere;font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
-.ftc *{box-sizing:border-box}
-.ftc a{color:#b2bfb4;text-decoration:none;transition:color .15s ease}
-.ftc a:hover{color:#d0ff67}
-.ftc a:focus-visible{outline:2px solid var(--lime);outline-offset:4px;border-radius:4px}
-.ftc-wrap{width:min(1180px,calc(100% - 40px));margin:auto}
-
-/* 1 · faixa de contato humano */
-.ftc-talk{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;margin:-1px 0 0;padding:34px 0;border-bottom:1px solid var(--line)}
-.ftc-talk h2{margin:0;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.035em;line-height:1.15}
-.ftc-talk h2 em{font-style:normal;color:var(--lime)}
-.ftc-talk p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:560px}
-.ftc-talk-actions{display:flex;gap:12px;flex-wrap:wrap}
-.ftc .ftc-wa{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:14px;background:var(--wa);color:#06210f;font-size:15px;font-weight:800;box-shadow:0 4px 0 #1a9a4a}
-.ftc .ftc-wa:hover{color:#06210f;filter:brightness(1.05)}
-.ftc .ftc-wa svg{width:22px;height:22px;fill:currentColor}
-.ftc .ftc-mail{display:inline-flex;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:0 20px;border-radius:14px;border:1px solid #33503b;color:var(--txt);font-size:14px;font-weight:650}
-.ftc .ftc-mail svg{width:18px;height:18px;fill:none;stroke:var(--lime);stroke-width:1.7}
-
-/* 2 · colunas (mesma estrutura do rodapé atual) */
-.ftc-main{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:45px;padding:46px 0 40px}
-.ftc-brand{display:inline-flex;align-items:center;gap:12px;color:var(--txt)!important}
-.ftc-luna{flex:none;display:block;width:auto;height:64px;filter:drop-shadow(0 6px 14px rgba(186,249,26,.18))}
-.ftc-brand strong{display:block;font-family:'DM Sans',sans-serif;font-size:25px;font-weight:700;letter-spacing:-.045em;line-height:1.1}
-.ftc-brand small{display:block;margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:.01em}
-.ftc-desc{max-width:280px;margin:20px 0 0;color:var(--muted);font-size:13px;line-height:1.75}
-.ftc-api{display:block;width:190px;height:auto;border-radius:12px;box-shadow:0 10px 26px -14px rgba(0,0,0,.7)}
-.ftc-col h3{margin:3px 0 14px;color:#e3ebdf;font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
-.ftc-col ul{margin:0;padding:0;list-style:none}
-.ftc-col li a{display:inline-flex;align-items:center;gap:8px;min-height:36px;font-size:13px;line-height:1.5}
-.ftc-ext{font-size:13px;color:#6e826f}
-.ftc-note{max-width:190px;margin:12px 0 0;color:var(--dim);font-size:11px;line-height:1.7}
-
-/* 3 · selos de confiança */
-.ftc-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0;padding:22px 0;border-top:1px solid #283b2d;border-bottom:1px solid #283b2d;list-style:none}
-.ftc-trust li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:#132219;border:1px solid #1f3326}
-.ftc-trust svg{flex:none;width:22px;height:22px;margin-top:1px;fill:none;stroke:var(--lime);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.ftc-trust b{display:block;color:#e8efe3;font-size:13px;font-weight:700;line-height:1.35}
-.ftc-trust span{display:block;margin-top:2px;color:var(--dim);font-size:11.5px;line-height:1.45}
-
-/* 4 · identificação da empresa */
-.ftc-company{display:grid;grid-template-columns:auto 1fr auto;gap:18px 30px;align-items:center;padding:26px 0}
-.ftc-legal{padding-left:30px;border-left:1px solid #283b2d}
-.ftc-legal .ln{display:block}
-.ftc-legal br{display:none}
-.ftc-legal{margin:0;color:#c2cebc;font-size:12.5px;line-height:1.8}
-.ftc-legal b{color:#eef3ea;font-weight:700}
-.ftc-legal .sep{margin:0 8px;color:#41584a}
-.ftc-legal a{color:#d6e7cf;text-decoration:underline;text-decoration-color:#4d6a55;text-underline-offset:3px}
-.ftc-pay{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-.ftc-pay span{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:8px;background:#f4f5ef;color:#101312;font-size:11.5px;font-weight:800;letter-spacing:-.01em}
-.ftc-pay span svg{width:16px;height:16px;flex:none}
-.ftc-pay small{width:100%;text-align:right;color:var(--dim);font-size:11px}
-
-/* 5 · base */
-.ftc-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0 28px;border-top:1px solid #1f3326}
-.ftc-bottom p{margin:0;color:var(--dim);font-size:11px;line-height:1.6}
-.ftc-bottom nav{display:flex;gap:22px;flex-wrap:wrap}
-.ftc-bottom a{font-size:11.5px}
-
-@media(max-width:950px){
-  .ftc-main{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
-  .ftc-about{grid-column:1/-1}
-  .ftc-trust{grid-template-columns:repeat(2,1fr)}
-  .ftc-company{grid-template-columns:auto 1fr}
-  .ftc-pay{grid-column:1/-1}
-  .ftc-talk{grid-template-columns:1fr;gap:20px}
-  .ftc-pay{justify-content:flex-start}.ftc-pay small{text-align:left}
-}
-@media(max-width:600px){
-  .ftc-wrap{width:calc(100% - 36px)}
-  .ftc-talk{grid-template-columns:1fr;padding:30px 0}
-  .ftc-talk h2{font-size:23px}
-  .ftc-talk-actions{flex-direction:column}
-  .ftc .ftc-wa,.ftc .ftc-mail{justify-content:center;width:100%}
-  .ftc .ftc-mail{font-size:13px;padding:0 14px}
-  .ftc-api{width:170px}
-  .ftc-company{grid-template-columns:1fr}
-  .ftc-legal{padding-left:0;border-left:0}
-  .ftc-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px;padding:36px 0 30px}
-  .ftc-col li a{min-height:44px;font-size:12px}
-  .ftc-trust{grid-template-columns:1fr}
-  .ftc-bottom{flex-direction:column;align-items:flex-start;gap:12px}
-  .ftc-legal .sep{display:none}
-  .ftc-legal .ln{display:block}
-  .ftc-legal br{display:none}
-  .ftc{padding-bottom:92px} /* espaço para a barra fixa de CTA no celular */
-}
-@media(max-width:360px){.ftc-main{grid-template-columns:1fr}.ftc-talk h2{font-size:21px}.ftc .ftc-mail{font-size:12px}}
-</style>
-</head>
-<body>
-
-<div class="demo-above">↑ conteúdo da página (apenas para visualizar o rodapé no contexto)</div>
 
 <!-- ===================== INÍCIO DO RODAPÉ ===================== -->
 <footer class="ftc ftc--nobar" id="rodape" aria-label="Rodapé e informações da empresa">
