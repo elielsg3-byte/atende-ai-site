@@ -1,6 +1,31 @@
 {
   "headers": [
     {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self'; base-uri 'self'; object-src 'none'; form-action 'self' https://pay.cakto.com.br"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+        }
+      ]
+    },
+    {
       "source": "/assets/video/(.*)",
       "headers": [
         {
@@ -26,12 +51,6 @@
           "value": "public, max-age=604800, stale-while-revalidate=86400"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/luna",
-      "destination": "https://luna-api-atende-ai-site.vercel.app/api/luna"
     }
   ]
 }
