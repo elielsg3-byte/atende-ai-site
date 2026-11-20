@@ -899,6 +899,104 @@ body .mobile-menu .site-button.site-button--mobile{min-height:52px;padding:14px 
 .rv4-proof-label{font-size:10px!important}
 .plan-badge{font-size:9px!important}
 </style>
+<style id="ftc-css">
+/* Rodapé de credibilidade (prefixo .ftc-) */
+
+
+.ftc{--ink:#0e1812;--line:#25382b;--txt:#f4f5ef;--muted:#9bad9c;--dim:#7f9583;--lime:#baf91a;--wa:#25d366;
+  background:var(--ink);color:var(--txt);border-top:1px solid var(--line);padding:0;content-visibility:auto;contain-intrinsic-size:auto 900px;overflow-wrap:anywhere;font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.ftc *{box-sizing:border-box}
+.ftc a{color:#b2bfb4;text-decoration:none;transition:color .15s ease}
+.ftc a:hover{color:#d0ff67}
+.ftc a:focus-visible{outline:2px solid var(--lime);outline-offset:4px;border-radius:4px}
+.ftc-wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+
+/* 1 · faixa de contato humano */
+.ftc-talk{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;margin:-1px 0 0;padding:34px 0;border-bottom:1px solid var(--line)}
+.ftc-talk h2{margin:0;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.035em;line-height:1.15}
+.ftc-talk h2 em{font-style:normal;color:var(--lime)}
+.ftc-talk p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:560px}
+.ftc-talk-actions{display:flex;gap:12px;flex-wrap:wrap}
+.ftc .ftc-wa{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:14px;background:var(--wa);color:#06210f;font-size:15px;font-weight:800;box-shadow:0 4px 0 #1a9a4a}
+.ftc .ftc-wa:hover{color:#06210f;filter:brightness(1.05)}
+.ftc .ftc-wa svg{width:22px;height:22px;fill:currentColor}
+.ftc .ftc-mail{display:inline-flex;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:0 20px;border-radius:14px;border:1px solid #33503b;color:var(--txt);font-size:14px;font-weight:650}
+.ftc .ftc-mail svg{width:18px;height:18px;fill:none;stroke:var(--lime);stroke-width:1.7}
+
+/* 2 · colunas (mesma estrutura do rodapé atual) */
+.ftc-main{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:45px;padding:46px 0 40px}
+.ftc-brand{display:inline-flex;align-items:center;gap:12px;color:var(--txt)!important}
+.ftc-luna{flex:none;display:block;width:auto;height:64px;filter:drop-shadow(0 6px 14px rgba(186,249,26,.18))}
+.ftc-brand strong{display:block;font-family:'DM Sans',sans-serif;font-size:25px;font-weight:700;letter-spacing:-.045em;line-height:1.1}
+.ftc-brand small{display:block;margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:.01em}
+.ftc-desc{max-width:280px;margin:20px 0 0;color:var(--muted);font-size:13px;line-height:1.75}
+.ftc-api{display:block;width:190px;height:auto;border-radius:12px;box-shadow:0 10px 26px -14px rgba(0,0,0,.7)}
+.ftc-col h3{margin:3px 0 14px;color:#e3ebdf;font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
+.ftc-col ul{margin:0;padding:0;list-style:none}
+.ftc-col li a{display:inline-flex;align-items:center;gap:8px;min-height:36px;font-size:13px;line-height:1.5}
+.ftc-ext{font-size:13px;color:#6e826f}
+.ftc-note{max-width:190px;margin:12px 0 0;color:var(--dim);font-size:11px;line-height:1.7}
+
+/* 3 · selos de confiança */
+.ftc-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0;padding:22px 0;border-top:1px solid #283b2d;border-bottom:1px solid #283b2d;list-style:none}
+.ftc-trust li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:#132219;border:1px solid #1f3326}
+.ftc-trust svg{flex:none;width:22px;height:22px;margin-top:1px;fill:none;stroke:var(--lime);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ftc-trust b{display:block;color:#e8efe3;font-size:13px;font-weight:700;line-height:1.35}
+.ftc-trust span{display:block;margin-top:2px;color:var(--dim);font-size:11.5px;line-height:1.45}
+
+/* 4 · identificação da empresa */
+.ftc-company{display:grid;grid-template-columns:auto 1fr auto;gap:18px 30px;align-items:center;padding:26px 0}
+.ftc-legal{padding-left:30px;border-left:1px solid #283b2d}
+.ftc-legal .ln{display:block}
+.ftc-legal br{display:none}
+.ftc-legal{margin:0;color:#c2cebc;font-size:12.5px;line-height:1.8}
+.ftc-legal b{color:#eef3ea;font-weight:700}
+.ftc-legal .sep{margin:0 8px;color:#41584a}
+.ftc-legal a{color:#d6e7cf;text-decoration:underline;text-decoration-color:#4d6a55;text-underline-offset:3px}
+.ftc-pay{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.ftc-pay span{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:8px;background:#f4f5ef;color:#101312;font-size:11.5px;font-weight:800;letter-spacing:-.01em}
+.ftc-pay span svg{width:16px;height:16px;flex:none}
+.ftc-pay small{width:100%;text-align:right;color:var(--dim);font-size:11px}
+
+/* 5 · base */
+.ftc-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0 28px;border-top:1px solid #1f3326}
+.ftc-bottom p{margin:0;color:var(--dim);font-size:11px;line-height:1.6}
+.ftc-bottom nav{display:flex;gap:22px;flex-wrap:wrap}
+.ftc-bottom a{font-size:11.5px}
+
+@media(max-width:950px){
+  .ftc-main{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .ftc-about{grid-column:1/-1}
+  .ftc-trust{grid-template-columns:repeat(2,1fr)}
+  .ftc-company{grid-template-columns:auto 1fr}
+  .ftc-pay{grid-column:1/-1}
+  .ftc-talk{grid-template-columns:1fr;gap:20px}
+  .ftc-pay{justify-content:flex-start}.ftc-pay small{text-align:left}
+}
+@media(max-width:600px){
+  .ftc-wrap{width:calc(100% - 36px)}
+  .ftc-talk{grid-template-columns:1fr;padding:30px 0}
+  .ftc-talk h2{font-size:23px}
+  .ftc-talk-actions{flex-direction:column}
+  .ftc .ftc-wa,.ftc .ftc-mail{justify-content:center;width:100%}
+  .ftc .ftc-mail{font-size:13px;padding:0 14px}
+  .ftc-api{width:170px}
+  .ftc-company{grid-template-columns:1fr}
+  .ftc-legal{padding-left:0;border-left:0}
+  .ftc-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px;padding:36px 0 30px}
+  .ftc-col li a{min-height:44px;font-size:12px}
+  .ftc-trust{grid-template-columns:1fr}
+  .ftc-bottom{flex-direction:column;align-items:flex-start;gap:12px}
+  .ftc-legal .sep{display:none}
+  .ftc-legal .ln{display:block}
+  .ftc-legal br{display:none}
+  .ftc{padding-bottom:92px} /* espaço para a barra fixa de CTA no celular */
+}
+@media(max-width:360px){.ftc-main{grid-template-columns:1fr}.ftc-talk h2{font-size:21px}.ftc .ftc-mail{font-size:12px}}
+@media(min-width:601px){.ftc-company:not(:has(.ftc-api)){grid-template-columns:1fr auto}.ftc-company:not(:has(.ftc-api)) .ftc-legal{padding-left:0;border-left:0}}
+@media(max-width:600px){.ftc.ftc--nobar{padding-bottom:0}}
+
+</style>
 </head>
 <body>
 <noscript><img height="1" width="1" style="display:none" alt=""
@@ -1795,51 +1893,205 @@ a.tst-store{color:var(--ink)}
 
 </main>
 
-<footer class="site-footer" id="rodape">
-  <div class="footer-wrap">
-    <div class="footer-main">
-      <div class="footer-about">
-        <a href="#inicio" class="footer-brand" aria-label="Atende.ai — voltar ao início">
-          <img src="/assets/balao-superior-direita-footer.svg" alt="" width="42" height="42" loading="lazy" decoding="async">
+<footer class="site-footer"> atual por este
+   bloco e colar este <style> no <head> da página.
+   ===================================================================== */
+body{margin:0;background:#f7f9fb;font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased}
+.demo-above{padding:80px 20px;text-align:center;color:#5d6561;font-size:14px}
+
+.ftc{--ink:#0e1812;--line:#25382b;--txt:#f4f5ef;--muted:#9bad9c;--dim:#7f9583;--lime:#baf91a;--wa:#25d366;
+  background:var(--ink);color:var(--txt);border-top:1px solid var(--line);padding:0;content-visibility:auto;contain-intrinsic-size:auto 900px;overflow-wrap:anywhere;font-family:'Inter',ui-sans-serif,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+.ftc *{box-sizing:border-box}
+.ftc a{color:#b2bfb4;text-decoration:none;transition:color .15s ease}
+.ftc a:hover{color:#d0ff67}
+.ftc a:focus-visible{outline:2px solid var(--lime);outline-offset:4px;border-radius:4px}
+.ftc-wrap{width:min(1180px,calc(100% - 40px));margin:auto}
+
+/* 1 · faixa de contato humano */
+.ftc-talk{display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;margin:-1px 0 0;padding:34px 0;border-bottom:1px solid var(--line)}
+.ftc-talk h2{margin:0;font-family:'DM Sans',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.035em;line-height:1.15}
+.ftc-talk h2 em{font-style:normal;color:var(--lime)}
+.ftc-talk p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:560px}
+.ftc-talk-actions{display:flex;gap:12px;flex-wrap:wrap}
+.ftc .ftc-wa{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;border-radius:14px;background:var(--wa);color:#06210f;font-size:15px;font-weight:800;box-shadow:0 4px 0 #1a9a4a}
+.ftc .ftc-wa:hover{color:#06210f;filter:brightness(1.05)}
+.ftc .ftc-wa svg{width:22px;height:22px;fill:currentColor}
+.ftc .ftc-mail{display:inline-flex;max-width:100%;align-items:center;gap:10px;min-height:52px;padding:0 20px;border-radius:14px;border:1px solid #33503b;color:var(--txt);font-size:14px;font-weight:650}
+.ftc .ftc-mail svg{width:18px;height:18px;fill:none;stroke:var(--lime);stroke-width:1.7}
+
+/* 2 · colunas (mesma estrutura do rodapé atual) */
+.ftc-main{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:45px;padding:46px 0 40px}
+.ftc-brand{display:inline-flex;align-items:center;gap:12px;color:var(--txt)!important}
+.ftc-luna{flex:none;display:block;width:auto;height:64px;filter:drop-shadow(0 6px 14px rgba(186,249,26,.18))}
+.ftc-brand strong{display:block;font-family:'DM Sans',sans-serif;font-size:25px;font-weight:700;letter-spacing:-.045em;line-height:1.1}
+.ftc-brand small{display:block;margin-top:5px;color:var(--muted);font-size:10px;letter-spacing:.01em}
+.ftc-desc{max-width:280px;margin:20px 0 0;color:var(--muted);font-size:13px;line-height:1.75}
+.ftc-api{display:block;width:190px;height:auto;border-radius:12px;box-shadow:0 10px 26px -14px rgba(0,0,0,.7)}
+.ftc-col h3{margin:3px 0 14px;color:#e3ebdf;font-size:11px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}
+.ftc-col ul{margin:0;padding:0;list-style:none}
+.ftc-col li a{display:inline-flex;align-items:center;gap:8px;min-height:36px;font-size:13px;line-height:1.5}
+.ftc-ext{font-size:13px;color:#6e826f}
+.ftc-note{max-width:190px;margin:12px 0 0;color:var(--dim);font-size:11px;line-height:1.7}
+
+/* 3 · selos de confiança */
+.ftc-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0;padding:22px 0;border-top:1px solid #283b2d;border-bottom:1px solid #283b2d;list-style:none}
+.ftc-trust li{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-radius:14px;background:#132219;border:1px solid #1f3326}
+.ftc-trust svg{flex:none;width:22px;height:22px;margin-top:1px;fill:none;stroke:var(--lime);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ftc-trust b{display:block;color:#e8efe3;font-size:13px;font-weight:700;line-height:1.35}
+.ftc-trust span{display:block;margin-top:2px;color:var(--dim);font-size:11.5px;line-height:1.45}
+
+/* 4 · identificação da empresa */
+.ftc-company{display:grid;grid-template-columns:auto 1fr auto;gap:18px 30px;align-items:center;padding:26px 0}
+.ftc-legal{padding-left:30px;border-left:1px solid #283b2d}
+.ftc-legal .ln{display:block}
+.ftc-legal br{display:none}
+.ftc-legal{margin:0;color:#c2cebc;font-size:12.5px;line-height:1.8}
+.ftc-legal b{color:#eef3ea;font-weight:700}
+.ftc-legal .sep{margin:0 8px;color:#41584a}
+.ftc-legal a{color:#d6e7cf;text-decoration:underline;text-decoration-color:#4d6a55;text-underline-offset:3px}
+.ftc-pay{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+.ftc-pay span{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:8px;background:#f4f5ef;color:#101312;font-size:11.5px;font-weight:800;letter-spacing:-.01em}
+.ftc-pay span svg{width:16px;height:16px;flex:none}
+.ftc-pay small{width:100%;text-align:right;color:var(--dim);font-size:11px}
+
+/* 5 · base */
+.ftc-bottom{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:20px 0 28px;border-top:1px solid #1f3326}
+.ftc-bottom p{margin:0;color:var(--dim);font-size:11px;line-height:1.6}
+.ftc-bottom nav{display:flex;gap:22px;flex-wrap:wrap}
+.ftc-bottom a{font-size:11.5px}
+
+@media(max-width:950px){
+  .ftc-main{grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+  .ftc-about{grid-column:1/-1}
+  .ftc-trust{grid-template-columns:repeat(2,1fr)}
+  .ftc-company{grid-template-columns:auto 1fr}
+  .ftc-pay{grid-column:1/-1}
+  .ftc-talk{grid-template-columns:1fr;gap:20px}
+  .ftc-pay{justify-content:flex-start}.ftc-pay small{text-align:left}
+}
+@media(max-width:600px){
+  .ftc-wrap{width:calc(100% - 36px)}
+  .ftc-talk{grid-template-columns:1fr;padding:30px 0}
+  .ftc-talk h2{font-size:23px}
+  .ftc-talk-actions{flex-direction:column}
+  .ftc .ftc-wa,.ftc .ftc-mail{justify-content:center;width:100%}
+  .ftc .ftc-mail{font-size:13px;padding:0 14px}
+  .ftc-api{width:170px}
+  .ftc-company{grid-template-columns:1fr}
+  .ftc-legal{padding-left:0;border-left:0}
+  .ftc-main{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 22px;padding:36px 0 30px}
+  .ftc-col li a{min-height:44px;font-size:12px}
+  .ftc-trust{grid-template-columns:1fr}
+  .ftc-bottom{flex-direction:column;align-items:flex-start;gap:12px}
+  .ftc-legal .sep{display:none}
+  .ftc-legal .ln{display:block}
+  .ftc-legal br{display:none}
+  .ftc{padding-bottom:92px} /* espaço para a barra fixa de CTA no celular */
+}
+@media(max-width:360px){.ftc-main{grid-template-columns:1fr}.ftc-talk h2{font-size:21px}.ftc .ftc-mail{font-size:12px}}
+</style>
+</head>
+<body>
+
+<div class="demo-above">↑ conteúdo da página (apenas para visualizar o rodapé no contexto)</div>
+
+<!-- ===================== INÍCIO DO RODAPÉ ===================== -->
+<footer class="ftc" id="rodape" aria-label="Rodapé e informações da empresa">
+  <div class="ftc-wrap">
+
+    <!-- 1 · contato humano -->
+    <div class="ftc-talk">
+      <div>
+        <h2>Ficou alguma dúvida? <em>Fala com a gente.</em></h2>
+        <p>Do outro lado é uma pessoa da equipe Atende.AI, não um robô. A gente te ajuda a escolher o plano e explica como sua loja entra no ar.</p>
+      </div>
+      <div class="ftc-talk-actions">
+        <a class="ftc-wa" href="https://wa.me/5518996750836?text=Oi!%20Vim%20pelo%20site%20e%20tenho%20uma%20d%C3%BAvida%20sobre%20a%20Luna." target="_blank" rel="noopener" data-track="footer-whatsapp">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.2 1.4 2.5 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.8-.1 1.4Z"/></svg>
+          (18) 99675-0836
+        </a>
+        <a class="ftc-mail" href="mailto:contato@atendeaidelivery.com.br">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+          contato@atendeaidelivery.com.br
+        </a>
+      </div>
+    </div>
+
+    <!-- 2 · colunas -->
+    <div class="ftc-main">
+      <div class="ftc-about">
+        <a href="#inicio" class="ftc-brand" aria-label="Atende.ai — voltar ao início">
+          <img class="ftc-luna" src="/assets/luna-avatar.webp" width="49" height="64" alt="" decoding="async">
           <span><strong>Atende.ai</strong><small>Atendimento digital para delivery</small></span>
         </a>
-        <p class="footer-description">Sua Atendente Digital no WhatsApp. Mais atenção para o cliente, pedidos organizados e mais tempo para cuidar da sua loja.</p>
+        <p class="ftc-desc">Sua Atendente Digital no WhatsApp. Mais atenção para o cliente, pedidos organizados e mais tempo para cuidar da sua loja.</p>
       </div>
-      <nav class="footer-column" aria-label="Conheça a Atende.ai">
-        <h2>Conheça a Atende.ai</h2>
+      <nav class="ftc-col" aria-label="Conheça a Atende.ai">
+        <h3>Conheça a Atende.ai</h3>
         <ul>
           <li><a href="#tecnologia">Como funciona</a></li>
-          <li><a href="#como-comecar">Primeiros passos</a></li>
+          <li><a href="#teste-luna">Teste a Luna grátis</a></li>
           <li><a href="#resultados">Resultados</a></li>
           <li><a href="#depoimentos">Quem já usa</a></li>
         </ul>
       </nav>
-      <nav class="footer-column" aria-label="Planos Founder">
-        <h2>Planos Founder</h2>
+      <nav class="ftc-col" aria-label="Planos Founder">
+        <h3>Planos Founder</h3>
         <ul>
-          <li><a href="https://pay.cakto.com.br/p3rgmzw_892813">Adquirir Founder Basic <span class="footer-external" aria-hidden="true">↗</span></a></li>
-          <li><a href="https://pay.cakto.com.br/fwrej9i_1220822">Adquirir Founder PRO <span class="footer-external" aria-hidden="true">↗</span></a></li>
+          <li><a href="https://pay.cakto.com.br/p3rgmzw_892813">Founder Basic · R$ 97 <span class="ftc-ext" aria-hidden="true">↗</span></a></li>
+          <li><a href="https://pay.cakto.com.br/fwrej9i_1220822">Founder PRO · R$ 167 <span class="ftc-ext" aria-hidden="true">↗</span></a></li>
         </ul>
-        <p class="footer-checkout-note">A compra é finalizada na Cakto. Confira os recursos de cada plano antes de escolher.</p>
+        <p class="ftc-note">Compra finalizada na Cakto, com pagamento seguro. Confira os recursos de cada plano antes de escolher.</p>
       </nav>
-      <nav class="footer-column" aria-label="Informações para sua decisão">
-        <h2>Antes de começar</h2>
+      <nav class="ftc-col" aria-label="Antes de começar">
+        <h3>Antes de começar</h3>
         <ul>
           <li><a href="#faq">Perguntas frequentes</a></li>
-          <li><a href="#garantia">Nosso compromisso e garantia</a></li>
+          <li><a href="#garantia">Garantia de 120 dias</a></li>
           <li><a href="#contato">Faça seu diagnóstico</a></li>
         </ul>
       </nav>
     </div>
-    <ul class="footer-assurances" aria-label="Condições comerciais">
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>Pagamento único, sem mensalidade</li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg>Zero comissão por pedido</li>
-      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.5 7.5 9 7.5 9s7.5-4.5 7.5-9V6L12 3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Garantia de 120 dias</li>
+
+    <!-- 3 · selos de confiança -->
+    <ul class="ftc-trust" aria-label="Por que comprar com segurança">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.5 7.5 9 7.5 9s7.5-4.5 7.5-9V6L12 3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><div><b>Garantia de 120 dias</b><span>Se a Luna não entregar, devolvemos 100% do valor.</span></div></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><div><b>Pagamento seguro</b><span>Processado pela Cakto, via Pix ou cartão.</span></div></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg><div><b>Pagamento único no lote Founder</b><span>Sem mensalidade e sem comissão por pedido.</span></div></li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V9l8-5 8 5v11"/><path d="M9 20v-6h6v6"/></svg><div><b>Empresa registrada</b><span>CNPJ 93.782.647/0001-01</span></div></li>
     </ul>
-    <div class="footer-bottom">
-      <p>© 2026 Atende.ai. Todos os direitos reservados.</p>
-      <a href="#inicio">Voltar ao início <span aria-hidden="true">↑</span></a>
+
+    <!-- 4 · identificação da empresa -->
+    <div class="ftc-company">
+      <!-- SELO DA API OFICIAL — desativado até concluir a migração para a WhatsApp Business API oficial. Para ativar, descomente a linha abaixo:
+      <img class="ftc-api" src="/assets/selo-whatsapp-api.webp" width="190" height="83" alt="Oficial WhatsApp Business API" loading="lazy" decoding="async">
+      -->
+      <p class="ftc-legal">
+        <span class="ln"><b>Atende.AI</b>
+        <!-- PREENCHER: razão social exatamente como está no cartão CNPJ, ex.: "· Nome Empresarial LTDA" -->
+        <span class="sep">·</span>CNPJ <b>93.782.647/0001-01</b></span>
+        <br>
+        <span class="ln">Atendimento: <a href="https://wa.me/5518996750836" target="_blank" rel="noopener">WhatsApp (18) 99675-0836</a></span>
+        <span class="ln">E-mail: <a href="mailto:contato@atendeaidelivery.com.br">contato@atendeaidelivery.com.br</a></span>
+      </p>
+      <div class="ftc-pay" aria-label="Formas de pagamento">
+        <!-- ícone Pix: Simple Icons (CC0) -->
+        <span><svg viewBox="0 0 24 24" fill="#32BCAD" aria-hidden="true"><path d="M5.283 18.36a3.505 3.505 0 0 0 2.493-1.032l3.6-3.6a.684.684 0 0 1 .946 0l3.613 3.613a3.504 3.504 0 0 0 2.493 1.032h.71l-4.56 4.56a3.647 3.647 0 0 1-5.156 0L4.85 18.36ZM18.428 5.627a3.505 3.505 0 0 0-2.493 1.032l-3.613 3.614a.67.67 0 0 1-.946 0l-3.6-3.6A3.505 3.505 0 0 0 5.283 5.64h-.434l4.573-4.572a3.646 3.646 0 0 1 5.156 0l4.559 4.559ZM1.068 9.422 3.79 6.699h1.492a2.483 2.483 0 0 1 1.744.722l3.6 3.6a1.73 1.73 0 0 0 2.443 0l3.614-3.613a2.482 2.482 0 0 1 1.744-.723h1.767l2.737 2.737a3.646 3.646 0 0 1 0 5.156l-2.736 2.736h-1.768a2.482 2.482 0 0 1-1.744-.722l-3.613-3.613a1.77 1.77 0 0 0-2.444 0l-3.6 3.6a2.483 2.483 0 0 1-1.744.722H3.791l-2.723-2.723a3.646 3.646 0 0 1 0-5.156"/></svg>Pix</span>
+        <!-- ícones cartão e cadeado: Lucide (ISC) -->
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="#101312" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/><path d="M6 14h2"/></svg>Cartão</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="#101312" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Cakto</span>
+        <small>Ambiente de pagamento protegido</small>
+      </div>
     </div>
+
+    <!-- 5 · base -->
+    <div class="ftc-bottom">
+      <p>© 2026 Atende.AI · CNPJ 93.782.647/0001-01 · Todos os direitos reservados.</p>
+      <nav aria-label="Documentos">
+        <a href="#inicio">Voltar ao início ↑</a>
+      </nav>
+    </div>
+
   </div>
 </footer>
 
