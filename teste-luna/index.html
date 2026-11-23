@@ -1060,7 +1060,18 @@ async function userSays(text) {
   return el;
 }
 
+/* eventos do Clarity: cada etapa do teste conta 1x por visita */
+const _marks = new Set();
+function mark(ev) { if (_marks.has(ev)) return; _marks.add(ev); try { window.clarity && window.clarity('event', ev); } catch (e) {} }
+function markTag(k, v) { try { window.clarity && window.clarity('set', k, v); } catch (e) {} }
+document.addEventListener('click', e => {
+  const a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+  if (/wa\.me|whatsapp/i.test(a.href)) mark('luna_6_cta_equipe');
+  else if (a.href === activateUrl() || /cakto|plano=/.test(a.href)) mark('luna_6_cta_ativar');
+}, true);
+
 async function openChat(k) {
+  mark('luna_1_nicho_escolhido'); markTag('nicho', k);
   F.run++; const run = F.run;
   F.niche = k; F.step = 0; F.phase = 'opening'; F.quiz = {};
   F.ai = { hist: [], state: {}, count: 0, tips: null }; F.gain = STORES[k].gain || null;
@@ -1115,7 +1126,7 @@ function submit() { const t = input.value.trim(); if (!t || comp.dataset.compose
 async function send(text) {
   if (F.phase === 'faq') return faqAsk(text);
   if (F.busy || F.phase !== 'order') return;
-  F.busy = true; setTips([]); const run = F.run;
+  F.busy = true; setTips([]); const run = F.run; mark('luna_2_primeira_msg');
   await userSays(text);
   await respond(text, run);
   F.busy = false;
@@ -1148,7 +1159,7 @@ async function respond(input, run) {
     setSubtitle('digitando...'); await sleep(1100); if (run !== F.run) return;
     setSubtitle('online');
     if (!await lunaSays([UI.comandaText(s.comanda, s.name), endLine(st.end)], run)) return;
-    F.phase = 'quiz'; await sleep(1200); quiz(run); return;
+    mark('luna_3_pedido_concluido'); F.phase = 'quiz'; await sleep(1200); quiz(run); return;
   }
   nextTips();
 }
@@ -1197,6 +1208,7 @@ async function aiFallback(run) {
   setComposer('buttons'); await sleep(1200); quiz(run);
 }
 async function aiLimit(run) {
+  mark('luna_3b_limite_msgs');
   if (!await lunaSays(['Por aqui a demonstração vai até ' + CONFIG.maxMsgs + ' mensagens 😊 Já deu pra sentir como eu atendo, né?'], run, true)) return;
   F.phase = 'quiz'; setComposer('buttons'); await sleep(900); quiz(run);
 }
@@ -1252,7 +1264,7 @@ async function brain(input, run, retry = 0) {
     setSubtitle('online');
     const end = STORES[F.niche].script.find(x => x.end).end;
     if (!await lunaSays([UI.comandaText(data.comanda, STORES[F.niche].name, ai.state.entrega && ai.state.entrega.endereco), endLine(end)], run)) return;
-    F.phase = 'quiz'; setComposer('buttons'); await sleep(1200); quiz(run); return;
+    mark('luna_3_pedido_concluido'); F.phase = 'quiz'; setComposer('buttons'); await sleep(1200); quiz(run); return;
   }
   if (ai.count >= CONFIG.maxMsgs) return aiLimit(run);
   ai.tips = aiTips(replies[replies.length - 1] || '', ai.state);
@@ -1269,6 +1281,7 @@ async function ask(text, labels, run) {
   return o;
 }
 async function quiz(run) {
+  mark('luna_4_quiz_iniciado');
   const go = await ask('Agora deixa eu sair do papel de atendente da loja: eu sou a *Luna*, da Atende.AI 💚\nPosso te fazer 3 perguntinhas rápidas pra mostrar como eu ficaria na *sua* loja?', ['Bora!'], run);
   if (!go) return;
   const q1 = await ask('Sua loja já vende pelo WhatsApp?', ['Sim, todo dia', 'Pouco, quero vender mais', 'Ainda não'], run); if (!q1) return;
@@ -1361,6 +1374,7 @@ const CTA_OPTS = () => [
   { label: 'Ainda tenho dúvidas', value: 'faq' },
 ];
 async function cta(run, text) {
+  mark('luna_5_quiz_concluido');
   $('#ld-cta').classList.add('is-visible'); syncSideCta();
   F.phase = 'faq';
   const o = await ask(text || ctaText(), CTA_OPTS(), run); if (!o) return;
